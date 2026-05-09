@@ -7,10 +7,13 @@ type Props = {
   categories: { id: string; title: string }[];
 };
 
+const SCROLL_LOCK_MS = 800;
+
 export function CategoryNav({ categories }: Props) {
   const t = useT();
   const [activeId, setActiveId] = useState<string>(categories[0]?.id ?? "");
   const navRef = useRef<HTMLDivElement>(null);
+  const lockUntilRef = useRef<number>(0);
 
   useEffect(() => {
     if (!categories.length) return;
@@ -20,6 +23,7 @@ export function CategoryNav({ categories }: Props) {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (Date.now() < lockUntilRef.current) return;
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort(
@@ -57,6 +61,11 @@ export function CategoryNav({ categories }: Props) {
     e.preventDefault();
     const el = document.getElementById(id);
     if (!el) return;
+    // Optimistic active state — chip turns dark immediately on tap,
+    // and the IntersectionObserver is muted briefly so it doesn't flip
+    // back as in-between sections cross the viewport during smooth scroll.
+    setActiveId(id);
+    lockUntilRef.current = Date.now() + SCROLL_LOCK_MS;
     const top = el.getBoundingClientRect().top + window.scrollY - 120;
     window.scrollTo({ top, behavior: "smooth" });
     history.replaceState(null, "", `#${id}`);
@@ -77,10 +86,10 @@ export function CategoryNav({ categories }: Props) {
               data-id={c.id}
               aria-current={active ? "true" : undefined}
               onClick={(e) => handleClick(e, c.id)}
-              className={`relative flex-shrink-0 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-medium tracking-wide transition ${
+              className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-2 text-[13px] font-medium tracking-wide transition-colors duration-150 active:scale-[0.97] ${
                 active
-                  ? "bg-ink text-sand-50 shadow-sm"
-                  : "text-ink-700/70 hover:text-ink"
+                  ? "bg-ink text-sand-50 shadow-sm active:bg-ink-800"
+                  : "text-ink-700/70 hover:text-ink active:bg-sand-200 active:text-ink"
               }`}
             >
               {c.title}
