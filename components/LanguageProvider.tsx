@@ -36,15 +36,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>(DEFAULT_LANG);
 
   useEffect(() => {
+    // Always default to French. Only honor an explicit user choice
+    // saved via the language picker — never auto-detect from the
+    // browser locale.
     let chosen: Lang = DEFAULT_LANG;
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (isLang(stored)) {
-        chosen = stored;
-      } else {
-        const nav = window.navigator.language?.toLowerCase().slice(0, 2);
-        if (isLang(nav)) chosen = nav;
-      }
+      if (isLang(stored)) chosen = stored;
     } catch {
       // localStorage may be unavailable in private mode
     }
