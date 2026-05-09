@@ -30,6 +30,31 @@ const PhoneIcon = () => (
   </svg>
 );
 
+const InstagramIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <rect
+      x="3.5"
+      y="3.5"
+      width="17"
+      height="17"
+      rx="4.5"
+      stroke="currentColor"
+      strokeWidth="1.4"
+    />
+    <circle cx="12" cy="12" r="3.8" stroke="currentColor" strokeWidth="1.4" />
+    <circle cx="17.4" cy="6.6" r="0.9" fill="currentColor" />
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path
+      d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v8h3v-8h2.5L17 10h-3V8.5c0-.3.2-.5.5-.5H14Z"
+      fill="currentColor"
+    />
+  </svg>
+);
+
 export function Hero() {
   const t = useT();
 
@@ -102,6 +127,34 @@ export function Hero() {
             >
               <PhoneIcon />
               <span dir="ltr">{restaurant.phoneDisplay}</span>
+            </a>
+          </li>
+        </ul>
+
+        <ul
+          className="mt-4 flex animate-fade-up items-center justify-center gap-2.5"
+          style={{ animationDelay: "320ms" }}
+        >
+          <li>
+            <a
+              href={restaurant.instagram}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t("contactInstagram")}
+              className="grid h-9 w-9 place-items-center rounded-full border border-gold/30 bg-ink-800/40 text-sand-100 transition hover:border-gold/60 hover:bg-ink-800/70 hover:text-gold-light"
+            >
+              <InstagramIcon />
+            </a>
+          </li>
+          <li>
+            <a
+              href={restaurant.facebook}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={t("contactFacebook")}
+              className="grid h-9 w-9 place-items-center rounded-full border border-gold/30 bg-ink-800/40 text-sand-100 transition hover:border-gold/60 hover:bg-ink-800/70 hover:text-gold-light"
+            >
+              <FacebookIcon />
             </a>
           </li>
         </ul>
