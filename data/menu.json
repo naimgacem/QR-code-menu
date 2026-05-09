@@ -1,0 +1,440 @@
+{
+  "$comment": "Trilingual menu data. fr is canonical; en/ar fall back to fr if missing. Owner can edit this JSON without rebuilding TypeScript.",
+  "categories": [
+    {
+      "id": "salades",
+      "title": {
+        "fr": "Salades",
+        "en": "Salads",
+        "ar": "سلطات"
+      },
+      "subtitle": {
+        "fr": "Fraîcheur du jardin",
+        "en": "Fresh from the garden",
+        "ar": "من الحديقة"
+      },
+      "items": [
+        {
+          "id": "salade-verte",
+          "name": {
+            "fr": "Salade Verte",
+            "en": "Green Salad",
+            "ar": "سلطة خضراء"
+          },
+          "price": 400,
+          "description": {
+            "fr": "Salade, tomate, carotte, concombre, olive, betterave, maïs.",
+            "en": "Lettuce, tomato, carrot, cucumber, olive, beetroot, corn.",
+            "ar": "خس، طماطم، جزر، خيار، زيتون، شمندر، ذرة."
+          },
+          "image": "https://quiikly.com/storage/menu/1747687407682b97efa5fd2.jpg"
+        }
+      ]
+    },
+    {
+      "id": "plats-traditionnels",
+      "title": {
+        "fr": "Plats traditionnels",
+        "en": "Traditional dishes",
+        "ar": "أطباق تقليدية"
+      },
+      "subtitle": {
+        "fr": "L'âme de la cuisine algéroise",
+        "en": "The heart of Algiers cuisine",
+        "ar": "روح المطبخ الجزائري"
+      },
+      "items": [
+        {
+          "id": "mtewem",
+          "name": {
+            "fr": "Mtewem",
+            "en": "Mtewem",
+            "ar": "متّوم"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Boulettes de viande hachée à l'ail et aux épices, en sauce.",
+            "en": "Spiced minced-meat balls with garlic, in sauce.",
+            "ar": "كرات لحم مفروم بالثوم والتوابل، في الصلصة."
+          },
+          "image": "https://quiikly.com/storage/menu/17469867406820e6f4e4907.jpeg"
+        },
+        {
+          "id": "hmis",
+          "name": {
+            "fr": "Hmis",
+            "en": "Hmis",
+            "ar": "حميس"
+          },
+          "price": 500,
+          "description": {
+            "fr": "Salade chaude de poivrons et tomates, à la mode algéroise.",
+            "en": "Warm pepper and tomato salad, Algiers style.",
+            "ar": "سلطة فلفل وطماطم على الطريقة الجزائرية."
+          },
+          "image": "https://quiikly.com/storage/menu/17469867576820e70510043.jpeg"
+        },
+        {
+          "id": "rechta",
+          "name": {
+            "fr": "Rechta",
+            "en": "Rechta",
+            "ar": "رشتة"
+          },
+          "price": 1200,
+          "description": {
+            "fr": "Pâtes plates traditionnelles, sauce blanche aux pois chiches.",
+            "en": "Traditional flat pasta, white chickpea sauce.",
+            "ar": "معكرونة مسطحة تقليدية في صلصة بيضاء مع الحمص."
+          },
+          "image": "https://quiikly.com/storage/menu/17469868046820e734e53f4.jpeg"
+        },
+        {
+          "id": "chakhchoukha",
+          "name": {
+            "fr": "Chakhchoukha",
+            "en": "Chakhchoukha",
+            "ar": "شخشوخة"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Galette émiettée à la sauce relevée, plat partagé.",
+            "en": "Crumbled flatbread in spiced sauce, a sharing dish.",
+            "ar": "خبز مفتت في صلصة حارة، طبق للمشاركة."
+          },
+          "image": "https://quiikly.com/storage/menu/17469868266820e74ae3907.jpeg"
+        },
+        {
+          "id": "bourak-poulet",
+          "name": {
+            "fr": "Bourak poulet",
+            "en": "Chicken bourak",
+            "ar": "بوراك دجاج"
+          },
+          "price": 200,
+          "description": {
+            "fr": "Feuille de brick croustillante, garniture au poulet.",
+            "en": "Crisp pastry roll filled with chicken.",
+            "ar": "ورقة بريك مقرمشة محشوة بالدجاج."
+          },
+          "image": "https://quiikly.com/storage/menu/17469868506820e7620d71b.jpeg"
+        },
+        {
+          "id": "bourak-viande",
+          "name": {
+            "fr": "Bourak viande",
+            "en": "Beef bourak",
+            "ar": "بوراك لحم"
+          },
+          "price": 300,
+          "description": {
+            "fr": "Feuille de brick croustillante, garniture à la viande hachée.",
+            "en": "Crisp pastry roll filled with minced beef.",
+            "ar": "ورقة بريك مقرمشة محشوة باللحم المفروم."
+          },
+          "image": "https://quiikly.com/storage/menu/17469868676820e773715ec.jpeg"
+        },
+        {
+          "id": "chakchouka",
+          "name": {
+            "fr": "Chakchouka",
+            "en": "Chakchouka",
+            "ar": "شكشوكة"
+          },
+          "price": 600,
+          "description": {
+            "fr": "Poivrons et tomates mijotés à l'huile d'olive.",
+            "en": "Peppers and tomatoes simmered in olive oil.",
+            "ar": "فلفل وطماطم مطهوة في زيت الزيتون."
+          },
+          "image": "https://quiikly.com/storage/menu/17469868996820e7932d913.jpeg"
+        },
+        {
+          "id": "couscous",
+          "name": {
+            "fr": "Couscous",
+            "en": "Couscous",
+            "ar": "كسكس"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Semoule à la vapeur, légumes du jour et bouillon.",
+            "en": "Steamed semolina, seasonal vegetables and broth.",
+            "ar": "كسكس على البخار مع خضار الموسم والمرق."
+          },
+          "image": "https://quiikly.com/storage/menu/17469869206820e7a868489.jpeg"
+        }
+      ]
+    },
+    {
+      "id": "nos-plats",
+      "title": {
+        "fr": "Poissons & Spécialités",
+        "en": "Seafood & Specialties",
+        "ar": "أسماك وأطباق خاصة"
+      },
+      "subtitle": {
+        "fr": "Servis sur la terrasse",
+        "en": "Served on the terrace",
+        "ar": "تقدم على الشرفة"
+      },
+      "items": [
+        {
+          "id": "frite",
+          "name": {
+            "fr": "Frites maison",
+            "en": "House fries",
+            "ar": "بطاطا مقلية"
+          },
+          "price": 400,
+          "description": {
+            "fr": "Pommes de terre fraîches, frites à la minute.",
+            "en": "Fresh potatoes, fried to order.",
+            "ar": "بطاطا طازجة مقلية لحظيا."
+          },
+          "image": "https://quiikly.com/storage/menu/174811512368321eb3dcd83.jpg"
+        },
+        {
+          "id": "rouji",
+          "name": {
+            "fr": "Rouget",
+            "en": "Red mullet",
+            "ar": "روجي"
+          },
+          "price": 2500,
+          "description": {
+            "fr": "Rouget grillé, accompagnement du jour.",
+            "en": "Grilled red mullet, daily side.",
+            "ar": "سمك روجي مشوي مع طبق جانبي اليوم."
+          },
+          "image": "https://quiikly.com/storage/menu/174811423768321b3d1ca13.jpg"
+        },
+        {
+          "id": "sardine",
+          "name": {
+            "fr": "Sardine",
+            "en": "Sardines",
+            "ar": "سردين"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Sardines fraîches, à la plancha.",
+            "en": "Fresh sardines, grilled on the plancha.",
+            "ar": "سردين طازج على الصاج."
+          },
+          "image": "https://quiikly.com/storage/menu/17469869676820e7d7f2ea9.jpeg"
+        },
+        {
+          "id": "chtitha-sardine",
+          "name": {
+            "fr": "Chtitha sardine",
+            "en": "Sardine chtitha",
+            "ar": "شطيطحة سردين"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Sardines en sauce rouge épicée.",
+            "en": "Sardines in spicy red sauce.",
+            "ar": "سردين في صلصة حمراء حارة."
+          },
+          "image": "https://quiikly.com/storage/menu/17469870126820e8042fa8d.jpeg"
+        },
+        {
+          "id": "crevette-sauce",
+          "name": {
+            "fr": "Crevettes en sauce",
+            "en": "Shrimp in sauce",
+            "ar": "قمرون بالصلصة"
+          },
+          "price": 2000,
+          "description": {
+            "fr": "Crevettes en sauce tomatée à l'ail.",
+            "en": "Shrimp in garlicky tomato sauce.",
+            "ar": "قمرون في صلصة طماطم بالثوم."
+          },
+          "image": "https://quiikly.com/storage/menu/17469870446820e8242afc5.jpeg"
+        },
+        {
+          "id": "sepia-sauce",
+          "name": {
+            "fr": "Sépia en sauce",
+            "en": "Cuttlefish in sauce",
+            "ar": "حبار بالصلصة"
+          },
+          "price": 2000,
+          "description": {
+            "fr": "Sépia mijotée à la tomate.",
+            "en": "Cuttlefish simmered with tomato.",
+            "ar": "حبار مطهو بالطماطم."
+          },
+          "image": "https://quiikly.com/storage/menu/17469871146820e86a61cd1.jpeg"
+        },
+        {
+          "id": "merlan",
+          "name": {
+            "fr": "Merlan",
+            "en": "Whiting",
+            "ar": "مرلان"
+          },
+          "price": 3000,
+          "description": {
+            "fr": "Merlan frais du jour, frit ou grillé.",
+            "en": "Fresh whiting, fried or grilled.",
+            "ar": "سمك مرلان طازج، مقلي أو مشوي."
+          },
+          "image": "https://quiikly.com/storage/menu/17469874266820e9a2c99d2.jpg"
+        },
+        {
+          "id": "dorade",
+          "name": {
+            "fr": "Dorade",
+            "en": "Sea bream",
+            "ar": "دوراد"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Dorade fraîche, grillée à la braise.",
+            "en": "Fresh sea bream, charcoal-grilled.",
+            "ar": "دوراد طازج مشوي على الجمر."
+          },
+          "image": "https://quiikly.com/storage/menu/175259640168767fb1f1fe7.jpeg"
+        }
+      ]
+    },
+    {
+      "id": "patisserie",
+      "title": {
+        "fr": "Pâtisseries traditionnelles",
+        "en": "Traditional pastries",
+        "ar": "حلويات تقليدية"
+      },
+      "subtitle": {
+        "fr": "Notre table de douceurs",
+        "en": "Our sweets table",
+        "ar": "مائدة الحلويات"
+      },
+      "items": [
+        {
+          "id": "plat-gateaux",
+          "name": {
+            "fr": "Plat de gâteaux variés",
+            "en": "Pastry assortment",
+            "ar": "تشكيلة حلويات"
+          },
+          "price": 1500,
+          "description": {
+            "fr": "Assortiment de pâtisseries algéroises.",
+            "en": "Assortment of Algiers pastries.",
+            "ar": "تشكيلة من الحلويات الجزائرية."
+          },
+          "image": "https://quiikly.com/storage/menu/1747684467682b8c73b4d6c.jpg"
+        },
+        {
+          "id": "makrout-louze",
+          "name": {
+            "fr": "Makrout Louze",
+            "en": "Makrout Louze",
+            "ar": "مقروط اللوز"
+          },
+          "price": 250,
+          "description": {
+            "fr": "Pâtisserie aux amandes et au miel.",
+            "en": "Almond and honey pastry.",
+            "ar": "حلوى باللوز والعسل."
+          },
+          "image": "https://quiikly.com/storage/menu/1747684656682b8d30d5245.jpg"
+        },
+        {
+          "id": "baklawa",
+          "name": {
+            "fr": "Baklawa",
+            "en": "Baklawa",
+            "ar": "بقلاوة"
+          },
+          "price": 250,
+          "description": {
+            "fr": "Feuilleté aux fruits secs et au miel.",
+            "en": "Layered pastry with nuts and honey.",
+            "ar": "حلوى مورقة بالمكسرات والعسل."
+          },
+          "image": "https://quiikly.com/storage/menu/1747684806682b8dc6f01ad.jpg"
+        },
+        {
+          "id": "dziriyat",
+          "name": {
+            "fr": "Dziriyat",
+            "en": "Dziriyat",
+            "ar": "جزيريات"
+          },
+          "price": 250,
+          "description": {
+            "fr": "Petit gâteau d'Alger aux amandes.",
+            "en": "Small Algiers almond cake.",
+            "ar": "حلوى جزائرية صغيرة باللوز."
+          },
+          "image": "https://quiikly.com/storage/menu/1747685061682b8ec593a97.jpg"
+        }
+      ]
+    },
+    {
+      "id": "boissons",
+      "title": {
+        "fr": "Boissons chaudes",
+        "en": "Hot drinks",
+        "ar": "مشروبات ساخنة"
+      },
+      "subtitle": {
+        "fr": "À partir de 16h00",
+        "en": "From 4 PM",
+        "ar": "ابتداء من الساعة 16:00"
+      },
+      "items": [
+        {
+          "id": "cafe",
+          "name": {
+            "fr": "Café",
+            "en": "Coffee",
+            "ar": "قهوة"
+          },
+          "price": 450,
+          "description": {
+            "fr": "Café fraîchement préparé.",
+            "en": "Freshly brewed coffee.",
+            "ar": "قهوة محضرة طازجة."
+          },
+          "image": "https://quiikly.com/storage/menu/1747685338682b8fda0659a.jpg"
+        },
+        {
+          "id": "the",
+          "name": {
+            "fr": "Thé",
+            "en": "Mint tea",
+            "ar": "شاي"
+          },
+          "price": 250,
+          "description": {
+            "fr": "Thé à la menthe.",
+            "en": "Mint tea.",
+            "ar": "شاي بالنعناع."
+          },
+          "image": "https://quiikly.com/storage/menu/1747685461682b9055ca471.jpg"
+        },
+        {
+          "id": "service-the",
+          "name": {
+            "fr": "Service de thé",
+            "en": "Tea service",
+            "ar": "خدمة الشاي"
+          },
+          "price": 1000,
+          "description": {
+            "fr": "Théière traditionnelle pour 4 personnes.",
+            "en": "Traditional teapot for 4 people.",
+            "ar": "إبريق شاي تقليدي لأربعة أشخاص."
+          },
+          "image": "https://quiikly.com/storage/menu/1747685676682b912c0bd5b.jpg"
+        }
+      ]
+    }
+  ]
+}

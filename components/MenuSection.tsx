@@ -1,0 +1,51 @@
+"use client";
+
+import type { MenuCategory } from "@/lib/menu-data";
+import { pick } from "@/lib/i18n";
+import { useLang } from "./LanguageProvider";
+import { MenuItemCard } from "./MenuItemCard";
+import { OrnamentDivider } from "./OrnamentDivider";
+
+type Props = {
+  category: MenuCategory;
+  query?: string;
+};
+
+export function MenuSection({ category, query = "" }: Props) {
+  const { lang } = useLang();
+  const headingId = `${category.id}-heading`;
+  return (
+    <section
+      id={category.id}
+      aria-labelledby={headingId}
+      className="scroll-mt-[120px] px-5 py-10 first:pt-7 sm:px-6"
+    >
+      <div className="mx-auto max-w-xl">
+        <header className="mb-6 text-center">
+          {category.subtitle && (
+            <p className="text-[10px] uppercase tracking-widest text-gold-deep">
+              {pick(category.subtitle, lang)}
+            </p>
+          )}
+          <h2
+            id={headingId}
+            className="mt-2 font-display text-3xl leading-tight text-ink sm:text-4xl"
+          >
+            {pick(category.title, lang)}
+          </h2>
+          <div className="mt-3">
+            <OrnamentDivider />
+          </div>
+        </header>
+
+        <ul role="list" className="space-y-5">
+          {category.items.map((item) => (
+            <li key={item.id}>
+              <MenuItemCard item={item} query={query} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
