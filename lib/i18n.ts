@@ -52,12 +52,20 @@ const M = {
 
     location: "Casbah, Alger",
 
-    noticeLabel: "Bon à savoir",
-    noticeTeaser: "Salle, terrasse & pause café",
-    noticeP1:
-      "Veuillez noter que les plats traditionnels sont servis uniquement au rez-de-chaussée, tandis que la terrasse est réservée exclusivement aux poissons, et vice versa. Si vous souhaitez une exception, un supplément de 30 % sera appliqué.",
-    noticeP2:
-      "Pause café disponible à partir de 16h00, ou en accompagnement du dîner.",
+    noticeTitle: "Informations importantes",
+    noticeIntro1:
+      "Les plats traditionnels sont servis uniquement au rez-de-chaussée.",
+    noticeIntro2:
+      "La terrasse est réservée exclusivement aux plats de poisson.",
+    noticeBullet1:
+      "Consommer du poisson au rez-de-chaussée entraîne un supplément de 20 %.",
+    noticeBullet2:
+      "Consommer des plats traditionnels en terrasse entraîne un supplément de 30 %.",
+    noticeOutro: "Merci pour votre compréhension.",
+    noticeAcknowledge: "J'ai compris",
+    noticeBanner: "Informations importantes concernant les plats et les espaces",
+    noticeReopen: "Rouvrir les informations importantes",
+    noticeClose: "Fermer",
 
     categoriesLabel: "Catégories du menu",
 
@@ -87,12 +95,17 @@ const M = {
 
     location: "Casbah, Algiers",
 
-    noticeLabel: "Good to know",
-    noticeTeaser: "Indoor, terrace & coffee break",
-    noticeP1:
-      "Please note that traditional dishes are served only on the ground floor, while the terrace is reserved exclusively for fish, and vice versa. A 30% surcharge applies if you request an exception.",
-    noticeP2:
-      "Coffee break available from 4 PM, or alongside dinner.",
+    noticeTitle: "Important information",
+    noticeIntro1: "Traditional dishes are served only on the ground floor.",
+    noticeIntro2: "The terrace is reserved exclusively for fish dishes.",
+    noticeBullet1: "Eating fish on the ground floor incurs a 20% surcharge.",
+    noticeBullet2:
+      "Eating traditional dishes on the terrace incurs a 30% surcharge.",
+    noticeOutro: "Thank you for your understanding.",
+    noticeAcknowledge: "Got it",
+    noticeBanner: "Important information about dishes and seating",
+    noticeReopen: "Re-open the important information",
+    noticeClose: "Close",
 
     categoriesLabel: "Menu categories",
 
@@ -122,12 +135,18 @@ const M = {
 
     location: "القصبة، الجزائر",
 
-    noticeLabel: "للعلم",
-    noticeTeaser: "الصالة والشرفة وراحة القهوة",
-    noticeP1:
-      "يرجى العلم أن الأطباق التقليدية تقدم في الطابق الأرضي فقط، بينما الشرفة محجوزة حصريا للأسماك، والعكس صحيح. في حال طلب استثناء، تُطبق زيادة بنسبة 30٪.",
-    noticeP2:
-      "راحة القهوة متوفرة ابتداء من الساعة 16:00، أو مع العشاء.",
+    noticeTitle: "معلومات مهمة",
+    noticeIntro1: "الأطباق التقليدية تقدم في الطابق الأرضي فقط.",
+    noticeIntro2: "الشرفة محجوزة حصريا للأطباق السمكية.",
+    noticeBullet1:
+      "تناول السمك في الطابق الأرضي يستوجب زيادة بنسبة 20٪.",
+    noticeBullet2:
+      "تناول الأطباق التقليدية في الشرفة يستوجب زيادة بنسبة 30٪.",
+    noticeOutro: "شكرا لتفهمكم.",
+    noticeAcknowledge: "فهمت",
+    noticeBanner: "معلومات مهمة عن الأطباق والأماكن",
+    noticeReopen: "إعادة فتح المعلومات المهمة",
+    noticeClose: "إغلاق",
 
     categoriesLabel: "أصناف القائمة",
 

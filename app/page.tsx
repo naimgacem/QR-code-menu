@@ -1,14 +1,14 @@
 import { Hero } from "@/components/Hero";
-import { NoticeBar } from "@/components/NoticeBar";
+import { NoticeSystem } from "@/components/NoticeSystem";
 import { MenuExplorer } from "@/components/MenuExplorer";
 import { Contact } from "@/components/Contact";
 import { StickyCallButton } from "@/components/StickyCallButton";
 
 export default function HomePage() {
   return (
-    <main className="relative mx-auto min-h-screen max-w-xl overflow-hidden bg-sand-50 md:shadow-[0_0_60px_-15px_rgba(15,14,12,0.18)] md:ring-1 md:ring-sand-300/60">
+    <main className="relative mx-auto min-h-screen max-w-xl overflow-x-clip bg-sand-50 md:shadow-[0_0_60px_-15px_rgba(15,14,12,0.18)] md:ring-1 md:ring-sand-300/60">
       <Hero />
-      <NoticeBar />
+      <NoticeSystem />
 
       <section
         id="menu"
