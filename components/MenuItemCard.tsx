@@ -5,11 +5,9 @@ import { useState } from "react";
 import type { MenuItem } from "@/lib/menu-data";
 import { pick } from "@/lib/i18n";
 import { useLang } from "./LanguageProvider";
-import { Highlight } from "./Highlight";
 
 type Props = {
   item: MenuItem;
-  query?: string;
 };
 
 const formatPrice = (n: number, lang: string) => {
@@ -23,7 +21,7 @@ const clampAspect = (w: number, h: number) => {
   return Math.min(Math.max(r, 0.8), 16 / 9);
 };
 
-export function MenuItemCard({ item, query = "" }: Props) {
+export function MenuItemCard({ item }: Props) {
   const { lang, t } = useLang();
   const [loaded, setLoaded] = useState(false);
 
@@ -76,7 +74,7 @@ export function MenuItemCard({ item, query = "" }: Props) {
       <div className="p-4">
         <div className="flex items-baseline justify-between gap-3">
           <h3 className="font-sans text-[16px] font-semibold leading-snug text-ink">
-            <Highlight text={name} query={query} />
+            {name}
           </h3>
           <span
             aria-label={`${t("pricePrefix")}${price}`}
@@ -88,7 +86,7 @@ export function MenuItemCard({ item, query = "" }: Props) {
         </div>
         {description && (
           <p className="mt-1.5 text-[13px] leading-relaxed text-ink-700/75">
-            <Highlight text={description} query={query} />
+            {description}
           </p>
         )}
       </div>

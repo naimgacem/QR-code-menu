@@ -64,7 +64,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr" dir="ltr" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-sand-50 font-sans text-ink antialiased">
+      <body className="bg-sand-200 font-sans text-ink antialiased md:bg-stone-300/60">
         <LanguageProvider>
           <SkipLink />
           {children}

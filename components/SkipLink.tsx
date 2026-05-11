@@ -6,10 +6,10 @@ export function SkipLink() {
   const t = useT();
   return (
     <a
-      href="#menu-search"
+      href="#menu"
       className="sr-only focus:not-sr-only focus:fixed focus:start-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sand-50 focus:shadow-card"
     >
-      {t("skipToSearch")}
+      {t("skipToMenu")}
     </a>
   );
 }

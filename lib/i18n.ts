@@ -44,7 +44,7 @@ const interp = (str: string, r?: Replacements) => {
 
 const M = {
   fr: {
-    skipToSearch: "Aller à la recherche du menu",
+    skipToMenu: "Aller au menu",
 
     statusOpen: "Ouvert · ferme à {h}h00",
     statusClosedToday: "Fermé · ouvre à {h}h00",
@@ -58,14 +58,6 @@ const M = {
       "Veuillez noter que les plats traditionnels sont servis uniquement au rez-de-chaussée, tandis que la terrasse est réservée exclusivement aux poissons, et vice versa. Si vous souhaitez une exception, un supplément de 30 % sera appliqué.",
     noticeP2:
       "Pause café disponible à partir de 16h00, ou en accompagnement du dîner.",
-
-    searchLabel: "Rechercher dans la carte",
-    searchPlaceholder: "Rechercher un plat, un goût…",
-    searchClear: "Effacer la recherche",
-    searchResults: "{n} résultats",
-    searchEmpty: "Aucun résultat",
-    searchEmptyHint: "Essayez « couscous », « rechta », « café » ou",
-    searchSeeAll: "voir toute la carte",
 
     categoriesLabel: "Catégories du menu",
 
@@ -87,7 +79,7 @@ const M = {
     langPickerLabel: "Choisir la langue",
   },
   en: {
-    skipToSearch: "Skip to menu search",
+    skipToMenu: "Skip to menu",
 
     statusOpen: "Open · closes at {h}:00",
     statusClosedToday: "Closed · opens at {h}:00",
@@ -101,14 +93,6 @@ const M = {
       "Please note that traditional dishes are served only on the ground floor, while the terrace is reserved exclusively for fish, and vice versa. A 30% surcharge applies if you request an exception.",
     noticeP2:
       "Coffee break available from 4 PM, or alongside dinner.",
-
-    searchLabel: "Search the menu",
-    searchPlaceholder: "Search a dish, a flavor…",
-    searchClear: "Clear search",
-    searchResults: "{n} results",
-    searchEmpty: "No results",
-    searchEmptyHint: "Try “couscous”, “rechta”, “coffee” or",
-    searchSeeAll: "view the whole menu",
 
     categoriesLabel: "Menu categories",
 
@@ -130,7 +114,7 @@ const M = {
     langPickerLabel: "Choose language",
   },
   ar: {
-    skipToSearch: "انتقل إلى البحث في القائمة",
+    skipToMenu: "انتقل إلى القائمة",
 
     statusOpen: "مفتوح · يغلق على الساعة {h}:00",
     statusClosedToday: "مغلق · يفتح على الساعة {h}:00",
@@ -144,14 +128,6 @@ const M = {
       "يرجى العلم أن الأطباق التقليدية تقدم في الطابق الأرضي فقط، بينما الشرفة محجوزة حصريا للأسماك، والعكس صحيح. في حال طلب استثناء، تُطبق زيادة بنسبة 30٪.",
     noticeP2:
       "راحة القهوة متوفرة ابتداء من الساعة 16:00، أو مع العشاء.",
-
-    searchLabel: "ابحث في القائمة",
-    searchPlaceholder: "ابحث عن طبق أو نكهة…",
-    searchClear: "مسح البحث",
-    searchResults: "{n} نتيجة",
-    searchEmpty: "لا توجد نتائج",
-    searchEmptyHint: "جرب «كسكس»، «رشتة»، «قهوة» أو",
-    searchSeeAll: "شاهد كامل القائمة",
 
     categoriesLabel: "أصناف القائمة",
 

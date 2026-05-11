@@ -61,9 +61,6 @@ export function CategoryNav({ categories }: Props) {
     e.preventDefault();
     const el = document.getElementById(id);
     if (!el) return;
-    // Optimistic active state — chip turns dark immediately on tap,
-    // and the IntersectionObserver is muted briefly so it doesn't flip
-    // back as in-between sections cross the viewport during smooth scroll.
     setActiveId(id);
     lockUntilRef.current = Date.now() + SCROLL_LOCK_MS;
     const top = el.getBoundingClientRect().top + window.scrollY - 120;
@@ -72,10 +69,22 @@ export function CategoryNav({ categories }: Props) {
   };
 
   return (
-    <nav aria-label={t("categoriesLabel")}>
+    <nav
+      aria-label={t("categoriesLabel")}
+      className="relative pb-2 pt-0.5"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-sand-50 via-sand-50/85 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-sand-50 via-sand-50/85 to-transparent"
+      />
+
       <div
         ref={navRef}
-        className="no-scrollbar mx-auto flex max-w-xl items-center gap-1 overflow-x-auto px-4 py-2.5"
+        className="no-scrollbar mx-auto flex max-w-xl items-center gap-2 overflow-x-auto overscroll-x-contain scroll-smooth px-5 py-1"
       >
         {categories.map((c) => {
           const active = c.id === activeId;
@@ -86,10 +95,10 @@ export function CategoryNav({ categories }: Props) {
               data-id={c.id}
               aria-current={active ? "true" : undefined}
               onClick={(e) => handleClick(e, c.id)}
-              className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-2 text-[13px] font-medium tracking-wide transition-colors duration-150 active:scale-[0.97] ${
+              className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-2 text-[13px] font-medium leading-none tracking-wide ring-1 transition-all duration-200 ease-out active:scale-[0.96] ${
                 active
-                  ? "bg-ink text-sand-50 shadow-sm active:bg-ink-800"
-                  : "text-ink-700/70 hover:text-ink active:bg-sand-200 active:text-ink"
+                  ? "bg-ink text-sand-50 ring-ink shadow-[0_6px_18px_-6px_rgba(15,14,12,0.45)]"
+                  : "bg-white/80 text-ink-700/75 ring-sand-200/80 hover:bg-white hover:text-ink active:bg-sand-100"
               }`}
             >
               {c.title}

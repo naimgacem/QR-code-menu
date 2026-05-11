@@ -6,7 +6,7 @@ import { StickyCallButton } from "@/components/StickyCallButton";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen overflow-hidden">
+    <main className="relative mx-auto min-h-screen max-w-xl overflow-hidden bg-sand-50 md:shadow-[0_0_60px_-15px_rgba(15,14,12,0.18)] md:ring-1 md:ring-sand-300/60">
       <Hero />
       <NoticeBar />
 

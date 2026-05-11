@@ -8,17 +8,16 @@ import { OrnamentDivider } from "./OrnamentDivider";
 
 type Props = {
   category: MenuCategory;
-  query?: string;
 };
 
-export function MenuSection({ category, query = "" }: Props) {
+export function MenuSection({ category }: Props) {
   const { lang } = useLang();
   const headingId = `${category.id}-heading`;
   return (
     <section
       id={category.id}
       aria-labelledby={headingId}
-      className="scroll-mt-[120px] px-5 py-10 first:pt-7 sm:px-6"
+      className="scroll-mt-[80px] px-5 py-10 first:pt-7 sm:px-6"
     >
       <div className="mx-auto max-w-xl">
         <header className="mb-6 text-center">
@@ -41,7 +40,7 @@ export function MenuSection({ category, query = "" }: Props) {
         <ul role="list" className="space-y-5">
           {category.items.map((item) => (
             <li key={item.id}>
-              <MenuItemCard item={item} query={query} />
+              <MenuItemCard item={item} />
             </li>
           ))}
         </ul>
