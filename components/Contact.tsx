@@ -107,16 +107,16 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="border-t border-sand-200 bg-sand-50"
+      className="border-t border-line-soft bg-app"
     >
-      <div className="mx-auto max-w-xl px-6 py-9 text-center">
+      <div className="mx-auto max-w-xl px-6 py-10 text-center">
         <h2
           id="contact-heading"
-          className="text-[10px] uppercase tracking-widest text-gold-deep"
+          className="text-[10px] uppercase tracking-widest text-accent-strong"
         >
           {t("contactLabel")}
         </h2>
-        <p className="mt-1.5 text-[13px] leading-relaxed text-ink-700/75">
+        <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
           {t("contactHours", { hours: restaurant.hours })}
         </p>
 
@@ -126,10 +126,8 @@ export function Contact() {
               <a
                 href={href}
                 aria-label={t(key)}
-                {...(external
-                  ? { target: "_blank", rel: "noreferrer" }
-                  : {})}
-                className="grid h-11 w-11 place-items-center rounded-full border border-sand-200 bg-white text-ink-700 transition hover:border-gold/50 hover:text-ink"
+                {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                className="grid h-11 w-11 place-items-center rounded-full border border-line-soft bg-surface text-muted transition hover:border-accent/50 hover:text-fg"
               >
                 <Icon />
               </a>
@@ -137,15 +135,15 @@ export function Contact() {
           ))}
         </ul>
 
-        <p className="mt-5 text-[12.5px] tabular-nums text-ink-700/70" dir="ltr">
+        <p className="mt-5 text-[12.5px] tabular-nums text-muted" dir="ltr">
           {restaurant.phoneDisplay}
-          <span aria-hidden="true" className="mx-2 text-gold/40">
+          <span aria-hidden="true" className="mx-2 text-accent/40">
             ·
           </span>
           {t("location")}
         </p>
 
-        <p className="mt-6 text-[11px] text-ink-700/45">
+        <p className="mt-6 text-[11px] text-subtle">
           {t("contactCopyright", { year })}
         </p>
       </div>

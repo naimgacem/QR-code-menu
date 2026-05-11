@@ -69,17 +69,14 @@ export function CategoryNav({ categories }: Props) {
   };
 
   return (
-    <nav
-      aria-label={t("categoriesLabel")}
-      className="relative pb-2 pt-0.5"
-    >
+    <nav aria-label={t("categoriesLabel")} className="relative pb-2 pt-0.5">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-sand-50 via-sand-50/85 to-transparent"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-app via-app/85 to-transparent"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-sand-50 via-sand-50/85 to-transparent"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-app via-app/85 to-transparent"
       />
 
       <div
@@ -97,8 +94,8 @@ export function CategoryNav({ categories }: Props) {
               onClick={(e) => handleClick(e, c.id)}
               className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-2 text-[13px] font-medium leading-none tracking-wide ring-1 transition-all duration-200 ease-out active:scale-[0.96] ${
                 active
-                  ? "bg-ink text-sand-50 ring-ink shadow-[0_6px_18px_-6px_rgba(15,14,12,0.45)]"
-                  : "bg-white/80 text-ink-700/75 ring-sand-200/80 hover:bg-white hover:text-ink active:bg-sand-100"
+                  ? "bg-action text-action-fg ring-action shadow-[0_6px_18px_-6px_rgb(var(--fg)/0.45)]"
+                  : "bg-surface/80 text-muted ring-line-soft hover:bg-surface hover:text-fg active:bg-surface-muted"
               }`}
             >
               {c.title}

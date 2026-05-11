@@ -33,15 +33,15 @@ export function NoticeBanner({ onClick }: Props) {
       type="button"
       onClick={onClick}
       aria-label={t("noticeReopen")}
-      className="group flex w-full touch-manipulation items-center justify-between gap-3 border-b border-sand-200/80 bg-sand-100/65 px-5 py-3 text-start text-[12.5px] leading-snug text-ink-700 transition-all duration-200 ease-out hover:bg-sand-100 hover:shadow-[inset_0_-1px_0_0_rgba(182,138,53,0.18)] active:scale-[0.995] active:bg-sand-200/70 md:cursor-pointer"
+      className="group flex w-full touch-manipulation items-center justify-between gap-3 border-b border-line-soft bg-surface-muted/65 px-5 py-3 text-start text-[12.5px] leading-snug text-muted transition-all duration-200 ease-out hover:bg-surface-muted hover:shadow-[inset_0_-1px_0_0_rgb(var(--accent)/0.18)] active:scale-[0.995] active:bg-surface-2/70 md:cursor-pointer"
     >
       <span className="flex items-center gap-2.5">
-        <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-gold/15 text-gold-deep ring-1 ring-gold/25 transition group-hover:bg-gold/20 group-hover:ring-gold/40">
+        <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent/15 text-accent-strong ring-1 ring-accent/25 transition group-hover:bg-accent/20 group-hover:ring-accent/40">
           <InfoCircle />
         </span>
-        <span className="font-medium text-ink/85">{t("noticeBanner")}</span>
+        <span className="font-medium text-fg/85">{t("noticeBanner")}</span>
       </span>
-      <span className="flex-shrink-0 text-ink-700/40 transition-all duration-200 group-hover:text-gold-deep ltr:group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5">
+      <span className="flex-shrink-0 text-muted/55 transition-all duration-200 group-hover:text-accent-strong ltr:group-hover:translate-x-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5">
         <Chevron />
       </span>
     </button>

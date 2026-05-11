@@ -1,14 +1,14 @@
 type Props = {
   className?: string;
-  color?: string;
   opacity?: number;
 };
 
-export function ArchPattern({
-  className = "",
-  color = "#B68A35",
-  opacity = 0.12,
-}: Props) {
+/**
+ * Decorative Moorish-arch repeating pattern. Strokes inherit the parent's
+ * `currentColor` so this component is automatically theme-aware — set
+ * `text-hero-accent` (or any token color) on a parent to recolor.
+ */
+export function ArchPattern({ className = "", opacity = 0.13 }: Props) {
   return (
     <svg
       className={className}
@@ -28,7 +28,7 @@ export function ArchPattern({
         >
           <path
             d="M40 8 C 60 8, 72 24, 72 44 L 72 72 L 8 72 L 8 44 C 8 24, 20 8, 40 8 Z"
-            stroke={color}
+            stroke="currentColor"
             strokeOpacity={opacity}
             strokeWidth="1"
             fill="none"
@@ -37,7 +37,7 @@ export function ArchPattern({
             cx="40"
             cy="40"
             r="2"
-            fill={color}
+            fill="currentColor"
             fillOpacity={opacity * 1.5}
           />
         </pattern>

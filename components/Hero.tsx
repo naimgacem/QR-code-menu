@@ -5,6 +5,7 @@ import { restaurant } from "@/lib/restaurant";
 import { ArchPattern } from "./ArchPattern";
 import { OpenStatus } from "./OpenStatus";
 import { LanguagePicker } from "./LanguagePicker";
+import { ThemeToggle } from "./ThemeToggle";
 import { useT } from "./LanguageProvider";
 
 const PinIcon = () => (
@@ -61,24 +62,25 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-ink text-sand-50"
+      className="relative overflow-hidden bg-hero-bg text-hero-fg"
     >
-      <ArchPattern
-        className="absolute inset-0 h-full w-full"
-        color="#C9A24A"
-        opacity={0.13}
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ink/30 to-ink" />
+      <div className="pointer-events-none absolute inset-0 text-hero-accent">
+        <ArchPattern className="h-full w-full" opacity={0.13} />
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-hero-bg" />
 
-      <LanguagePicker />
+      <div className="absolute end-3 top-3 z-30 flex items-center gap-2">
+        <ThemeToggle />
+        <LanguagePicker />
+      </div>
 
       <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-6 pt-8 text-center">
         <div
           className="relative h-[72px] w-[72px] animate-pop-in"
           style={{ animationDelay: "0ms" }}
         >
-          <div className="absolute inset-0 rounded-full bg-gold/20 blur-2xl" />
-          <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/30 bg-ink-900 p-2 shadow-[0_18px_50px_-12px_rgba(201,162,74,0.4)]">
+          <div className="absolute inset-0 rounded-full bg-hero-accent/20 blur-2xl" />
+          <div className="relative h-full w-full overflow-hidden rounded-full border border-hero-accent/40 bg-hero-bg p-2 shadow-[0_18px_50px_-12px_rgb(var(--hero-accent)/0.4)]">
             <Image
               src={restaurant.logoUrl}
               alt={`${restaurant.name}`}
@@ -106,7 +108,7 @@ export function Hero() {
         </div>
 
         <ul
-          className="mt-3 flex animate-fade-up flex-col items-center gap-1 text-[13px] text-sand-100/85"
+          className="mt-3 flex animate-fade-up flex-col items-center gap-1 text-[13px] text-hero-fg-muted"
           style={{ animationDelay: "260ms" }}
         >
           <li>
@@ -114,7 +116,7 @@ export function Hero() {
               href={restaurant.mapsUrl}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-sm transition hover:text-gold-light"
+              className="inline-flex items-center gap-1.5 rounded-sm transition hover:text-hero-accent"
             >
               <PinIcon />
               {t("location")}
@@ -123,7 +125,7 @@ export function Hero() {
           <li>
             <a
               href={`tel:${restaurant.phone}`}
-              className="inline-flex items-center gap-1.5 rounded-sm transition hover:text-gold-light"
+              className="inline-flex items-center gap-1.5 rounded-sm transition hover:text-hero-accent"
             >
               <PhoneIcon />
               <span dir="ltr">{restaurant.phoneDisplay}</span>
@@ -141,7 +143,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               aria-label={t("contactInstagram")}
-              className="grid h-9 w-9 place-items-center rounded-full border border-gold/30 bg-ink-800/40 text-sand-100 transition hover:border-gold/60 hover:bg-ink-800/70 hover:text-gold-light"
+              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
             >
               <InstagramIcon />
             </a>
@@ -152,7 +154,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               aria-label={t("contactFacebook")}
-              className="grid h-9 w-9 place-items-center rounded-full border border-gold/30 bg-ink-800/40 text-sand-100 transition hover:border-gold/60 hover:bg-ink-800/70 hover:text-gold-light"
+              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
             >
               <FacebookIcon />
             </a>
@@ -161,7 +163,7 @@ export function Hero() {
       </div>
 
       <div
-        className="relative mx-auto h-[2px] max-w-xl bg-gradient-to-r from-transparent via-gold/50 to-transparent"
+        className="relative mx-auto h-[2px] max-w-xl bg-gradient-to-r from-transparent via-hero-accent/55 to-transparent"
         aria-hidden="true"
       />
     </section>

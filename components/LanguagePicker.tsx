@@ -26,14 +26,14 @@ export function LanguagePicker() {
   }, [open]);
 
   return (
-    <div ref={ref} className="absolute end-3 top-3 z-30">
+    <div ref={ref} className="relative">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={t("langPickerLabel")}
-        className="flex items-center gap-1.5 rounded-full border border-gold/30 bg-ink-800/60 px-3 py-1.5 text-[11px] font-medium uppercase tracking-widest text-sand-50 backdrop-blur-md transition hover:bg-ink-800/80"
+        className="flex items-center gap-1.5 rounded-full border border-hero-accent/30 bg-hero-bg/50 px-3 py-1.5 text-[11px] font-medium uppercase tracking-widest text-hero-fg backdrop-blur-md transition hover:bg-hero-bg/80"
       >
         <svg
           width="13"
@@ -55,7 +55,7 @@ export function LanguagePicker() {
         <ul
           role="listbox"
           aria-label={t("langPickerLabel")}
-          className="absolute end-0 mt-2 w-36 overflow-hidden rounded-lg border border-sand-200 bg-white shadow-card"
+          className="absolute end-0 mt-2 w-36 overflow-hidden rounded-lg border border-line bg-surface shadow-card"
         >
           {SUPPORTED_LANGS.map((l) => {
             const active = l === lang;
@@ -71,12 +71,12 @@ export function LanguagePicker() {
                   }}
                   className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-start text-[13px] transition ${
                     active
-                      ? "bg-sand-100 text-ink"
-                      : "text-ink-700 hover:bg-sand-50"
+                      ? "bg-surface-muted text-fg"
+                      : "text-muted hover:bg-surface-muted/50"
                   }`}
                 >
                   <span>{LANG_NAME[l]}</span>
-                  <span className="text-[10px] uppercase tracking-widest text-gold-deep">
+                  <span className="text-[10px] uppercase tracking-widest text-accent-strong">
                     {LANG_LABEL[l]}
                   </span>
                 </button>

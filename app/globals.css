@@ -2,10 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* ============================================================
+ * Design tokens (RGB triplets so Tailwind's <alpha-value>
+ * syntax can append /opacity).  Every component reads from
+ * these — no hardcoded hex anywhere.
+ * ============================================================ */
+:root,
+:root[data-theme="light"] {
+  /* canvas */
+  --app: 247 241 225; /* warm cream  #F7F1E1 */
+  --surface: 252 250 243; /* card / panel */
+  --surface-2: 240 232 210; /* hero band, raised */
+  --surface-muted: 246 238 218; /* notice banner */
+  --surface-overlay: 253 251 244; /* modal */
+
+  /* lines */
+  --line: 220 207 173; /* primary border */
+  --line-soft: 233 222 195; /* dividers */
+
+  /* text */
+  --fg: 27 24 19; /* deep warm ink #1B1813 */
+  --muted: 63 58 48;
+  --subtle: 123 113 96;
+
+  /* accent — gold/bronze family */
+  --accent: 160 122 47; /* readable deep gold */
+  --accent-strong: 110 83 26; /* very deep gold (eyebrows) */
+  --accent-hover: 140 106 31;
+  --accent-soft: 234 213 169; /* tinted gold for bg fills */
+
+  /* primary action */
+  --action: 27 24 19; /* ink button */
+  --action-hover: 42 38 32;
+  --action-fg: 247 241 225;
+
+  /* status pills */
+  --status-open-bg: 34 197 94;
+  --status-open-fg: 21 128 61;
+  --status-closed-bg: 220 38 38;
+  --status-closed-fg: 185 28 28;
+
+  /* hero band */
+  --hero-bg: 234 220 187; /* warm sand */
+  --hero-fg: 27 24 19;
+  --hero-fg-muted: 80 70 55;
+  --hero-accent: 110 83 26;
+  --hero-overlay-from: 247 241 225; /* fade to app at bottom */
+
+  /* outer frame on desktop */
+  --frame: 224 211 178;
+
   color-scheme: light;
 }
 
+:root[data-theme="dark"] {
+  /* warm evening restaurant — coffee, leather, bronze */
+  --app: 15 10 5; /* very deep warm coffee #0F0A05 */
+  --surface: 27 19 12; /* espresso / leather */
+  --surface-2: 35 26 17; /* dark wood */
+  --surface-muted: 31 24 18;
+  --surface-overlay: 37 27 17; /* modal slightly elevated */
+
+  --line: 76 56 26; /* deep bronze hairline */
+  --line-soft: 51 38 19;
+
+  --fg: 242 229 197; /* warm cream — NO pure white */
+  --muted: 190 175 145;
+  --subtle: 136 122 96;
+
+  --accent: 214 172 87; /* warm muted gold */
+  --accent-strong: 232 189 99;
+  --accent-hover: 245 207 121;
+  --accent-soft: 76 56 26;
+
+  --action: 214 172 87; /* gold button in dark */
+  --action-hover: 232 189 99;
+  --action-fg: 27 19 12; /* espresso on gold */
+
+  --status-open-bg: 34 197 94;
+  --status-open-fg: 134 239 172;
+  --status-closed-bg: 220 38 38;
+  --status-closed-fg: 252 165 165;
+
+  --hero-bg: 15 10 5;
+  --hero-fg: 242 229 197;
+  --hero-fg-muted: 190 175 145;
+  --hero-accent: 214 172 87;
+  --hero-overlay-from: 15 10 5;
+
+  --frame: 27 19 12;
+
+  color-scheme: dark;
+}
+
+/* ============================================================
+ * Base
+ * ============================================================ */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,15 +113,16 @@ button,
 }
 
 body {
-  background: theme("colors.sand.50");
-  color: theme("colors.ink.DEFAULT");
+  background: rgb(var(--frame));
+  color: rgb(var(--fg));
   font-feature-settings: "ss01", "cv11";
   text-rendering: optimizeLegibility;
+  transition: background-color 280ms ease, color 280ms ease;
 }
 
 ::selection {
-  background: theme("colors.gold.DEFAULT");
-  color: theme("colors.sand.50");
+  background: rgb(var(--accent));
+  color: rgb(var(--action-fg));
 }
 
 *:focus {
@@ -37,13 +130,13 @@ body {
 }
 
 *:focus-visible {
-  outline: 2px solid theme("colors.gold.DEFAULT");
+  outline: 2px solid rgb(var(--accent));
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 mark {
-  background-color: rgba(182, 138, 53, 0.22);
+  background-color: rgb(var(--accent) / 0.22);
   color: inherit;
   border-radius: 2px;
   padding: 0 1px;
@@ -57,6 +150,9 @@ input[type="search"]::-webkit-search-decoration {
   appearance: none;
 }
 
+/* ============================================================
+ * Animations
+ * ============================================================ */
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -80,12 +176,8 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes modal-in {

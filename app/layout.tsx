@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { restaurant } from "@/lib/restaurant";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { SkipLink } from "@/components/SkipLink";
 import "./globals.css";
 
@@ -51,11 +52,29 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0F0E0C",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F7F1E1" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F0A05" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
+
+// Anti-FOIT (flash of incorrect theme): set data-theme on <html> before
+// React hydrates, using the stored choice or the OS preference.
+const themeBootScript = `
+(function () {
+  try {
+    var k = "deb-theme";
+    var stored = localStorage.getItem(k);
+    var t = stored === "dark" || stored === "light"
+      ? stored
+      : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -63,12 +82,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" dir="ltr" className={`${display.variable} ${body.variable}`}>
-      <body className="bg-sand-200 font-sans text-ink antialiased md:bg-stone-300/60">
-        <LanguageProvider>
-          <SkipLink />
-          {children}
-        </LanguageProvider>
+    <html
+      lang="fr"
+      dir="ltr"
+      data-theme="light"
+      suppressHydrationWarning
+      className={`${display.variable} ${body.variable}`}
+    >
+      <body className="bg-frame font-sans text-fg antialiased">
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+        <ThemeProvider>
+          <LanguageProvider>
+            <SkipLink />
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

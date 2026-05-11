@@ -42,7 +42,7 @@ export function OpenStatus() {
     return (
       <div
         aria-hidden="true"
-        className="inline-flex h-7 w-44 animate-pulse rounded-full bg-ink-800/60"
+        className="inline-flex h-7 w-44 animate-pulse rounded-full bg-hero-fg/15"
       />
     );
   }
@@ -55,8 +55,8 @@ export function OpenStatus() {
       aria-live="polite"
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[12px] font-medium tracking-wide ${
         status.open
-          ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-200"
-          : "border-rose-400/30 bg-rose-400/10 text-rose-200"
+          ? "border-status-open/35 bg-status-open/12 text-status-open-fg"
+          : "border-status-closed/35 bg-status-closed/12 text-status-closed-fg"
       }`}
     >
       <span
@@ -65,12 +65,12 @@ export function OpenStatus() {
       >
         <span
           className={`absolute inset-0 rounded-full ${
-            status.open ? "bg-emerald-400 animate-ping" : "bg-rose-400/60"
+            status.open ? "animate-ping bg-status-open" : "bg-status-closed/60"
           }`}
         />
         <span
           className={`relative h-2 w-2 rounded-full ${
-            status.open ? "bg-emerald-300" : "bg-rose-300"
+            status.open ? "bg-status-open" : "bg-status-closed"
           }`}
         />
       </span>

@@ -37,16 +37,16 @@ export function MenuItemCard({ item }: Props) {
     : t("photoOf", { name });
 
   return (
-    <article className="relative overflow-hidden rounded-xl border border-sand-200 bg-white shadow-card">
+    <article className="relative overflow-hidden rounded-xl border border-line-soft bg-surface shadow-card">
       {item.image && (
         <div
-          className="relative w-full overflow-hidden bg-sand-200/50"
+          className="relative w-full overflow-hidden bg-surface-2/60"
           style={{ aspectRatio: aspect }}
         >
           {!loaded && (
             <div
               aria-hidden="true"
-              className="absolute inset-0 animate-pulse bg-gradient-to-br from-sand-200 via-sand-100 to-sand-200"
+              className="absolute inset-0 animate-pulse bg-gradient-to-br from-surface-2 via-surface-muted to-surface-2"
             />
           )}
           <Image
@@ -73,19 +73,19 @@ export function MenuItemCard({ item }: Props) {
 
       <div className="p-4">
         <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-sans text-[16px] font-semibold leading-snug text-ink">
+          <h3 className="font-sans text-[16px] font-semibold leading-snug text-fg">
             {name}
           </h3>
           <span
             aria-label={`${t("pricePrefix")}${price}`}
-            className="flex-shrink-0 font-sans text-[15px] font-semibold tabular-nums tracking-tight text-ink"
+            className="flex-shrink-0 font-sans text-[15px] font-semibold tabular-nums tracking-tight text-fg"
             dir="ltr"
           >
             {price}
           </span>
         </div>
         {description && (
-          <p className="mt-1.5 text-[13px] leading-relaxed text-ink-700/75">
+          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
             {description}
           </p>
         )}
