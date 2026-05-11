@@ -53,25 +53,22 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F7F1E1" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F0A05" },
-  ],
+  themeColor: "#0F0A05",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
 };
 
 // Anti-FOIT (flash of incorrect theme): set data-theme on <html> before
-// React hydrates, using the stored choice or the OS preference.
+// React hydrates. Defaults to dark; only honors an explicit user choice
+// saved via the toggle. OS preference is intentionally ignored — the
+// restaurant's identity is the dark evening palette.
 const themeBootScript = `
 (function () {
   try {
     var k = "deb-theme";
     var stored = localStorage.getItem(k);
-    var t = stored === "dark" || stored === "light"
-      ? stored
-      : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    var t = stored === "dark" || stored === "light" ? stored : "dark";
     document.documentElement.setAttribute("data-theme", t);
   } catch (e) {}
 })();
@@ -86,7 +83,7 @@ export default function RootLayout({
     <html
       lang="fr"
       dir="ltr"
-      data-theme="light"
+      data-theme="dark"
       suppressHydrationWarning
       className={`${display.variable} ${body.variable}`}
     >
