@@ -2,7 +2,9 @@ import { Hero } from "@/components/Hero";
 import { NoticeSystem } from "@/components/NoticeSystem";
 import { MenuExplorer } from "@/components/MenuExplorer";
 import { Contact } from "@/components/Contact";
-import { StickyCallButton } from "@/components/StickyCallButton";
+import { BackToTopButton } from "@/components/BackToTopButton";
+import { OrderFAB } from "@/components/OrderFAB";
+import { OrderSheet } from "@/components/OrderSheet";
 
 export default function HomePage() {
   return (
@@ -19,7 +21,13 @@ export default function HomePage() {
       </section>
 
       <Contact />
-      <StickyCallButton />
+
+      <div className="fixed bottom-5 end-5 z-50 flex flex-col items-end gap-3">
+        <BackToTopButton />
+        <OrderFAB />
+      </div>
+
+      <OrderSheet />
     </main>
   );
 }

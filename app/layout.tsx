@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Manrope } from "next/font/google";
 import { restaurant } from "@/lib/restaurant";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { OrderProvider } from "@/components/OrderProvider";
 import { SkipLink } from "@/components/SkipLink";
 import "./globals.css";
 
@@ -93,8 +94,10 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
         <ThemeProvider>
           <LanguageProvider>
-            <SkipLink />
-            {children}
+            <OrderProvider>
+              <SkipLink />
+              {children}
+            </OrderProvider>
           </LanguageProvider>
         </ThemeProvider>
       </body>

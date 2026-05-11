@@ -5,6 +5,7 @@ import { useState } from "react";
 import type { MenuItem } from "@/lib/menu-data";
 import { pick } from "@/lib/i18n";
 import { useLang } from "./LanguageProvider";
+import { AddToOrderButton } from "./AddToOrderButton";
 
 type Props = {
   item: MenuItem;
@@ -89,6 +90,9 @@ export function MenuItemCard({ item }: Props) {
             {description}
           </p>
         )}
+        <div className="mt-3 flex justify-end">
+          <AddToOrderButton itemId={item.id} itemName={name} />
+        </div>
       </div>
     </article>
   );
