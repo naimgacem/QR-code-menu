@@ -69,39 +69,41 @@ export function CategoryNav({ categories }: Props) {
   };
 
   return (
-    <nav aria-label={t("categoriesLabel")} className="relative py-1">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-app via-app/85 to-transparent"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-app via-app/85 to-transparent"
-      />
+    <nav aria-label={t("categoriesLabel")} className="px-4 py-2.5">
+      <div className="relative mx-auto max-w-xl overflow-hidden rounded-full bg-surface ring-1 ring-line-soft shadow-[0_2px_10px_-4px_rgb(var(--fg)/0.14)]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-surface via-surface/80 to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-surface via-surface/80 to-transparent"
+        />
 
-      <div
-        ref={navRef}
-        className="no-scrollbar mx-auto flex max-w-xl items-center gap-2 overflow-x-auto overscroll-x-contain scroll-smooth px-5 py-1"
-      >
-        {categories.map((c) => {
-          const active = c.id === activeId;
-          return (
-            <a
-              key={c.id}
-              href={`#${c.id}`}
-              data-id={c.id}
-              aria-current={active ? "true" : undefined}
-              onClick={(e) => handleClick(e, c.id)}
-              className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-2 text-[13px] font-medium leading-none tracking-wide ring-1 transition-all duration-200 ease-out active:scale-[0.96] ${
-                active
-                  ? "bg-action text-action-fg ring-action shadow-[0_6px_18px_-6px_rgb(var(--fg)/0.45)]"
-                  : "bg-surface/80 text-muted ring-line-soft hover:bg-surface hover:text-fg active:bg-surface-muted"
-              }`}
-            >
-              {c.title}
-            </a>
-          );
-        })}
+        <div
+          ref={navRef}
+          className="no-scrollbar flex items-center gap-1 overflow-x-auto overscroll-x-contain scroll-smooth px-3 py-1.5"
+        >
+          {categories.map((c) => {
+            const active = c.id === activeId;
+            return (
+              <a
+                key={c.id}
+                href={`#${c.id}`}
+                data-id={c.id}
+                aria-current={active ? "true" : undefined}
+                onClick={(e) => handleClick(e, c.id)}
+                className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-3.5 py-1.5 text-[12.5px] font-medium leading-none tracking-wide transition-all duration-200 ease-out active:scale-[0.95] ${
+                  active
+                    ? "bg-action text-action-fg shadow-sm"
+                    : "bg-surface-2 text-muted hover:text-fg active:bg-surface-muted"
+                }`}
+              >
+                {c.title}
+              </a>
+            );
+          })}
+        </div>
       </div>
     </nav>
   );
