@@ -14,20 +14,6 @@ const PhoneIcon = () => (
   </svg>
 );
 
-const WhatsAppIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <path
-      d="M20 12a8 8 0 1 1-3.4-6.5L20 4l-1.5 3.4A8 8 0 0 1 20 12Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1-2-1-1 .5C11 13 11 11 11 11l.5-1-1-2-1 1Z"
-      fill="currentColor"
-    />
-  </svg>
-);
-
 const MapIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
     <path
@@ -74,12 +60,6 @@ export function Contact() {
       href: `tel:${restaurant.phone}`,
       Icon: PhoneIcon,
       external: false,
-    },
-    {
-      key: "contactWhatsapp" as const,
-      href: `https://wa.me/${restaurant.whatsapp}`,
-      Icon: WhatsAppIcon,
-      external: true,
     },
     {
       key: "contactMaps" as const,

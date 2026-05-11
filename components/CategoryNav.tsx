@@ -69,7 +69,7 @@ export function CategoryNav({ categories }: Props) {
   };
 
   return (
-    <nav aria-label={t("categoriesLabel")} className="relative pb-2 pt-0.5">
+    <nav aria-label={t("categoriesLabel")} className="relative py-1">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-app via-app/85 to-transparent"
