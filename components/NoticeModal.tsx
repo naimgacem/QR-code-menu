@@ -100,6 +100,7 @@ export function NoticeModal({ open, onClose }: Props) {
     >
       <div
         className="absolute inset-0 animate-fade-in bg-app/55 backdrop-blur-[3px]"
+        style={{ willChange: "opacity", transform: "translateZ(0)" }}
         aria-hidden="true"
       />
 

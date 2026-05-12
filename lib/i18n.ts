@@ -46,11 +46,15 @@ const M = {
   fr: {
     skipToMenu: "Aller au menu",
 
-    statusOpen: "Ouvert · ferme à {h}h00",
-    statusClosedToday: "Fermé · ouvre à {h}h00",
-    statusClosedTomorrow: "Fermé · ouvre demain à {h}h00",
+    statusOpen: "Ouvert · ferme à {time}",
+    statusClosedToday: "Fermé · ouvre à {time}",
+    statusClosedTomorrow: "Fermé · ouvre demain à {time}",
 
     location: "Casbah, Alger",
+
+    heroTagline:
+      "Là où l’authenticité rencontre l’esprit du patrimoine",
+    eveningReservations: "Soirée sur réservation",
 
     noticeTitle: "Informations importantes",
     noticeIntro1:
@@ -104,11 +108,14 @@ const M = {
   en: {
     skipToMenu: "Skip to menu",
 
-    statusOpen: "Open · closes at {h}:00",
-    statusClosedToday: "Closed · opens at {h}:00",
-    statusClosedTomorrow: "Closed · opens tomorrow at {h}:00",
+    statusOpen: "Open · closes at {time}",
+    statusClosedToday: "Closed · opens at {time}",
+    statusClosedTomorrow: "Closed · opens tomorrow at {time}",
 
     location: "Casbah, Algiers",
+
+    heroTagline: "Where authenticity meets the spirit of heritage",
+    eveningReservations: "Evenings by reservation",
 
     noticeTitle: "Important information",
     noticeIntro1: "Traditional dishes are served only on the ground floor.",
@@ -160,11 +167,14 @@ const M = {
   ar: {
     skipToMenu: "انتقل إلى القائمة",
 
-    statusOpen: "مفتوح · يغلق على الساعة {h}:00",
-    statusClosedToday: "مغلق · يفتح على الساعة {h}:00",
-    statusClosedTomorrow: "مغلق · يفتح غدا على الساعة {h}:00",
+    statusOpen: "مفتوح · يغلق على الساعة {time}",
+    statusClosedToday: "مغلق · يفتح على الساعة {time}",
+    statusClosedTomorrow: "مغلق · يفتح غدا على الساعة {time}",
 
     location: "القصبة، الجزائر",
+
+    heroTagline: "حيث تلتقي الأصالة بروح التراث",
+    eveningReservations: "السهرة على الحجز",
 
     noticeTitle: "معلومات مهمة",
     noticeIntro1: "الأطباق التقليدية تقدم في الطابق الأرضي فقط.",

@@ -1,10 +1,17 @@
 export const restaurant = {
   name: "Dar El Baraka",
-  tagline: "Cuisine traditionnelle algérienne",
   city: "Alger",
   district: "Casbah",
   address: "Restaurant Dar El Baraka, Casbah, Alger",
-  hours: "09:00 — 22:00",
+  hours: "11:00 — 17:30",
+  /** Service hours as discrete numbers. Used by OpenStatus to compute the
+   * live "open / closed / closes at" pill. Evening service is by reservation
+   * only and lives in the `eveningReservations` i18n message — it is not
+   * modeled as a service window here. */
+  openHour: 11,
+  openMinute: 0,
+  closeHour: 17,
+  closeMinute: 30,
   phone: "0553764385",
   phoneDisplay: "05 53 76 43 85",
   whatsapp: "213553764385",

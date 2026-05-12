@@ -15,7 +15,7 @@ export function MenuExplorer() {
 
   return (
     <>
-      <div className="sticky top-0 z-40 border-b border-line-soft bg-app/85 backdrop-blur-md">
+      <div className="sticky top-0 z-40 border-b border-line-soft bg-app/95">
         <CategoryNav categories={navCategories} />
       </div>
 

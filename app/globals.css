@@ -237,15 +237,13 @@ input[type="search"]::-webkit-search-decoration {
   }
 }
 
+/* Transform-only — animating opacity on a backdrop-blur element forces
+ * the browser to re-blur on every frame, which jitters on mid-range
+ * phones. The sheet starts off-screen (translateY 100%) so visibility
+ * is naturally controlled by position, not opacity. */
 @keyframes sheet-up {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 100%, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
+  from { transform: translate3d(0, 100%, 0); }
+  to   { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes count-pop {
@@ -333,11 +331,13 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .animate-modal-in {
-  animation: modal-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: modal-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
 
 .animate-sheet-up {
-  animation: sheet-up 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sheet-up 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: transform;
 }
 
 .animate-count-pop {
@@ -363,7 +363,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .animate-image-reveal {
-  animation: image-reveal 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: image-reveal 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-ornament-spin {

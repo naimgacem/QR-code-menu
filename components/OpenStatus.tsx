@@ -1,35 +1,56 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useT } from "./LanguageProvider";
-
-const OPEN_HOUR = 9;
-const CLOSE_HOUR = 22;
+import { useLang } from "./LanguageProvider";
+import { restaurant } from "@/lib/restaurant";
+import type { Lang } from "@/lib/i18n";
 
 type Status = {
   open: boolean;
   key: "statusOpen" | "statusClosedToday" | "statusClosedTomorrow";
   hour: number;
+  minute: number;
 };
 
 function compute(now: Date): Status {
-  const h = now.getHours();
-  const m = now.getMinutes();
-  const minutes = h * 60 + m;
-  const openMin = OPEN_HOUR * 60;
-  const closeMin = CLOSE_HOUR * 60;
+  const minutes = now.getHours() * 60 + now.getMinutes();
+  const openMin = restaurant.openHour * 60 + restaurant.openMinute;
+  const closeMin = restaurant.closeHour * 60 + restaurant.closeMinute;
 
   if (minutes >= openMin && minutes < closeMin) {
-    return { open: true, key: "statusOpen", hour: CLOSE_HOUR };
+    return {
+      open: true,
+      key: "statusOpen",
+      hour: restaurant.closeHour,
+      minute: restaurant.closeMinute,
+    };
   }
   if (minutes < openMin) {
-    return { open: false, key: "statusClosedToday", hour: OPEN_HOUR };
+    return {
+      open: false,
+      key: "statusClosedToday",
+      hour: restaurant.openHour,
+      minute: restaurant.openMinute,
+    };
   }
-  return { open: false, key: "statusClosedTomorrow", hour: OPEN_HOUR };
+  return {
+    open: false,
+    key: "statusClosedTomorrow",
+    hour: restaurant.openHour,
+    minute: restaurant.openMinute,
+  };
+}
+
+/** Locale-aware compact time format. French uses the "11h30" convention;
+ * English and Arabic use 24-hour "11:30". */
+function fmtTime(h: number, m: number, lang: Lang): string {
+  const mm = String(m).padStart(2, "0");
+  if (lang === "fr") return `${h}h${mm}`;
+  return `${h}:${mm}`;
 }
 
 export function OpenStatus() {
-  const t = useT();
+  const { t, lang } = useLang();
   const [status, setStatus] = useState<Status | null>(null);
 
   useEffect(() => {
@@ -47,7 +68,7 @@ export function OpenStatus() {
     );
   }
 
-  const label = t(status.key, { h: status.hour });
+  const label = t(status.key, { time: fmtTime(status.hour, status.minute, lang) });
 
   return (
     <div

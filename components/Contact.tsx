@@ -99,6 +99,9 @@ export function Contact() {
         <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
           {t("contactHours", { hours: restaurant.hours })}
         </p>
+        <p className="mt-0.5 font-display text-[13px] italic leading-snug text-accent-strong">
+          {t("eveningReservations")}
+        </p>
 
         <ul className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
           {links.map(({ key, href, Icon, external }) => (

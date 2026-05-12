@@ -77,7 +77,7 @@ export function Hero() {
       {/* subtle radial spotlight behind the logo */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-12 -z-10 h-64 w-64 -translate-x-1/2 rounded-full bg-hero-accent/15 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-14 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-hero-accent/15 blur-3xl"
       />
 
       {/* bottom transition into the menu body */}
@@ -88,69 +88,62 @@ export function Hero() {
         <LanguagePicker />
       </div>
 
-      <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-8 pt-9 text-center">
+      <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-9 pt-11 text-center">
         {/* logo with breathing gold halo */}
         <div
-          className="relative h-[80px] w-[80px] animate-pop-in"
+          className="relative h-[88px] w-[88px] animate-pop-in"
           style={{ animationDelay: "0ms" }}
         >
           <div
             aria-hidden="true"
             className="absolute inset-[-14%] animate-gold-breathe rounded-full bg-hero-accent/25 blur-2xl"
           />
-          <div className="relative h-full w-full overflow-hidden rounded-full border border-hero-accent/50 bg-hero-bg p-2 shadow-[0_20px_60px_-14px_rgb(var(--hero-accent)/0.55)]">
+          <div className="relative h-full w-full overflow-hidden rounded-full border border-hero-accent/50 bg-hero-bg p-2 shadow-[0_22px_60px_-14px_rgb(var(--hero-accent)/0.55)]">
             <Image
               src={restaurant.logoUrl}
-              alt={`${restaurant.name}`}
+              alt={restaurant.name}
               fill
               priority
-              sizes="80px"
+              sizes="88px"
               className="rounded-full object-cover"
             />
           </div>
         </div>
 
-        {/* eyebrow flourish above the wordmark — pure typography */}
-        <div
-          className="mt-5 flex animate-fade-up items-center gap-3 text-[10px] uppercase tracking-[0.34em] text-hero-fg-muted"
-          style={{ animationDelay: "60ms" }}
-        >
-          <span
-            aria-hidden="true"
-            className="block h-px w-7 origin-right animate-hairline-grow bg-gradient-to-l from-hero-accent/70 to-transparent"
-          />
-          <span>{t("location")}</span>
-          <span
-            aria-hidden="true"
-            className="block h-px w-7 origin-left animate-hairline-grow bg-gradient-to-r from-hero-accent/70 to-transparent"
-          />
-        </div>
-
         <h1
           id="hero-title"
-          className="mt-2 animate-fade-up font-display text-[40px] font-normal italic leading-[1.02] tracking-tight text-hero-fg sm:text-[48px]"
+          className="mt-5 animate-fade-up font-display text-[42px] font-normal italic leading-[1.02] tracking-tight text-hero-fg sm:text-[50px]"
           style={{ animationDelay: "100ms" }}
         >
           Dar El Baraka
         </h1>
 
         <p
-          className="mt-1 animate-fade-up text-[11px] font-medium uppercase tracking-[0.38em] text-hero-accent"
-          style={{ animationDelay: "150ms" }}
+          className="mt-2.5 max-w-[22rem] animate-fade-up font-display text-[14.5px] italic leading-snug text-hero-fg-muted text-balance sm:text-[16px]"
+          style={{ animationDelay: "180ms" }}
         >
-          {restaurant.tagline}
+          <span aria-hidden="true" className="me-1 text-hero-accent/70">«</span>
+          {t("heroTagline")}
+          <span aria-hidden="true" className="ms-1 text-hero-accent/70">»</span>
         </p>
 
         <div
-          className="mt-4 animate-fade-up"
-          style={{ animationDelay: "200ms" }}
+          className="mt-5 animate-fade-up"
+          style={{ animationDelay: "240ms" }}
         >
           <OpenStatus />
         </div>
 
+        <p
+          className="mt-1.5 animate-fade-up text-[11px] font-medium uppercase tracking-[0.28em] text-hero-accent/85"
+          style={{ animationDelay: "280ms" }}
+        >
+          {t("eveningReservations")}
+        </p>
+
         <ul
           className="mt-4 flex animate-fade-up flex-wrap items-center justify-center gap-x-1 gap-y-1.5 text-[13px] text-hero-fg-muted"
-          style={{ animationDelay: "260ms" }}
+          style={{ animationDelay: "320ms" }}
         >
           <li>
             <a
@@ -179,7 +172,7 @@ export function Hero() {
 
         <ul
           className="mt-4 flex animate-fade-up items-center justify-center gap-2.5"
-          style={{ animationDelay: "320ms" }}
+          style={{ animationDelay: "380ms" }}
         >
           <li>
             <a
