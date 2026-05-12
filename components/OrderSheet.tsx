@@ -104,6 +104,9 @@ export function OrderSheet() {
       pointerId: e.pointerId,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    if (sheetRef.current) {
+      sheetRef.current.style.willChange = "transform";
+    }
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -113,10 +116,13 @@ export function OrderSheet() {
     const dragDistance = e.clientY - dragRef.current.startY;
     if (dragDistance < 0) return; // only allow downward drag
 
+    // Add damping for smoother feel - sheet moves slower than finger
+    const dampedDistance = Math.min(dragDistance * 0.6, dragDistance);
+
     const elapsed = Date.now() - dragRef.current.startTime;
     const velocity = elapsed > 0 ? dragDistance / elapsed : 0;
 
-    sheetRef.current.style.transform = `translateY(${dragDistance}px)`;
+    sheetRef.current.style.transform = `translateY(${dampedDistance}px)`;
     sheetRef.current.style.transition = "none";
   };
 
@@ -141,11 +147,19 @@ export function OrderSheet() {
       sheetRef.current.style.transform = "translateY(100vh)";
       setTimeout(() => {
         setOpen(false);
+        if (sheetRef.current) {
+          sheetRef.current.style.willChange = "auto";
+        }
       }, DISMISS_DURATION);
     } else {
-      // spring back
+      // spring back smoothly
       sheetRef.current.style.transition = `transform ${SPRING_BACK_DURATION}ms ${EASE}`;
       sheetRef.current.style.transform = "translateY(0)";
+      setTimeout(() => {
+        if (sheetRef.current) {
+          sheetRef.current.style.willChange = "auto";
+        }
+      }, SPRING_BACK_DURATION);
     }
   };
 
