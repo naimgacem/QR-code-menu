@@ -133,7 +133,7 @@ export function NoticeModal({ open, onClose }: Props) {
                 className="mb-2 flex items-center gap-3"
               >
                 <span className="h-px flex-1 bg-line-soft" />
-                <span className="text-[10px] font-medium uppercase tracking-widest text-accent-strong">
+                <span className="whitespace-nowrap text-[10px] font-medium uppercase tracking-widest text-accent-strong">
                   {t("noticeRulesEyebrow")}
                 </span>
                 <span className="h-px flex-1 bg-line-soft" />
