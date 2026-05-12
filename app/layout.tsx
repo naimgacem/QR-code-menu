@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Amiri, Cairo, Cormorant_Garamond, Manrope } from "next/font/google";
 import { restaurant } from "@/lib/restaurant";
 import { LanguageProvider } from "@/components/LanguageProvider";
@@ -6,6 +7,10 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { OrderProvider } from "@/components/OrderProvider";
 import { SkipLink } from "@/components/SkipLink";
 import "./globals.css";
+
+/** GA4 Measurement ID. Public — safe to commit. To swap without code changes,
+ * set NEXT_PUBLIC_GA_ID at build time and it overrides this default. */
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-TVNJZWCKGF";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
@@ -111,6 +116,26 @@ export default function RootLayout({
             </OrderProvider>
           </LanguageProvider>
         </ThemeProvider>
+
+        {/* Google Analytics 4 — loaded after the page becomes interactive
+         * so it never competes with the menu's first paint. Disabled in
+         * dev so localhost traffic doesn't pollute the property. */}
+        {process.env.NODE_ENV === "production" && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   );
