@@ -1,5 +1,6 @@
 import { Hero } from "@/components/Hero";
 import { NoticeSystem } from "@/components/NoticeSystem";
+import { MenuTitle } from "@/components/MenuTitle";
 import { MenuExplorer } from "@/components/MenuExplorer";
 import { Contact } from "@/components/Contact";
 import { BackToTopButton } from "@/components/BackToTopButton";
@@ -17,6 +18,7 @@ export default function HomePage() {
         aria-label="Carte du restaurant"
         className="bg-app"
       >
+        <MenuTitle />
         <MenuExplorer />
       </section>
 

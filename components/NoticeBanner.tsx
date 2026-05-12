@@ -33,7 +33,7 @@ export function NoticeBanner({ onClick }: Props) {
       type="button"
       onClick={onClick}
       aria-label={t("noticeReopen")}
-      className="group flex w-full touch-manipulation items-center justify-between gap-3 border-b border-line-soft bg-surface-muted/65 px-5 py-3 text-start text-[12.5px] leading-snug text-muted transition-all duration-200 ease-out hover:bg-surface-muted hover:shadow-[inset_0_-1px_0_0_rgb(var(--accent)/0.18)] active:scale-[0.995] active:bg-surface-2/70 md:cursor-pointer"
+      className="group flex w-full touch-manipulation items-center justify-between gap-3 border-b border-line-soft bg-surface-muted px-5 py-3.5 text-start text-[12.5px] leading-snug text-muted shadow-[inset_0_-1px_0_0_rgb(var(--accent)/0.10)] transition-all duration-200 ease-out hover:bg-surface hover:shadow-[inset_0_-1px_0_0_rgb(var(--accent)/0.25)] active:scale-[0.995] active:bg-surface-2/70 md:cursor-pointer"
     >
       <span className="flex items-center gap-2.5">
         <span className="grid h-7 w-7 flex-shrink-0 place-items-center rounded-full bg-accent/15 text-accent-strong ring-1 ring-accent/25 transition group-hover:bg-accent/20 group-hover:ring-accent/40">

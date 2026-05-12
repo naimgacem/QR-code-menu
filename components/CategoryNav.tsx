@@ -69,22 +69,22 @@ export function CategoryNav({ categories }: Props) {
   };
 
   return (
-    <nav aria-label={t("categoriesLabel")} className="px-4 py-2.5">
-      <div className="relative mx-auto max-w-xl overflow-hidden rounded-full bg-surface ring-1 ring-line-soft shadow-[0_2px_10px_-4px_rgb(var(--fg)/0.14)]">
+    <nav aria-label={t("categoriesLabel")} className="px-4 pt-1.5 pb-3">
+      <div className="relative mx-auto max-w-xl overflow-hidden rounded-full bg-surface ring-1 ring-line-soft/90 shadow-[0_3px_14px_-5px_rgb(var(--fg)/0.18)]">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-5 bg-gradient-to-r from-surface via-surface/80 to-transparent"
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-6 bg-gradient-to-r from-surface via-surface/85 to-transparent"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-5 bg-gradient-to-l from-surface via-surface/80 to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-6 bg-gradient-to-l from-surface via-surface/85 to-transparent"
         />
 
         <div
           ref={navRef}
-          className="no-scrollbar flex overflow-x-auto overscroll-x-contain scroll-smooth py-1.5"
+          className="no-scrollbar flex overflow-x-auto overscroll-x-contain scroll-smooth py-2"
         >
-          <div className="mx-auto flex items-center gap-1 px-3">
+          <div className="mx-auto flex items-center gap-2 px-4">
             {categories.map((c) => {
               const active = c.id === activeId;
               return (
@@ -94,7 +94,7 @@ export function CategoryNav({ categories }: Props) {
                   data-id={c.id}
                   aria-current={active ? "true" : undefined}
                   onClick={(e) => handleClick(e, c.id)}
-                  className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-3.5 py-1.5 text-[12.5px] font-medium leading-none tracking-wide transition-all duration-200 ease-out active:scale-[0.95] ${
+                  className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-4 py-1.5 text-[12.5px] font-medium leading-none tracking-wide transition-all duration-200 ease-out active:scale-[0.95] ${
                     active
                       ? "bg-action text-action-fg shadow-sm"
                       : "bg-surface-2 text-muted hover:text-fg active:bg-surface-muted"

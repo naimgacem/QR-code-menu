@@ -67,6 +67,7 @@ const M = {
     noticeClose: "Fermer",
 
     categoriesLabel: "Catégories du menu",
+    menuLabel: "Menu",
 
     pricePrefix: "Prix : ",
     photoOf: "Photo de {name}",
@@ -122,6 +123,7 @@ const M = {
     noticeClose: "Close",
 
     categoriesLabel: "Menu categories",
+    menuLabel: "Menu",
 
     pricePrefix: "Price: ",
     photoOf: "Photo of {name}",
@@ -177,6 +179,7 @@ const M = {
     noticeClose: "إغلاق",
 
     categoriesLabel: "أصناف القائمة",
+    menuLabel: "القائمة",
 
     pricePrefix: "السعر: ",
     photoOf: "صورة {name}",
