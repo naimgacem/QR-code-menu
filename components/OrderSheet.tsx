@@ -27,11 +27,15 @@ const CloseIcon = () => (
 
 /** Past this drag distance (px) OR this downward velocity (px/ms), a
  * release dismisses the sheet. Otherwise it springs back to rest. */
-const DISMISS_DISTANCE = 110;
-const DISMISS_VELOCITY = 0.55;
-const DISMISS_DURATION = 220;
-const SPRING_BACK_DURATION = 220;
-const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const DISMISS_DISTANCE = 100;
+const DISMISS_VELOCITY = 0.5;
+/** iOS-style decelerate-out — fast start matches the user's flick velocity,
+ * smooth long tail for a buttery exit. */
+const DISMISS_EASE = "cubic-bezier(0.32, 0.72, 0, 1)";
+const SPRING_BACK_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+const SPRING_BACK_DURATION = 240;
+const DISMISS_MIN_DURATION = 160;
+const DISMISS_MAX_DURATION = 340;
 
 export function OrderSheet() {
   const { lang, t } = useLang();
@@ -40,11 +44,16 @@ export function OrderSheet() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
-  /** Live drag state — held in a ref so pointermove doesn't re-render. */
+  /** Live drag state — held in a ref so pointermove doesn't re-render.
+   * lastY/lastTime track the most recent move so we can compute the
+   * instantaneous release velocity, not just the average over the whole
+   * drag (which under-counts fast flicks at the end). */
   const dragRef = useRef<{
     startY: number;
     startTime: number;
     pointerId: number;
+    lastY: number;
+    lastTime: number;
   } | null>(null);
 
   useEffect(() => {
@@ -98,67 +107,91 @@ export function OrderSheet() {
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    // Don't hijack taps on the close / clear buttons — they need their
+    // own click handlers to fire.
+    if ((e.target as HTMLElement).closest("button, a")) return;
+
+    const now = Date.now();
     dragRef.current = {
       startY: e.clientY,
-      startTime: Date.now(),
+      startTime: now,
       pointerId: e.pointerId,
+      lastY: e.clientY,
+      lastTime: now,
     };
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-    if (sheetRef.current) {
-      sheetRef.current.style.willChange = "transform";
+
+    const sheet = sheetRef.current;
+    if (sheet) {
+      // Kill the entrance CSS animation and any spring-back transition so
+      // the inline transform we set on pointermove takes effect immediately
+      // (CSS animations otherwise override inline styles).
+      sheet.style.animation = "none";
+      sheet.style.transition = "none";
+      sheet.style.willChange = "transform";
     }
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragRef.current || dragRef.current.pointerId !== e.pointerId) return;
-    if (!sheetRef.current) return;
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== e.pointerId) return;
+    const sheet = sheetRef.current;
+    if (!sheet) return;
 
-    const dragDistance = e.clientY - dragRef.current.startY;
-    if (dragDistance < 0) return; // only allow downward drag
+    // 1:1 finger follow — clamp upward drag to 0 so the sheet can't be
+    // pulled above its rest position.
+    const dy = Math.max(0, e.clientY - drag.startY);
+    sheet.style.transform = `translate3d(0, ${dy}px, 0)`;
 
-    // Add damping for smoother feel - sheet moves slower than finger
-    const dampedDistance = Math.min(dragDistance * 0.6, dragDistance);
-
-    const elapsed = Date.now() - dragRef.current.startTime;
-    const velocity = elapsed > 0 ? dragDistance / elapsed : 0;
-
-    sheetRef.current.style.transform = `translateY(${dampedDistance}px)`;
-    sheetRef.current.style.transition = "none";
+    drag.lastY = e.clientY;
+    drag.lastTime = Date.now();
   };
 
   const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!dragRef.current || dragRef.current.pointerId !== e.pointerId) return;
-    if (!sheetRef.current) return;
+    const drag = dragRef.current;
+    if (!drag || drag.pointerId !== e.pointerId) return;
+    const sheet = sheetRef.current;
+    if (!sheet) return;
 
     (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
 
-    const dragDistance = e.clientY - dragRef.current.startY;
-    const elapsed = Date.now() - dragRef.current.startTime;
-    const velocity = elapsed > 0 ? dragDistance / elapsed : 0;
+    const dy = Math.max(0, e.clientY - drag.startY);
+    const totalElapsed = Math.max(1, Date.now() - drag.startTime);
+    const recentElapsed = Math.max(1, Date.now() - drag.lastTime);
+    // Average velocity over the whole drag, plus the instantaneous velocity
+    // at release. Whichever is higher decides the dismiss — a slow drag that
+    // ends with a quick flick should still dismiss.
+    const avgVelocity = dy / totalElapsed;
+    const releaseVelocity = (e.clientY - drag.lastY) / recentElapsed;
+    const velocity = Math.max(avgVelocity, releaseVelocity);
 
     dragRef.current = null;
 
-    const shouldDismiss =
-      dragDistance > DISMISS_DISTANCE || velocity > DISMISS_VELOCITY;
+    const shouldDismiss = dy > DISMISS_DISTANCE || velocity > DISMISS_VELOCITY;
 
     if (shouldDismiss) {
-      // animate to fully off-screen
-      sheetRef.current.style.transition = `transform ${DISMISS_DURATION}ms ${EASE}`;
-      sheetRef.current.style.transform = "translateY(100vh)";
-      setTimeout(() => {
+      // Pick a duration that roughly matches the user's release velocity,
+      // so the exit feels like the gesture is continuing rather than the
+      // browser taking over. Falls back to a comfortable default when the
+      // user lifted off without moving.
+      const distanceRemaining = Math.max(40, sheet.offsetHeight - dy);
+      const velocityBased = velocity > 0.1 ? distanceRemaining / velocity : 280;
+      const duration = Math.min(
+        DISMISS_MAX_DURATION,
+        Math.max(DISMISS_MIN_DURATION, velocityBased)
+      );
+
+      sheet.style.transition = `transform ${duration}ms ${DISMISS_EASE}`;
+      sheet.style.transform = "translate3d(0, 100%, 0)";
+
+      window.setTimeout(() => {
         setOpen(false);
-        if (sheetRef.current) {
-          sheetRef.current.style.willChange = "auto";
-        }
-      }, DISMISS_DURATION);
+      }, duration);
     } else {
-      // spring back smoothly
-      sheetRef.current.style.transition = `transform ${SPRING_BACK_DURATION}ms ${EASE}`;
-      sheetRef.current.style.transform = "translateY(0)";
-      setTimeout(() => {
-        if (sheetRef.current) {
-          sheetRef.current.style.willChange = "auto";
-        }
+      sheet.style.transition = `transform ${SPRING_BACK_DURATION}ms ${SPRING_BACK_EASE}`;
+      sheet.style.transform = "translate3d(0, 0, 0)";
+      window.setTimeout(() => {
+        if (sheet) sheet.style.willChange = "auto";
       }, SPRING_BACK_DURATION);
     }
   };
