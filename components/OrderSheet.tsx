@@ -201,14 +201,9 @@ export function OrderSheet() {
 
             <footer className="border-t border-line-soft bg-surface px-5 pb-5 pt-4">
               <div className="flex items-baseline justify-between gap-3">
-                <div>
-                  <p className="text-[11px] uppercase tracking-widest text-accent-strong">
-                    {t("orderTotal")}
-                  </p>
-                  <p className="text-[10.5px] text-subtle">
-                    {t("orderTotalNote")}
-                  </p>
-                </div>
+                <p className="text-[11px] uppercase tracking-widest text-accent-strong">
+                  {t("orderTotal")}
+                </p>
                 <p
                   className="font-display text-[28px] font-semibold tabular-nums text-fg"
                   dir="ltr"

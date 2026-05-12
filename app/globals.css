@@ -9,32 +9,35 @@
  * ============================================================ */
 :root,
 :root[data-theme="light"] {
-  /* canvas */
-  --app: 247 241 225; /* warm cream  #F7F1E1 */
-  --surface: 252 250 243; /* card / panel */
-  --surface-2: 240 232 210; /* hero band, raised */
-  --surface-muted: 246 238 218; /* notice banner */
-  --surface-overlay: 253 251 244; /* modal */
+  /* canvas — warm paper, restrained saturation.
+   * Sits between the two previous attempts: not pure-white-feeling,
+   * not yellow-saturated either. Hue stays warm, saturation pulled
+   * down toward neutral so the bg reads as "stone / linen / aged paper". */
+  --app: 232 226 208; /* #E8E2D0 — warm linen */
+  --surface: 239 234 217; /* #EFEAD9 — card / capsule */
+  --surface-2: 226 220 199; /* #E2DCC7 — subtle shade vs surface */
+  --surface-muted: 230 222 200; /* #E6DEC8 — notice banner */
+  --surface-overlay: 241 236 220; /* #F1ECDC — modal */
 
   /* lines */
-  --line: 220 207 173; /* primary border */
-  --line-soft: 233 222 195; /* dividers */
+  --line: 188 174 137; /* warm taupe border */
+  --line-soft: 207 196 166; /* subtle dividers */
 
   /* text */
-  --fg: 27 24 19; /* deep warm ink #1B1813 */
+  --fg: 27 24 19;
   --muted: 63 58 48;
   --subtle: 123 113 96;
 
-  /* accent — gold/bronze family */
-  --accent: 160 122 47; /* readable deep gold */
-  --accent-strong: 110 83 26; /* very deep gold (eyebrows) */
+  /* accent — matches the warm gold gradient of the logo (unchanged) */
+  --accent: 160 122 47;
+  --accent-strong: 122 88 23;
   --accent-hover: 140 106 31;
-  --accent-soft: 234 213 169; /* tinted gold for bg fills */
+  --accent-soft: 218 200 159;
 
   /* primary action */
-  --action: 27 24 19; /* ink button */
+  --action: 27 24 19;
   --action-hover: 42 38 32;
-  --action-fg: 247 241 225;
+  --action-fg: 239 234 217;
 
   /* status pills */
   --status-open-bg: 34 197 94;
@@ -42,15 +45,15 @@
   --status-closed-bg: 220 38 38;
   --status-closed-fg: 185 28 28;
 
-  /* hero band */
-  --hero-bg: 234 220 187; /* warm sand */
+  /* hero band — softened sand, distinct but no longer loud */
+  --hero-bg: 201 185 145; /* #C9B991 */
   --hero-fg: 27 24 19;
   --hero-fg-muted: 80 70 55;
-  --hero-accent: 110 83 26;
-  --hero-overlay-from: 247 241 225; /* fade to app at bottom */
+  --hero-accent: 122 88 23;
+  --hero-overlay-from: 232 226 208;
 
-  /* outer frame on desktop */
-  --frame: 224 211 178;
+  /* outer frame on desktop — softer taupe */
+  --frame: 172 156 122; /* #AC9C7A */
 
   color-scheme: light;
 }
@@ -110,6 +113,42 @@ a,
 button,
 [role="button"] {
   -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+ * Arabic — fix cramped metrics and broken letter-joining caused
+ * by Latin tracking utilities. Cairo / Amiri handle the glyphs
+ * via unicode-range; here we just relax spacing.
+ * ============================================================ */
+:lang(ar) {
+  letter-spacing: 0;
+  word-spacing: 0.02em;
+}
+
+:lang(ar) .tracking-tight,
+:lang(ar) .tracking-normal,
+:lang(ar) .tracking-wide,
+:lang(ar) .tracking-wider,
+:lang(ar) .tracking-widest {
+  letter-spacing: 0;
+}
+
+:lang(ar) .leading-none {
+  line-height: 1.25;
+}
+
+:lang(ar) .leading-tight {
+  line-height: 1.4;
+}
+
+:lang(ar) .leading-snug {
+  line-height: 1.55;
+}
+
+:lang(ar) p,
+:lang(ar) li,
+:lang(ar) summary {
+  line-height: 1.7;
 }
 
 body {

@@ -169,7 +169,7 @@
           "name": {
             "fr": "Crevettes en sauce",
             "en": "Shrimp in sauce",
-            "ar": "قمرون بالصلصة"
+            "ar": "كروفات بالصلصة"
           },
           "price": 2000,
           "image": "https://quiikly.com/storage/menu/17469870446820e8242afc5.jpeg"
@@ -179,7 +179,7 @@
           "name": {
             "fr": "Sépia en sauce",
             "en": "Cuttlefish in sauce",
-            "ar": "حبار بالصلصة"
+            "ar": "سيبيا بالصلصة"
           },
           "price": 2000,
           "image": "https://quiikly.com/storage/menu/17469871146820e86a61cd1.jpeg"
@@ -249,7 +249,7 @@
           "name": {
             "fr": "Dziriyat",
             "en": "Dziriyat",
-            "ar": "جزيريات"
+            "ar": "دزيريات"
           },
           "price": 250,
           "image": "https://quiikly.com/storage/menu/1747685061682b8ec593a97.jpg"

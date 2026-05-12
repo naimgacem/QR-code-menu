@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Amiri, Cairo, Cormorant_Garamond, Manrope } from "next/font/google";
 import { restaurant } from "@/lib/restaurant";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -19,6 +19,20 @@ const body = Manrope({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const arabicBody = Cairo({
+  subsets: ["arabic"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
+const arabicDisplay = Amiri({
+  subsets: ["arabic"],
+  weight: ["400", "700"],
+  variable: "--font-arabic-display",
   display: "swap",
 });
 
@@ -85,7 +99,7 @@ export default function RootLayout({
       dir="ltr"
       data-theme="dark"
       suppressHydrationWarning
-      className={`${display.variable} ${body.variable}`}
+      className={`${display.variable} ${body.variable} ${arabicBody.variable} ${arabicDisplay.variable}`}
     >
       <body className="bg-frame font-sans text-fg antialiased">
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />

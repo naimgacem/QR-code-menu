@@ -16,6 +16,38 @@ const InfoMark = () => (
   </svg>
 );
 
+function RuleCard({
+  percent,
+  where,
+  delay,
+}: {
+  percent: number;
+  where: string;
+  delay: number;
+}) {
+  return (
+    <li
+      className="group relative flex animate-fade-up items-center gap-4 overflow-hidden rounded-xl bg-accent/10 px-4 py-3 ring-1 ring-accent/25"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <span
+        aria-hidden="true"
+        className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-accent/60"
+      />
+      <div
+        className="flex-shrink-0 ps-1 font-sans text-[34px] font-bold leading-none tabular-nums tracking-tight text-accent-strong"
+        dir="ltr"
+      >
+        +{percent}
+        <span className="ms-0.5 text-[22px] font-semibold align-baseline">%</span>
+      </div>
+      <p className="flex-1 text-start text-[13.5px] font-medium leading-snug text-fg">
+        {where}
+      </p>
+    </li>
+  );
+}
+
 export function NoticeModal({ open, onClose }: Props) {
   const t = useT();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -95,25 +127,31 @@ export function NoticeModal({ open, onClose }: Props) {
             <p>{t("noticeIntro1")}</p>
             <p>{t("noticeIntro2")}</p>
 
-            <ul
-              className="mt-3 space-y-2 rounded-lg border border-line-soft bg-surface/70 p-3 text-[13.5px]"
-              role="list"
-            >
-              <li className="flex items-start gap-2">
-                <span
-                  aria-hidden="true"
-                  className="mt-[7px] inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
+            <div className="pt-2">
+              <div
+                aria-hidden="true"
+                className="mb-2 flex items-center gap-3"
+              >
+                <span className="h-px flex-1 bg-line-soft" />
+                <span className="text-[10px] font-medium uppercase tracking-widest text-accent-strong">
+                  {t("noticeRulesEyebrow")}
+                </span>
+                <span className="h-px flex-1 bg-line-soft" />
+              </div>
+
+              <ul role="list" className="space-y-2.5">
+                <RuleCard
+                  percent={20}
+                  where={t("noticeRule1Where")}
+                  delay={260}
                 />
-                <span>{t("noticeBullet1")}</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span
-                  aria-hidden="true"
-                  className="mt-[7px] inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent"
+                <RuleCard
+                  percent={30}
+                  where={t("noticeRule2Where")}
+                  delay={380}
                 />
-                <span>{t("noticeBullet2")}</span>
-              </li>
-            </ul>
+              </ul>
+            </div>
 
             <p className="pt-1 text-center text-[12.5px] text-subtle">
               {t("noticeOutro")}

@@ -56,8 +56,18 @@ const config: Config = {
         frame: tokenColor("frame"),
       },
       fontFamily: {
-        display: ["var(--font-display)", "Cormorant Garamond", "serif"],
-        sans: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: [
+          "var(--font-display)",
+          "var(--font-arabic-display)",
+          "Cormorant Garamond",
+          "serif",
+        ],
+        sans: [
+          "var(--font-body)",
+          "var(--font-arabic)",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       letterSpacing: {
         wider: "0.08em",

@@ -82,27 +82,29 @@ export function CategoryNav({ categories }: Props) {
 
         <div
           ref={navRef}
-          className="no-scrollbar flex items-center gap-1 overflow-x-auto overscroll-x-contain scroll-smooth px-3 py-1.5"
+          className="no-scrollbar flex overflow-x-auto overscroll-x-contain scroll-smooth py-1.5"
         >
-          {categories.map((c) => {
-            const active = c.id === activeId;
-            return (
-              <a
-                key={c.id}
-                href={`#${c.id}`}
-                data-id={c.id}
-                aria-current={active ? "true" : undefined}
-                onClick={(e) => handleClick(e, c.id)}
-                className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-3.5 py-1.5 text-[12.5px] font-medium leading-none tracking-wide transition-all duration-200 ease-out active:scale-[0.95] ${
-                  active
-                    ? "bg-action text-action-fg shadow-sm"
-                    : "bg-surface-2 text-muted hover:text-fg active:bg-surface-muted"
-                }`}
-              >
-                {c.title}
-              </a>
-            );
-          })}
+          <div className="mx-auto flex items-center gap-1 px-3">
+            {categories.map((c) => {
+              const active = c.id === activeId;
+              return (
+                <a
+                  key={c.id}
+                  href={`#${c.id}`}
+                  data-id={c.id}
+                  aria-current={active ? "true" : undefined}
+                  onClick={(e) => handleClick(e, c.id)}
+                  className={`relative flex-shrink-0 whitespace-nowrap touch-manipulation select-none rounded-full px-3.5 py-1.5 text-[12.5px] font-medium leading-none tracking-wide transition-all duration-200 ease-out active:scale-[0.95] ${
+                    active
+                      ? "bg-action text-action-fg shadow-sm"
+                      : "bg-surface-2 text-muted hover:text-fg active:bg-surface-muted"
+                  }`}
+                >
+                  {c.title}
+                </a>
+              );
+            })}
+          </div>
         </div>
       </div>
     </nav>
