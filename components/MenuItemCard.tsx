@@ -13,7 +13,7 @@ type Props = {
 
 const formatPrice = (n: number, lang: string) => {
   const locale = lang === "ar" ? "ar-DZ" : "fr-FR";
-  return new Intl.NumberFormat(locale).format(n) + " DA";
+  return new Intl.NumberFormat(locale).format(n);
 };
 
 const clampAspect = (w: number, h: number) => {
@@ -32,13 +32,14 @@ export function MenuItemCard({ item }: Props) {
 
   const name = pick(item.name, lang);
   const description = item.description ? pick(item.description, lang) : undefined;
-  const price = formatPrice(item.price, lang);
+  const priceNumber = formatPrice(item.price, lang);
+  const ariaPrice = `${t("pricePrefix")}${priceNumber} DA`;
   const alt = description
     ? `${name} — ${description}`
     : t("photoOf", { name });
 
   return (
-    <article className="relative overflow-hidden rounded-xl border border-line-soft bg-surface shadow-card">
+    <article className="group relative overflow-hidden rounded-xl border border-line-soft bg-surface shadow-card transition-all duration-500 hover:-translate-y-0.5 hover:border-accent/35 hover:shadow-card-hover">
       {item.image && (
         <div
           className="relative w-full overflow-hidden bg-surface-2/60"
@@ -65,32 +66,51 @@ export function MenuItemCard({ item }: Props) {
               }
               setLoaded(true);
             }}
-            className={`object-cover transition-opacity duration-500 ${
-              loaded ? "opacity-100" : "opacity-0"
+            className={`object-cover transition-[opacity,transform] duration-700 ease-out group-hover:scale-[1.025] ${
+              loaded ? "animate-image-reveal opacity-100" : "opacity-0"
             }`}
+          />
+          {/* very subtle bottom edge glaze for legibility against the next row */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-b from-transparent to-surface/40"
           />
         </div>
       )}
 
-      <div className="p-4">
-        <div className="flex items-baseline justify-between gap-3">
-          <h3 className="font-sans text-[16px] font-semibold leading-snug text-fg">
+      <div className="px-4 pt-3.5 pb-4">
+        <div className="price-row">
+          <h3 className="min-w-0 font-display text-[20px] font-medium leading-[1.15] text-fg">
             {name}
           </h3>
+          <span aria-hidden="true" className="leader" />
           <span
-            aria-label={`${t("pricePrefix")}${price}`}
-            className="flex-shrink-0 font-sans text-[15px] font-semibold tabular-nums tracking-tight text-fg"
+            aria-label={ariaPrice}
+            className="flex-shrink-0 whitespace-nowrap"
             dir="ltr"
           >
-            {price}
+            <span
+              aria-hidden="true"
+              className="price-display text-[20px] italic leading-none text-accent-strong"
+            >
+              {priceNumber}
+            </span>
+            <span
+              aria-hidden="true"
+              className="ms-1 align-baseline text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/85"
+            >
+              DA
+            </span>
           </span>
         </div>
+
         {description && (
-          <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
+          <p className="mt-2 text-[13px] leading-relaxed text-muted">
             {description}
           </p>
         )}
-        <div className="mt-3 flex justify-end">
+
+        <div className="mt-3.5 flex justify-end">
           <AddToOrderButton itemId={item.id} itemName={name} />
         </div>
       </div>

@@ -78,7 +78,7 @@ export function OrderSheet() {
 
   const formatPrice = (n: number) => {
     const locale = lang === "ar" ? "ar-DZ" : "fr-FR";
-    return new Intl.NumberFormat(locale).format(n) + " DA";
+    return new Intl.NumberFormat(locale).format(n);
   };
 
   if (!open) return null;
@@ -143,17 +143,18 @@ export function OrderSheet() {
         ) : (
           <>
             <ul className="flex-1 divide-y divide-line-soft overflow-y-auto px-5">
-              {entries.map(({ id, qty, item }) => {
+              {entries.map(({ id, qty, item }, i) => {
                 const name = pick(item.name, lang);
                 const lineTotal = formatPrice(item.price * qty);
                 const unit = formatPrice(item.price);
                 return (
                   <li
                     key={id}
-                    className="flex items-center gap-3 py-3"
+                    className="flex animate-fade-up items-center gap-3 py-3"
+                    style={{ animationDelay: `${Math.min(i * 40, 240)}ms` }}
                   >
                     {item.image ? (
-                      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg bg-surface-2">
+                      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-lg bg-surface-2 ring-1 ring-line-soft/60">
                         <Image
                           src={item.image}
                           alt=""
@@ -165,26 +166,38 @@ export function OrderSheet() {
                     ) : (
                       <div
                         aria-hidden="true"
-                        className="h-14 w-14 flex-shrink-0 rounded-lg bg-surface-2"
+                        className="h-14 w-14 flex-shrink-0 rounded-lg bg-surface-2 ring-1 ring-line-soft/60"
                       />
                     )}
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[14px] font-semibold text-fg">
+                      <p className="truncate font-display text-[16px] font-medium leading-tight text-fg">
                         {name}
                       </p>
                       <p
-                        className="mt-0.5 text-[12.5px] tabular-nums text-muted"
+                        className="mt-0.5 flex items-baseline gap-1.5 text-[12.5px] text-muted"
                         dir="ltr"
                       >
                         {qty > 1 ? (
                           <>
-                            <span className="text-fg">{lineTotal}</span>
-                            <span className="ms-1.5 text-subtle">
-                              · {unit} × {qty}
+                            <span className="price-display italic text-[15px] text-accent-strong">
+                              {lineTotal}
+                            </span>
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
+                              DA
+                            </span>
+                            <span className="ms-1 text-subtle">
+                              · {unit}&nbsp;×&nbsp;{qty}
                             </span>
                           </>
                         ) : (
-                          unit
+                          <>
+                            <span className="price-display italic text-[15px] text-accent-strong">
+                              {unit}
+                            </span>
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent/80">
+                              DA
+                            </span>
+                          </>
                         )}
                       </p>
                     </div>
@@ -201,14 +214,17 @@ export function OrderSheet() {
 
             <footer className="border-t border-line-soft bg-surface px-5 pb-5 pt-4">
               <div className="flex items-baseline justify-between gap-3">
-                <p className="text-[11px] uppercase tracking-widest text-accent-strong">
+                <p className="text-[11px] uppercase tracking-[0.32em] text-accent-strong">
                   {t("orderTotal")}
                 </p>
                 <p
-                  className="font-display text-[28px] font-semibold tabular-nums text-fg"
+                  className="price-display flex items-baseline gap-1.5 text-[32px] italic leading-none text-accent-strong"
                   dir="ltr"
                 >
-                  {formatPrice(total)}
+                  <span>{formatPrice(total)}</span>
+                  <span className="text-[12px] font-semibold uppercase not-italic tracking-[0.2em] text-accent/85">
+                    DA
+                  </span>
                 </p>
               </div>
               <p className="mt-3 rounded-lg border border-line-soft bg-app/60 px-3 py-2 text-center text-[12.5px] leading-relaxed text-muted">

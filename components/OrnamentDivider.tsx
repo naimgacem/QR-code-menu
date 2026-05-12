@@ -4,7 +4,9 @@ type Props = {
 
 /**
  * Small horizontal flourish: two short rules flanking a diamond + dot.
- * Inherits `currentColor` from the parent so it themes automatically.
+ * The diamond breathes via a slow CSS rotation, and the flanking rules
+ * fade in from the outside on first paint. Inherits `currentColor` so it
+ * themes automatically.
  */
 export function OrnamentDivider({ className = "" }: Props) {
   return (
@@ -13,8 +15,8 @@ export function OrnamentDivider({ className = "" }: Props) {
       aria-hidden="true"
     >
       <span
-        className="h-px max-w-[80px] flex-1 bg-current"
-        style={{ opacity: 0.4 }}
+        className="h-px max-w-[80px] flex-1 origin-right animate-hairline-grow bg-gradient-to-l from-current via-current/70 to-transparent"
+        style={{ opacity: 0.55 }}
       />
       <svg
         width="36"
@@ -22,6 +24,7 @@ export function OrnamentDivider({ className = "" }: Props) {
         viewBox="0 0 36 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="animate-ornament-spin"
       >
         <path
           d="M2 7 L10 7"
@@ -47,8 +50,8 @@ export function OrnamentDivider({ className = "" }: Props) {
         <circle cx="18" cy="7" r="1.4" fill="currentColor" />
       </svg>
       <span
-        className="h-px max-w-[80px] flex-1 bg-current"
-        style={{ opacity: 0.4 }}
+        className="h-px max-w-[80px] flex-1 origin-left animate-hairline-grow bg-gradient-to-r from-current via-current/70 to-transparent"
+        style={{ opacity: 0.55 }}
       />
     </div>
   );

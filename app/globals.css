@@ -151,6 +151,13 @@ button,
   line-height: 1.7;
 }
 
+/* Italic doesn't exist in Arabic typography. Disable any utility-driven
+ * italic on Arabic text so dish names / prices don't render slanted. */
+:lang(ar) .italic,
+:lang(ar) .font-italic {
+  font-style: normal;
+}
+
 body {
   background: rgb(var(--frame));
   color: rgb(var(--fg));
@@ -247,6 +254,72 @@ input[type="search"]::-webkit-search-decoration {
   100% { transform: scale(1); }
 }
 
+/* New — slow ambient gold breathe for the hero logo halo. */
+@keyframes gold-breathe {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.08);
+  }
+}
+
+/* New — drift the arch pattern a few pixels for atmospheric depth. */
+@keyframes drift-pattern {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -6px, 0); }
+}
+
+/* New — hairline rules grow in from the centre as the section reveals. */
+@keyframes hairline-grow {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* New — slow shimmer for ornamental gold gradient lines. */
+@keyframes shimmer-slide {
+  0%, 100% {
+    background-position: 0% 50%;
+    opacity: 0.55;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+/* New — image scale-and-fade reveal, more cinematic than plain opacity. */
+@keyframes image-reveal {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* New — gentle ornament rotation for the diamond on dividers. */
+@keyframes ornament-spin {
+  0%, 100% { transform: rotate(0deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+/* New — drift used as a subtle vertical lull on FABs/badges. */
+@keyframes float-lull {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -3px, 0); }
+}
+
 .animate-fade-up {
   animation: fade-up 600ms ease-out both;
 }
@@ -271,6 +344,37 @@ input[type="search"]::-webkit-search-decoration {
   animation: count-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+.animate-gold-breathe {
+  animation: gold-breathe 7s ease-in-out infinite;
+}
+
+.animate-drift-pattern {
+  animation: drift-pattern 11s ease-in-out infinite;
+}
+
+.animate-hairline-grow {
+  animation: hairline-grow 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+
+.animate-shimmer-slide {
+  background-size: 200% 100%;
+  animation: shimmer-slide 6s ease-in-out infinite;
+}
+
+.animate-image-reveal {
+  animation: image-reveal 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-ornament-spin {
+  animation: ornament-spin 9s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+.animate-float-lull {
+  animation: float-lull 4.5s ease-in-out infinite;
+}
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -285,6 +389,51 @@ input[type="search"]::-webkit-search-decoration {
   }
   .text-pretty {
     text-wrap: pretty;
+  }
+
+  /* Numeric figure styles for the price typography. Cormorant Garamond
+   * has rich OpenType — turn on oldstyle proportional figs for body
+   * copy, tabular lining for prices so columns align. */
+  .nums-oldstyle {
+    font-feature-settings: "onum", "pnum";
+  }
+  .nums-tabular {
+    font-feature-settings: "tnum", "lnum";
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Editorial price treatment — used on MenuItemCard, OrderSheet total,
+   * NoticeModal surcharge cards. Cormorant Italic with tabular lining
+   * numerals reads like a hand-set restaurant menu. */
+  .price-display {
+    font-family: var(--font-display), var(--font-arabic-display), serif;
+    font-feature-settings: "tnum", "lnum", "ss01";
+    font-variant-numeric: tabular-nums lining-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Leader: a faint dotted/lined rule that fills the gap between a
+   * dish name and its price — classic typeset menu device. Used inside
+   * MenuItemCard via the .price-row utility. */
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+  }
+  .price-row > .leader {
+    flex: 1 1 auto;
+    height: 1px;
+    transform: translateY(-0.35em);
+    background-image: radial-gradient(
+      circle,
+      rgb(var(--accent) / 0.55) 0.6px,
+      transparent 0.7px
+    );
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+    background-position: left center;
+    min-width: 1.5rem;
+    opacity: 0.7;
   }
 }
 

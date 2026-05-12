@@ -34,14 +34,21 @@ function RuleCard({
         aria-hidden="true"
         className="absolute inset-y-2 start-0 w-[3px] rounded-full bg-accent/60"
       />
+      {/* breathing gold glow behind the percent — subtle, draws the eye */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-y-0 start-0 w-20 animate-gold-breathe bg-gradient-to-r from-accent/15 to-transparent"
+      />
       <div
-        className="flex-shrink-0 ps-1 font-sans text-[34px] font-bold leading-none tabular-nums tracking-tight text-accent-strong"
+        className="price-display relative flex-shrink-0 ps-1 text-[38px] italic font-medium leading-none text-accent-strong"
         dir="ltr"
       >
         +{percent}
-        <span className="ms-0.5 text-[22px] font-semibold align-baseline">%</span>
+        <span className="ms-0.5 align-baseline text-[22px] font-semibold not-italic">
+          %
+        </span>
       </div>
-      <p className="flex-1 text-start text-[13.5px] font-medium leading-snug text-fg">
+      <p className="relative flex-1 text-start text-[13.5px] font-medium leading-snug text-fg">
         {where}
       </p>
     </li>

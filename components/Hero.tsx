@@ -56,59 +56,100 @@ const FacebookIcon = () => (
   </svg>
 );
 
+/** Tiny gold dot used inline as a typographic separator. */
+const Bullet = () => (
+  <span aria-hidden="true" className="mx-2 inline-block h-1 w-1 rounded-full bg-hero-accent/55 align-middle" />
+);
+
 export function Hero() {
   const t = useT();
 
   return (
     <section
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-hero-bg text-hero-fg"
+      className="relative isolate overflow-hidden bg-hero-bg text-hero-fg"
     >
-      <div className="pointer-events-none absolute inset-0 text-hero-accent">
+      {/* drifting Moorish-arch pattern, ambient depth */}
+      <div className="pointer-events-none absolute inset-0 animate-drift-pattern text-hero-accent">
         <ArchPattern className="h-full w-full" opacity={0.13} />
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-hero-bg" />
+
+      {/* subtle radial spotlight behind the logo */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-12 -z-10 h-64 w-64 -translate-x-1/2 rounded-full bg-hero-accent/15 blur-3xl"
+      />
+
+      {/* bottom transition into the menu body */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-hero-bg" />
 
       <div className="absolute end-3 top-3 z-30 flex items-center gap-2">
         <ThemeToggle />
         <LanguagePicker />
       </div>
 
-      <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-6 pt-8 text-center">
+      <div className="relative mx-auto flex max-w-xl flex-col items-center px-6 pb-8 pt-9 text-center">
+        {/* logo with breathing gold halo */}
         <div
-          className="relative h-[72px] w-[72px] animate-pop-in"
+          className="relative h-[80px] w-[80px] animate-pop-in"
           style={{ animationDelay: "0ms" }}
         >
-          <div className="absolute inset-0 rounded-full bg-hero-accent/20 blur-2xl" />
-          <div className="relative h-full w-full overflow-hidden rounded-full border border-hero-accent/40 bg-hero-bg p-2 shadow-[0_18px_50px_-12px_rgb(var(--hero-accent)/0.4)]">
+          <div
+            aria-hidden="true"
+            className="absolute inset-[-14%] animate-gold-breathe rounded-full bg-hero-accent/25 blur-2xl"
+          />
+          <div className="relative h-full w-full overflow-hidden rounded-full border border-hero-accent/50 bg-hero-bg p-2 shadow-[0_20px_60px_-14px_rgb(var(--hero-accent)/0.55)]">
             <Image
               src={restaurant.logoUrl}
               alt={`${restaurant.name}`}
               fill
               priority
-              sizes="72px"
+              sizes="80px"
               className="rounded-full object-cover"
             />
           </div>
         </div>
 
+        {/* eyebrow flourish above the wordmark — pure typography */}
+        <div
+          className="mt-5 flex animate-fade-up items-center gap-3 text-[10px] uppercase tracking-[0.34em] text-hero-fg-muted"
+          style={{ animationDelay: "60ms" }}
+        >
+          <span
+            aria-hidden="true"
+            className="block h-px w-7 origin-right animate-hairline-grow bg-gradient-to-l from-hero-accent/70 to-transparent"
+          />
+          <span>{t("location")}</span>
+          <span
+            aria-hidden="true"
+            className="block h-px w-7 origin-left animate-hairline-grow bg-gradient-to-r from-hero-accent/70 to-transparent"
+          />
+        </div>
+
         <h1
           id="hero-title"
-          className="mt-4 animate-fade-up font-display text-[34px] font-light leading-[1.05] tracking-tight sm:text-[40px]"
+          className="mt-2 animate-fade-up font-display text-[40px] font-normal italic leading-[1.02] tracking-tight text-hero-fg sm:text-[48px]"
           style={{ animationDelay: "100ms" }}
         >
           Dar El Baraka
         </h1>
 
+        <p
+          className="mt-1 animate-fade-up text-[11px] font-medium uppercase tracking-[0.38em] text-hero-accent"
+          style={{ animationDelay: "150ms" }}
+        >
+          {restaurant.tagline}
+        </p>
+
         <div
-          className="mt-3 animate-fade-up"
-          style={{ animationDelay: "180ms" }}
+          className="mt-4 animate-fade-up"
+          style={{ animationDelay: "200ms" }}
         >
           <OpenStatus />
         </div>
 
         <ul
-          className="mt-3 flex animate-fade-up flex-col items-center gap-1 text-[13px] text-hero-fg-muted"
+          className="mt-4 flex animate-fade-up flex-wrap items-center justify-center gap-x-1 gap-y-1.5 text-[13px] text-hero-fg-muted"
           style={{ animationDelay: "260ms" }}
         >
           <li>
@@ -121,6 +162,9 @@ export function Hero() {
               <PinIcon />
               {t("location")}
             </a>
+          </li>
+          <li aria-hidden="true">
+            <Bullet />
           </li>
           <li>
             <a
@@ -143,7 +187,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               aria-label={t("contactInstagram")}
-              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
+              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:scale-[1.04] hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
             >
               <InstagramIcon />
             </a>
@@ -154,7 +198,7 @@ export function Hero() {
               target="_blank"
               rel="noreferrer"
               aria-label={t("contactFacebook")}
-              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
+              className="grid h-9 w-9 place-items-center rounded-full border border-hero-accent/30 bg-hero-bg/40 text-hero-fg transition hover:scale-[1.04] hover:border-hero-accent/60 hover:bg-hero-bg/70 hover:text-hero-accent"
             >
               <FacebookIcon />
             </a>
@@ -162,8 +206,9 @@ export function Hero() {
         </ul>
       </div>
 
+      {/* gold hairline divider that pulses slowly */}
       <div
-        className="relative mx-auto h-[2px] max-w-xl bg-gradient-to-r from-transparent via-hero-accent/55 to-transparent"
+        className="relative mx-auto h-[2px] max-w-xl animate-shimmer-slide bg-gradient-to-r from-transparent via-hero-accent/65 to-transparent"
         aria-hidden="true"
       />
     </section>
