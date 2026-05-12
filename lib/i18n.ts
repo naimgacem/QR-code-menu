@@ -115,7 +115,7 @@ const M = {
     location: "Casbah, Algiers",
 
     heroTagline: "Where authenticity meets the spirit of heritage",
-    eveningReservations: "Evenings by reservation",
+    eveningReservations: "Dinner by reservation",
 
     noticeTitle: "Important information",
     noticeIntro1: "Traditional dishes are served only on the ground floor.",
@@ -174,7 +174,7 @@ const M = {
     location: "القصبة، الجزائر",
 
     heroTagline: "حيث تلتقي الأصالة بروح التراث",
-    eveningReservations: "السهرة على الحجز",
+    eveningReservations: "السهرة بالحجز المسبق",
 
     noticeTitle: "معلومات مهمة",
     noticeIntro1: "الأطباق التقليدية تقدم في الطابق الأرضي فقط.",

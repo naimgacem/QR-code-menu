@@ -122,14 +122,17 @@ button,
  * ============================================================ */
 :lang(ar) {
   letter-spacing: 0;
-  word-spacing: 0.02em;
+  /* Generous word-spacing — Arabic words are visually denser than Latin
+   * at the same point size and need real breath between them. */
+  word-spacing: 0.1em;
 }
 
 :lang(ar) .tracking-tight,
 :lang(ar) .tracking-normal,
 :lang(ar) .tracking-wide,
 :lang(ar) .tracking-wider,
-:lang(ar) .tracking-widest {
+:lang(ar) .tracking-widest,
+:lang(ar) [class*="tracking-\["] {
   letter-spacing: 0;
 }
 
@@ -156,6 +159,42 @@ button,
 :lang(ar) .italic,
 :lang(ar) .font-italic {
   font-style: normal;
+}
+
+/* Size scaling: Arabic glyphs (Cairo / Amiri) render about 10% visually
+ * smaller than Latin glyphs at the same px size — different x-height and
+ * baseline metrics. These overrides bump every Tailwind text-[Xpx] utility
+ * actually used in the codebase so the Arabic UI reads at parity with the
+ * French one. Tiny uppercase labels get a bigger bump (uppercase is
+ * meaningless in Arabic, so those become regular labels and need
+ * comfortable size). Compound specificity (lang + class) beats Tailwind. */
+:lang(ar) .text-\[10px\]    { font-size: 12.5px; }
+:lang(ar) .text-\[11px\]    { font-size: 13px; }
+:lang(ar) .text-\[12px\]    { font-size: 13.5px; }
+:lang(ar) .text-\[12\.5px\] { font-size: 14px; }
+:lang(ar) .text-\[13px\]    { font-size: 14.5px; }
+:lang(ar) .text-\[13\.5px\] { font-size: 15px; }
+:lang(ar) .text-\[14px\]    { font-size: 15.5px; }
+:lang(ar) .text-\[14\.5px\] { font-size: 16.5px; }
+:lang(ar) .text-\[15px\]    { font-size: 16.5px; }
+:lang(ar) .text-\[16px\]    { font-size: 17.5px; }
+:lang(ar) .text-\[20px\]    { font-size: 22px; }
+:lang(ar) .text-\[22px\]    { font-size: 24px; }
+:lang(ar) .text-\[26px\]    { font-size: 28px; }
+:lang(ar) .text-\[28px\]    { font-size: 30px; }
+:lang(ar) .text-\[32px\]    { font-size: 34px; }
+:lang(ar) .text-\[34px\]    { font-size: 36px; }
+:lang(ar) .text-\[38px\]    { font-size: 40px; }
+:lang(ar) .text-\[40px\]    { font-size: 42px; }
+:lang(ar) .text-\[42px\]    { font-size: 44px; }
+:lang(ar) .text-\[50px\]    { font-size: 52px; }
+
+@media (min-width: 640px) {
+  :lang(ar) .sm\:text-\[16px\]   { font-size: 17.5px; }
+  :lang(ar) .sm\:text-\[16\.5px\]{ font-size: 18px; }
+  :lang(ar) .sm\:text-\[28px\]   { font-size: 30px; }
+  :lang(ar) .sm\:text-\[40px\]   { font-size: 42px; }
+  :lang(ar) .sm\:text-\[50px\]   { font-size: 52px; }
 }
 
 body {
