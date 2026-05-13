@@ -10,6 +10,7 @@
     "extract-dimensions": "node scripts/extract-dimensions.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "next": "15.0.7",
     "react": "18.3.1",
     "react-dom": "18.3.1"
