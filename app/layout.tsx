@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Amiri, Cairo, Cormorant_Garamond, Manrope } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { restaurant } from "@/lib/restaurant";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -136,6 +137,9 @@ export default function RootLayout({
             </Script>
           </>
         )}
+        
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </body>
     </html>
   );
