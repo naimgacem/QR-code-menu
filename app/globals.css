@@ -39,11 +39,12 @@
   --action-hover: 42 38 32;
   --action-fg: 239 234 217;
 
-  /* status pills */
-  --status-open-bg: 34 197 94;
-  --status-open-fg: 21 128 61;
-  --status-closed-bg: 220 38 38;
-  --status-closed-fg: 185 28 28;
+  /* status pills — monochrome: brand gold = open, quiet taupe = closed.
+   * No traffic-light green/red; status reads from the word + the live dot. */
+  --status-open-bg: 160 122 47; /* gold dot (matches --accent) */
+  --status-open-fg: 122 88 23; /* deep gold text (matches --accent-strong) */
+  --status-closed-bg: 123 113 96; /* neutral taupe dot (matches --subtle) */
+  --status-closed-fg: 80 70 55; /* muted text */
 
   /* hero band — softened sand, distinct but no longer loud */
   --hero-bg: 201 185 145; /* #C9B991 */
@@ -82,10 +83,11 @@
   --action-hover: 232 189 99;
   --action-fg: 27 19 12; /* espresso on gold */
 
-  --status-open-bg: 34 197 94;
-  --status-open-fg: 134 239 172;
-  --status-closed-bg: 220 38 38;
-  --status-closed-fg: 252 165 165;
+  /* status pills — monochrome gold/neutral (see light theme note) */
+  --status-open-bg: 214 172 87; /* warm gold dot (matches --accent) */
+  --status-open-fg: 232 189 99; /* bright gold text (matches --accent-strong) */
+  --status-closed-bg: 136 122 96; /* muted taupe dot (matches --subtle) */
+  --status-closed-fg: 190 175 145; /* muted cream text */
 
   --hero-bg: 15 10 5;
   --hero-fg: 242 229 197;

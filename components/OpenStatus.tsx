@@ -76,22 +76,24 @@ export function OpenStatus() {
       aria-live="polite"
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[12px] font-medium tracking-wide ${
         status.open
-          ? "border-status-open/35 bg-status-open/12 text-status-open-fg"
-          : "border-status-closed/35 bg-status-closed/12 text-status-closed-fg"
+          ? "border-status-open/40 bg-status-open/10 text-status-open-fg"
+          : "border-status-closed/25 bg-transparent text-status-closed-fg"
       }`}
     >
       <span
         aria-hidden="true"
         className="relative grid h-2 w-2 place-items-center"
       >
-        <span
-          className={`absolute inset-0 rounded-full ${
-            status.open ? "animate-ping bg-status-open" : "bg-status-closed/60"
-          }`}
-        />
+        {/* Open: a live gold dot that breathes via the ping ring.
+         * Closed: a quiet hollow taupe ring, static — no alarm color. */}
+        {status.open && (
+          <span className="absolute inset-0 animate-ping rounded-full bg-status-open" />
+        )}
         <span
           className={`relative h-2 w-2 rounded-full ${
-            status.open ? "bg-status-open" : "bg-status-closed"
+            status.open
+              ? "bg-status-open"
+              : "border border-status-closed/80 bg-transparent"
           }`}
         />
       </span>
