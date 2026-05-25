@@ -15,7 +15,9 @@ export function MenuExplorer() {
 
   return (
     <>
-      <div className="sticky top-0 z-40 border-b border-line-soft bg-app/95">
+      {/* No rectangle bar — the rounded capsule from CategoryNav is the only
+       * sticky element, so it reads as a floating island of pills. */}
+      <div className="sticky top-0 z-40">
         <CategoryNav categories={navCategories} />
       </div>
 
