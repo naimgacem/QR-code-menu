@@ -95,6 +95,26 @@
           "image": "https://quiikly.com/storage/menu/17469868676820e773715ec.jpeg"
         },
         {
+          "id": "kebda-mcharmla",
+          "name": {
+            "fr": "Kebda mcharmla",
+            "en": "Kebda mcharmla",
+            "ar": "كبدة مشرملة"
+          },
+          "price": 1800,
+          "image": "/images/menu/kebda-mcharmla.jpg"
+        },
+        {
+          "id": "kebda",
+          "name": {
+            "fr": "Kebda",
+            "en": "Kebda",
+            "ar": "كبدة"
+          },
+          "price": 1500,
+          "image": "/images/menu/kebda.jpg"
+        },
+        {
           "id": "chakchouka",
           "name": {
             "fr": "Chakchouka",
