@@ -26,9 +26,12 @@ export function MenuItemCard({ item }: Props) {
   const { lang, t } = useLang();
   const [loaded, setLoaded] = useState(false);
 
+  const fixedAspectForItem =
+    item.id === "kebda-mcharmla" || item.id === "kebda" ? 4 / 3 : null;
   const knownAspect =
     item.width && item.height ? clampAspect(item.width, item.height) : null;
-  const [aspect, setAspect] = useState<number>(knownAspect ?? 4 / 3);
+  const [aspect, setAspect] = useState<number>(fixedAspectForItem ?? knownAspect ?? 4 / 3);
+  const lockAspect = fixedAspectForItem != null || knownAspect != null;
 
   const name = pick(item.name, lang);
   const description = item.description ? pick(item.description, lang) : undefined;
@@ -58,7 +61,7 @@ export function MenuItemCard({ item }: Props) {
             sizes="(max-width: 640px) 100vw, 580px"
             loading="lazy"
             onLoad={(e) => {
-              if (knownAspect == null) {
+              if (!lockAspect) {
                 const img = e.currentTarget as HTMLImageElement;
                 if (img.naturalWidth && img.naturalHeight) {
                   setAspect(clampAspect(img.naturalWidth, img.naturalHeight));
