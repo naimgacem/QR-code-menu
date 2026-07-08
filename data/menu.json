@@ -23,6 +23,16 @@
             "ar": "خس، طماطم، جزر، خيار، زيتون، شمندر، ذرة."
           },
           "image": "https://quiikly.com/storage/menu/1747687407682b97efa5fd2.jpg"
+        },
+        {
+          "id": "salad-concombre",
+          "name": {
+            "fr": "Salade concombre",
+            "en": "Cucumber salad",
+            "ar": "Ø³Ù„Ø·Ø© Ø§Ù„Ø®ÙŠØ§Ø±"
+          },
+          "price": 400,
+          "image": "/images/menu/salad_concombre.jpg"
         }
       ]
     },
