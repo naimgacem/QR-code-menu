@@ -29,10 +29,20 @@
           "name": {
             "fr": "Salade concombre",
             "en": "Cucumber salad",
-            "ar": "Ø³Ù„Ø·Ø© Ø§Ù„Ø®ÙŠØ§Ø±"
+            "ar": "سلطة الخيار"
           },
-          "price": 400,
+          "price": 1000,
           "image": "/images/menu/salad_concombre.jpg"
+        },
+        {
+          "id": "salade-de-poulpe",
+          "name": {
+            "fr": "Salade de poulpe",
+            "en": "Octopus salad",
+            "ar": "سلطة الأخطبوط"
+          },
+          "price": 1200,
+          "image": "/images/menu/salad-de-polpe.jpg"
         }
       ]
     },
@@ -125,6 +135,16 @@
           "image": "/images/menu/kebda.jpg"
         },
         {
+          "id": "tadjin-olive",
+          "name": {
+            "fr": "Tajine Zitoun",
+            "en": "Tajine Zitoun",
+            "ar": "طاجين الزيتون"
+          },
+          "price": 1000,
+          "image": "/images/menu/tadjin-olive.jpg"
+        },
+        {
           "id": "chakchouka",
           "name": {
             "fr": "Chakchouka",
@@ -212,7 +232,7 @@
             "ar": "سيبيا بالصلصة"
           },
           "price": 2000,
-          "image": "https://quiikly.com/storage/menu/17469871146820e86a61cd1.jpeg"
+          "image": "/images/menu/sepia.jpg"
         },
         {
           "id": "merlan",
@@ -232,7 +252,7 @@
             "ar": "دوراد"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/175259640168767fb1f1fe7.jpeg"
+          "image": "/images/menu/dorad.jpg"
         }
       ]
     },
