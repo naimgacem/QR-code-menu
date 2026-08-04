@@ -23,7 +23,7 @@ export const restaurant = {
     "https://quiikly.com/storage/restaurant/logo/17469810766820d0d42c549.jpg",
   notices: {
     seating:
-      "Les plats traditionnels sont servis au rez-de-chaussée. La terrasse est réservée aux poissons. Toute exception entraîne un supplément de 30 %.",
+      "Les plats traditionnels sont servis au rez-de-chaussée. La terrasse est réservée aux poissons. Les plats traditionnels servis en terrasse entraînent un supplément de 30 % (sauf bourak).",
     coffee:
       "Pause café disponible à partir de 16h00, ou en accompagnement du dîner.",
   },

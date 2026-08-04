@@ -115,7 +115,7 @@ components/
   SkipLink.tsx            ← sr-only "Aller au menu" focus-visible link
 
   NoticeSystem.tsx        ← coordinator: auto-opens modal on first session visit
-  NoticeModal.tsx         ← accessible dialog with the +20% / +30% rule cards
+  NoticeModal.tsx         ← accessible dialog with the +30% rule card
   NoticeBanner.tsx        ← clickable strip that re-opens the modal
 
   MenuTitle.tsx           ← eyebrow "MENU" with flanking gold hairlines
@@ -155,7 +155,7 @@ These are non-obvious choices the user iterated to; don't undo without asking.
 - **Dark mode is the default**, OS preference ignored. Only an explicit toggle overrides it.
 - **French is the default**, `navigator.language` ignored. Only an explicit pick overrides.
 - **NoticeModal auto-opens on first session visit**, gated by `sessionStorage["deb-notice-seen"]`. Backdrop click does NOT dismiss — only Escape or the button. The banner is the persistent way to re-open it.
-- **Surcharge cards in the notice** have +20% / +30% in 34 px gold tabular-nums, gold-tinted card surface, soft entrance stagger (260 ms / 380 ms) to draw the eye after the modal settles. Rule 2 includes "(sauf bourak)" exclusion per owner's clarification.
+- **Surcharge card in the notice** shows +30% in 34 px gold tabular-nums, gold-tinted card surface, soft entrance fade (260 ms) to draw the eye after the modal settles. It covers traditional dishes served on the terrace and includes the "(sauf bourak)" exclusion per owner's clarification. The former +20% card (fish on the ground floor) was removed at the owner's request — fish downstairs carries no surcharge.
 - **Search was removed.** Not needed for a 24-item menu.
 - **Tag icons (fish/meat/leaf) were removed** from cards — owner didn't want them. Don't add back unprompted.
 - **Made-up descriptions were stripped.** Only Salade Verte (ingredient list) and Service de thé ("4 personnes") came from the original quiikly site and are real. Everything else is awaiting owner copy.

@@ -22,7 +22,9 @@
             "en": "Lettuce, tomato, carrot, cucumber, olive, beetroot, corn.",
             "ar": "خس، طماطم، جزر، خيار، زيتون، شمندر، ذرة."
           },
-          "image": "https://quiikly.com/storage/menu/1747687407682b97efa5fd2.jpg"
+          "image": "https://quiikly.com/storage/menu/1747687407682b97efa5fd2.jpg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "salad-concombre",
@@ -47,6 +49,36 @@
       ]
     },
     {
+      "id": "verrines",
+      "title": {
+        "fr": "Verrines",
+        "en": "Verrines",
+        "ar": "فيرين"
+      },
+      "items": [
+        {
+          "id": "verrine-crevettes",
+          "name": {
+            "fr": "Verrine de crevettes",
+            "en": "Shrimp verrine",
+            "ar": "فيرين الجمبري"
+          },
+          "price": 400,
+          "image": "/images/menu/verrine_de_crevettes.jpeg"
+        },
+        {
+          "id": "verrine-saumon-fume",
+          "name": {
+            "fr": "Verrine de saumon fumé",
+            "en": "Smoked salmon verrine",
+            "ar": "فيرين السلمون المدخن"
+          },
+          "price": 400,
+          "image": "/images/menu/verrine_de_saumon_fume.jpeg"
+        }
+      ]
+    },
+    {
       "id": "plats-traditionnels",
       "title": {
         "fr": "Plats traditionnels",
@@ -55,6 +87,16 @@
       },
       "items": [
         {
+          "id": "chorba",
+          "name": {
+            "fr": "Chorba",
+            "en": "Chorba",
+            "ar": "شربة"
+          },
+          "price": 600,
+          "image": "/images/menu/chorba.jpeg"
+        },
+        {
           "id": "mtewem",
           "name": {
             "fr": "Mtewem",
@@ -62,7 +104,9 @@
             "ar": "متّوم"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/17469867406820e6f4e4907.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469867406820e6f4e4907.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "hmis",
@@ -72,7 +116,9 @@
             "ar": "حميس"
           },
           "price": 500,
-          "image": "https://quiikly.com/storage/menu/17469867576820e70510043.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469867576820e70510043.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "rechta",
@@ -82,7 +128,9 @@
             "ar": "رشتة"
           },
           "price": 1200,
-          "image": "https://quiikly.com/storage/menu/17469868046820e734e53f4.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469868046820e734e53f4.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "chakhchoukha",
@@ -92,7 +140,9 @@
             "ar": "شخشوخة"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/17469868266820e74ae3907.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469868266820e74ae3907.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "bourak-poulet",
@@ -102,7 +152,9 @@
             "ar": "بوراك دجاج"
           },
           "price": 200,
-          "image": "https://quiikly.com/storage/menu/17469868506820e7620d71b.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469868506820e7620d71b.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "bourak-viande",
@@ -112,7 +164,9 @@
             "ar": "بوراك لحم"
           },
           "price": 300,
-          "image": "https://quiikly.com/storage/menu/17469868676820e773715ec.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469868676820e773715ec.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "kebda-mcharmla",
@@ -152,7 +206,9 @@
             "ar": "شكشوكة"
           },
           "price": 600,
-          "image": "https://quiikly.com/storage/menu/17469868996820e7932d913.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469868996820e7932d913.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "couscous",
@@ -162,7 +218,9 @@
             "ar": "كسكس"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/17469869206820e7a868489.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469869206820e7a868489.jpeg",
+          "width": 500,
+          "height": 375
         }
       ]
     },
@@ -182,7 +240,9 @@
             "ar": "بطاطا مقلية"
           },
           "price": 400,
-          "image": "https://quiikly.com/storage/menu/174811512368321eb3dcd83.jpg"
+          "image": "https://quiikly.com/storage/menu/174811512368321eb3dcd83.jpg",
+          "width": 500,
+          "height": 266
         },
         {
           "id": "rouji",
@@ -192,7 +252,9 @@
             "ar": "روجي"
           },
           "price": 2500,
-          "image": "https://quiikly.com/storage/menu/174811423768321b3d1ca13.jpg"
+          "image": "https://quiikly.com/storage/menu/174811423768321b3d1ca13.jpg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "sardine",
@@ -202,7 +264,9 @@
             "ar": "سردين"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/17469869676820e7d7f2ea9.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469869676820e7d7f2ea9.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "chtitha-sardine",
@@ -212,7 +276,9 @@
             "ar": "شطيطحة سردين"
           },
           "price": 1500,
-          "image": "https://quiikly.com/storage/menu/17469870126820e8042fa8d.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469870126820e8042fa8d.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "crevette-sauce",
@@ -222,7 +288,9 @@
             "ar": "كروفات بالصلصة"
           },
           "price": 2500,
-          "image": "https://quiikly.com/storage/menu/17469870446820e8242afc5.jpeg"
+          "image": "https://quiikly.com/storage/menu/17469870446820e8242afc5.jpeg",
+          "width": 500,
+          "height": 375
         },
         {
           "id": "sepia-sauce",
@@ -242,7 +310,9 @@
             "ar": "مرلان"
           },
           "price": 3000,
-          "image": "https://quiikly.com/storage/menu/17469874266820e9a2c99d2.jpg"
+          "image": "https://quiikly.com/storage/menu/17469874266820e9a2c99d2.jpg",
+          "width": 500,
+          "height": 374
         },
         {
           "id": "dorade",
@@ -271,8 +341,8 @@
             "en": "Pastry assortment",
             "ar": "تشكيلة حلويات"
           },
-          "price": 1500,
-          "image": "https://quiikly.com/storage/menu/1747684467682b8c73b4d6c.jpg"
+          "price": 2200,
+          "image": "/images/menu/gateau_variete.jpeg"
         },
         {
           "id": "makrout-louze",
@@ -281,8 +351,18 @@
             "en": "Makrout Louze",
             "ar": "مقروط اللوز"
           },
-          "price": 250,
-          "image": "https://quiikly.com/storage/menu/1747684656682b8d30d5245.jpg"
+          "price": 300,
+          "image": "/images/menu/makrout_louz.jpeg"
+        },
+        {
+          "id": "makrout-lmakla",
+          "name": {
+            "fr": "Makrout El Makla",
+            "en": "Makrout El Makla",
+            "ar": "مقروط المقلة"
+          },
+          "price": 200,
+          "image": "/images/menu/makrout_lmakla.jpeg"
         },
         {
           "id": "baklawa",
@@ -291,8 +371,8 @@
             "en": "Baklawa",
             "ar": "بقلاوة"
           },
-          "price": 250,
-          "image": "https://quiikly.com/storage/menu/1747684806682b8dc6f01ad.jpg"
+          "price": 300,
+          "image": "/images/menu/baklawa.jpeg"
         },
         {
           "id": "dziriyat",
@@ -301,8 +381,49 @@
             "en": "Dziriyat",
             "ar": "دزيريات"
           },
-          "price": 250,
-          "image": "https://quiikly.com/storage/menu/1747685061682b8ec593a97.jpg"
+          "price": 300,
+          "image": "/images/menu/deziriyat.jpeg"
+        },
+        {
+          "id": "knidlat",
+          "name": {
+            "fr": "Knidlat",
+            "en": "Knidlat",
+            "ar": "قنيدلات"
+          },
+          "price": 300,
+          "image": "/images/menu/knidlat.jpeg"
+        },
+        
+        {
+          "id": "mchewak",
+          "name": {
+            "fr": "Mchewak",
+            "en": "Mchewak",
+            "ar": "مشواك"
+          },
+          "price": 300,
+          "image": "/images/menu/mchewak.jpeg"
+        },
+        {
+          "id": "mkhabez",
+          "name": {
+            "fr": "Mkhabez",
+            "en": "Mkhabez",
+            "ar": "مخبز"
+          },
+          "price": 300,
+          "image": "/images/menu/mkhabaz.jpeg"
+        },
+        {
+          "id": "khobz-lbey",
+          "name": {
+            "fr": "Khobz El Bey",
+            "en": "Khobz El Bey",
+            "ar": "خبز الباي"
+          },
+          "price": 200,
+          "image": "/images/menu/khobz_lbay.jpeg"
         }
       ]
     },
@@ -322,7 +443,9 @@
             "ar": "قهوة"
           },
           "price": 450,
-          "image": "https://quiikly.com/storage/menu/1747685338682b8fda0659a.jpg"
+          "image": "https://quiikly.com/storage/menu/1747685338682b8fda0659a.jpg",
+          "width": 500,
+          "height": 300
         },
         {
           "id": "the",
@@ -332,7 +455,9 @@
             "ar": "شاي"
           },
           "price": 250,
-          "image": "https://quiikly.com/storage/menu/1747685461682b9055ca471.jpg"
+          "image": "https://quiikly.com/storage/menu/1747685461682b9055ca471.jpg",
+          "width": 500,
+          "height": 300
         },
         {
           "id": "service-the",
@@ -347,7 +472,9 @@
             "en": "Traditional teapot for 4 people.",
             "ar": "إبريق شاي تقليدي لأربعة أشخاص."
           },
-          "image": "https://quiikly.com/storage/menu/1747685676682b912c0bd5b.jpg"
+          "image": "https://quiikly.com/storage/menu/1747685676682b912c0bd5b.jpg",
+          "width": 500,
+          "height": 300
         }
       ]
     }

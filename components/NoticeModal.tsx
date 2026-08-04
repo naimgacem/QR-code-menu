@@ -149,14 +149,9 @@ export function NoticeModal({ open, onClose }: Props) {
 
               <ul role="list" className="space-y-2.5">
                 <RuleCard
-                  percent={20}
-                  where={t("noticeRule1Where")}
-                  delay={260}
-                />
-                <RuleCard
                   percent={30}
-                  where={t("noticeRule2Where")}
-                  delay={380}
+                  where={t("noticeRuleWhere")}
+                  delay={260}
                 />
               </ul>
             </div>
