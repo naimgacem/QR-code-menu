@@ -11,7 +11,7 @@ import "./globals.css";
 
 /** GA4 Measurement ID. Public — safe to commit. To swap without code changes,
  * set NEXT_PUBLIC_GA_ID at build time and it overrides this default. */
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-TVNJZWCKGF";
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "G-JSMPFYPE4M";
 
 const display = Cormorant_Garamond({
   subsets: ["latin"],
