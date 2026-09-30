@@ -23,11 +23,14 @@ import { Card } from "./ui/Card";
 import { ConfirmDialog } from "./ui/ConfirmDialog";
 import { TextField } from "./ui/Field";
 import { FormActionBar } from "./ui/FormActionBar";
+import { PageHeader, type PageHeaderProps } from "./ui/PageHeader";
 import { isModalOpen } from "./ui/keyboard";
 import { useToast } from "./ui/Toast";
 import { InfoIcon, PlusIcon, TrashIcon } from "./icons";
 
 type Props = {
+  /** Title, back link… The form adds the delete button in edit mode. */
+  headerProps: Omit<PageHeaderProps, "action">;
   category?: CategoryRow;
   /** The category's dishes (edit mode) — listed alongside the form, and
    * counted in the delete warning, since they go with it. */
@@ -36,7 +39,11 @@ type Props = {
 
 const BACK = "/admin/categories";
 
-export function CategoryForm({ category, dishes = [] }: Props) {
+export function CategoryForm({
+  headerProps,
+  category,
+  dishes = [],
+}: Props) {
   const router = useRouter();
   const toast = useToast();
   const formRef = useRef<HTMLFormElement>(null);
@@ -129,8 +136,31 @@ export function CategoryForm({ category, dishes = [] }: Props) {
     router.push(BACK);
   }
 
+  const header = (
+    <PageHeader
+      {...headerProps}
+      action={
+        isEdit ? (
+          // Up here, not only at the bottom of the form: the owner looks
+          // for "delete" next to the title, as in most iPhone apps.
+          <Button
+            variant="danger-ghost"
+            onClick={() => setConfirmingDelete(true)}
+            disabled={isPending}
+            icon={<TrashIcon className="h-[18px] w-[18px]" />}
+            aria-label="Supprimer"
+            className="border border-danger/30 px-3 sm:px-4"
+          >
+            <span className="hidden sm:inline">Supprimer</span>
+          </Button>
+        ) : undefined
+      }
+    />
+  );
+
   return (
     <>
+      {header}
       <form ref={formRef} onSubmit={handleSubmit} noValidate>
         <div className="grid items-start grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0 space-y-5 lg:col-start-1">

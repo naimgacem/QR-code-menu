@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { ChevronLeftIcon } from "../icons";
 
-type Props = {
+export type PageHeaderProps = {
   title: string;
   subtitle?: ReactNode;
   /** Renders a back link above the title — used on the edit/create screens,
@@ -15,7 +15,7 @@ type Props = {
   action?: ReactNode;
 };
 
-export function PageHeader({ title, subtitle, back, eyebrow, action }: Props) {
+export function PageHeader({ title, subtitle, back, eyebrow, action }: PageHeaderProps) {
   return (
     <div className="mb-5 md:mb-8">
       {back && (

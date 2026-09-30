@@ -220,7 +220,11 @@ components/admin/
   Dashboard.tsx           ← home: stats, recent edits, "À vérifier", per-category
   DishList.tsx            ← search (/), status filter, sticky category bar
                             (jump + scroll-spy), inline price edit,
-                            visibility switch with undo, reorder mode
+                            visibility switch with undo, reorder mode, and a
+                            ⋯ sheet per dish (modifier / masquer / supprimer).
+                            Tapping anywhere on a row (photo included)
+                            opens the edit screen; Dish/CategoryForm put
+                            "Supprimer" on the title row as well.
   DishForm.tsx            ← cards + live DishPreview + sticky FormActionBar
   DishPreview.tsx         ← the REAL MenuItemCard, inert, in `.menu-tokens`
   CategoryList.tsx  CategoryForm.tsx

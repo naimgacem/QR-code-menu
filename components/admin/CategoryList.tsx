@@ -113,7 +113,9 @@ export function CategoryList({
               <Link
                 href={`/admin/categories/${category.id}`}
                 aria-label={`Modifier ${category.title_fr}`}
-                className="absolute inset-0 focus-visible:outline-offset-[-2px]"
+                // z-[1]: above the (positioned) photo stack, so tapping the
+                // photos opens the category too; below the arrows (z-10).
+                className="absolute inset-0 z-[1] focus-visible:outline-offset-[-2px]"
               />
 
               <span className="hidden w-5 flex-shrink-0 text-center text-[12px] tabular-nums text-subtle sm:block">
@@ -164,7 +166,7 @@ export function CategoryList({
                   <ArrowDownIcon className="h-[18px] w-[18px]" />
                 </button>
               </span>
-              <ChevronRightIcon className="pointer-events-none hidden h-4 w-4 flex-shrink-0 text-subtle sm:block" />
+              <ChevronRightIcon className="pointer-events-none h-4 w-4 flex-shrink-0 text-subtle" />
             </li>
           );
         })}

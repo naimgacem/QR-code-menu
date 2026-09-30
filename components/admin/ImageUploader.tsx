@@ -13,9 +13,9 @@ import {
 import { Button, Spinner } from "./ui/Button";
 import {
   CameraIcon,
+  CloseIcon,
   ImageIcon,
   SlidersIcon,
-  TrashIcon,
   UploadIcon,
 } from "./icons";
 
@@ -42,6 +42,17 @@ type Props = {
   onBusyChange?: (busy: boolean) => void;
   disabled?: boolean;
 };
+
+const photoAction = (tone: "default" | "danger") =>
+  [
+    "flex touch-manipulation flex-col items-center justify-center gap-1 rounded-xl border",
+    "px-2 py-2.5 text-[13px] font-medium transition-[background-color,transform] duration-150",
+    "active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50",
+    "sm:h-9 sm:flex-row sm:gap-1.5 sm:px-3 sm:py-0",
+    tone === "danger"
+      ? "border-danger/30 text-danger hover:bg-danger-soft sm:ms-auto"
+      : "border-line bg-surface text-fg shadow-admin-xs hover:bg-surface-2",
+  ].join(" ");
 
 export function ImageUploader({
   value,
@@ -275,37 +286,43 @@ export function ImageUploader({
             )}
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              icon={<SlidersIcon className="h-4 w-4" />}
+          {/* Three labelled actions, evenly split on phones (icon over
+           * label) and a compact row from `sm`. Removing the photo uses ✕,
+           * not a bin: on the edit screen the bin means "delete the dish",
+           * and two red bins a thumb-width apart invite the wrong tap. */}
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap">
+            <button
+              type="button"
               onClick={retouch}
-              loading={opening}
               disabled={busy}
+              className={photoAction("default")}
             >
+              {opening ? (
+                <Spinner className="h-[18px] w-[18px]" />
+              ) : (
+                <SlidersIcon className="h-[18px] w-[18px]" />
+              )}
               Retoucher
-            </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              icon={<UploadIcon className="h-4 w-4" />}
+            </button>
+            <button
+              type="button"
               onClick={() => galleryRef.current?.click()}
               disabled={busy}
+              className={photoAction("default")}
             >
+              <UploadIcon className="h-[18px] w-[18px]" />
               Remplacer
-            </Button>
-            <Button
-              variant="danger-ghost"
-              size="sm"
-              icon={<TrashIcon className="h-4 w-4" />}
+            </button>
+            <button
+              type="button"
               onClick={removePhoto}
               disabled={busy}
-              aria-label="Retirer la photo"
-              className="ms-auto"
+              aria-label="Retirer la photo (le plat est conservé)"
+              className={photoAction("danger")}
             >
-              <span className="hidden sm:inline">Retirer</span>
-            </Button>
+              <CloseIcon className="h-[18px] w-[18px]" />
+              Retirer
+            </button>
           </div>
         </div>
       ) : (
@@ -326,26 +343,28 @@ export function ImageUploader({
             Vous pourrez la recadrer, la redresser et ajuster ses couleurs
             avant de l&apos;enregistrer.
           </p>
-          <div className="mt-4 flex flex-wrap justify-center gap-2">
-            {/* Camera shortcut only where there is a camera to point:
-             * hidden on mouse-driven desktops. */}
+          {/* Equal-width stack on phones, side by side from `sm`. */}
+          <div className="mt-4 flex w-full max-w-[260px] flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row sm:justify-center">
+            {/* Choosing an existing photo is the main path — dish photos
+             * are usually taken beforehand, in good light. */}
             <Button
-              size="sm"
-              icon={<CameraIcon className="h-4 w-4" />}
-              onClick={() => cameraRef.current?.click()}
-              disabled={busy}
-              className="[@media(hover:hover)_and_(pointer:fine)]:hidden"
-            >
-              Prendre une photo
-            </Button>
-            <Button
-              size="sm"
-              variant="secondary"
               icon={<UploadIcon className="h-4 w-4" />}
               onClick={() => galleryRef.current?.click()}
               disabled={busy}
+              className="w-full sm:w-auto"
             >
-              Choisir une image
+              Choisir une photo
+            </Button>
+            {/* Camera shortcut only where there is a camera to point:
+             * hidden on mouse-driven desktops. */}
+            <Button
+              variant="secondary"
+              icon={<CameraIcon className="h-4 w-4" />}
+              onClick={() => cameraRef.current?.click()}
+              disabled={busy}
+              className="w-full sm:w-auto [@media(hover:hover)_and_(pointer:fine)]:hidden"
+            >
+              Prendre une photo
             </Button>
           </div>
           <p className="mt-3 hidden text-[12px] text-subtle [@media(hover:hover)_and_(pointer:fine)]:block">

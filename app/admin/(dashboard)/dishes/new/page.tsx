@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import { listCategories } from "@/lib/admin/queries";
 import { DishForm } from "@/components/admin/DishForm";
-import { PageHeader } from "@/components/admin/ui/PageHeader";
 
 export default async function NewDishPage({
   searchParams,
@@ -18,18 +17,16 @@ export default async function NewDishPage({
   if (categories.length === 0) redirect("/admin/dishes");
 
   return (
-    <>
-      <PageHeader
-        title="Nouveau plat"
-        subtitle="Il apparaîtra sur la carte dès l'enregistrement."
-        back={{ href: "/admin/dishes", label: "Plats" }}
-      />
-      <DishForm
-        categories={categories}
-        initialCategoryId={
-          typeof params.category === "string" ? params.category : null
-        }
-      />
-    </>
+    <DishForm
+      headerProps={{
+        title: "Nouveau plat",
+        subtitle: "Il apparaîtra sur la carte dès l'enregistrement.",
+        back: { href: "/admin/dishes", label: "Plats" },
+      }}
+      categories={categories}
+      initialCategoryId={
+        typeof params.category === "string" ? params.category : null
+      }
+    />
   );
 }

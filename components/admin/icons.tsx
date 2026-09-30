@@ -307,6 +307,14 @@ export const ListIcon = ({ className }: IconProps) => (
   </svg>
 );
 
+export const MoreIcon = ({ className }: IconProps) => (
+  <svg {...base(className)}>
+    <circle cx="5.5" cy="12" r="1.6" fill="currentColor" />
+    <circle cx="12" cy="12" r="1.6" fill="currentColor" />
+    <circle cx="18.5" cy="12" r="1.6" fill="currentColor" />
+  </svg>
+);
+
 export const ReorderIcon = ({ className }: IconProps) => (
   <svg {...base(className)}>
     <path d="M8 4.5v15M4.5 8 8 4.5 11.5 8" {...stroke} />

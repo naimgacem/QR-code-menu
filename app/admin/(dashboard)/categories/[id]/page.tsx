@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import { listCategoriesWithDishes } from "@/lib/admin/queries";
 import { formatRelative } from "@/lib/admin/format";
 import { CategoryForm } from "@/components/admin/CategoryForm";
-import { PageHeader } from "@/components/admin/ui/PageHeader";
 
 export default async function EditCategoryPage({
   params,
@@ -20,18 +19,19 @@ export default async function EditCategoryPage({
   const updated = formatRelative(category.updated_at);
 
   return (
-    <>
-      <PageHeader
-        title={category.title_fr}
-        subtitle={[
+    <CategoryForm
+      category={category}
+      dishes={category.dishes}
+      headerProps={{
+        title: category.title_fr,
+        subtitle: [
           count > 0 ? `${count} plat${count > 1 ? "s" : ""}` : "Aucun plat",
           updated && `modifiée ${updated}`,
         ]
           .filter(Boolean)
-          .join(" · ")}
-        back={{ href: "/admin/categories", label: "Catégories" }}
-      />
-      <CategoryForm category={category} dishes={category.dishes} />
-    </>
+          .join(" · "),
+        back: { href: "/admin/categories", label: "Catégories" },
+      }}
+    />
   );
 }

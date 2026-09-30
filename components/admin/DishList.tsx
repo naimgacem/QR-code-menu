@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   useEffect,
   useMemo,
@@ -13,6 +14,7 @@ import type { CategoryWithDishes } from "@/lib/admin/queries";
 import type { DishRow } from "@/lib/supabase/types";
 import { deaccent, formatPrice } from "@/lib/admin/format";
 import {
+  deleteDish,
   moveDish,
   setDishAvailability,
   updateDishPrice,
@@ -20,24 +22,29 @@ import {
 import { DishThumb } from "./DishThumb";
 import { Badge, Kbd } from "./ui/Badge";
 import { Button, buttonClass, iconButtonClass } from "./ui/Button";
+import { ConfirmDialog } from "./ui/ConfirmDialog";
 import { EmptyState } from "./ui/EmptyState";
 import { controlClass } from "./ui/Field";
 import { isModalOpen, isTypingTarget } from "./ui/keyboard";
 import { PageHeader } from "./ui/PageHeader";
 import { Segmented } from "./ui/Segmented";
+import { Sheet, SheetItem } from "./ui/Sheet";
 import { Toggle } from "./ui/Switch";
 import { useToast } from "./ui/Toast";
 import {
   ArrowDownIcon,
   ArrowUpIcon,
   CheckIcon,
-  ChevronRightIcon,
   CloseIcon,
+  EyeIcon,
+  EyeOffIcon,
   InfoIcon,
+  MoreIcon,
   PencilIcon,
   PlusIcon,
   ReorderIcon,
   SearchIcon,
+  TrashIcon,
 } from "./icons";
 
 export type DishFilter = "all" | "hidden" | "no-photo";
@@ -214,10 +221,17 @@ export function DishList({
   initialCategory,
   summary,
 }: Props) {
+  const router = useRouter();
   const toast = useToast();
   const [, startTransition] = useTransition();
   const searchRef = useRef<HTMLInputElement>(null);
   const chipBarRef = useRef<HTMLDivElement>(null);
+
+  /** The dish whose ⋯ action sheet is open, and the one waiting on a
+   * delete confirmation. */
+  const [actionsFor, setActionsFor] = useState<DishRow | null>(null);
+  const [confirmingDelete, setConfirmingDelete] = useState<DishRow | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<DishFilter>(initialFilter);
@@ -229,6 +243,8 @@ export function DishList({
   const [availability, setAvailability] = useState<Record<string, boolean>>({});
   const [prices, setPrices] = useState<Record<string, number>>({});
   const [order, setOrder] = useState<Record<string, string[]>>({});
+  /** Deleted here, still in the props until the refreshed list arrives. */
+  const [removed, setRemoved] = useState<Record<string, true>>({});
   /** Arrow taps queue up faster than the server answers. While any are in
    * flight the local order is ahead of the props, so props must not reset
    * it — only once the last one lands. */
@@ -244,6 +260,12 @@ export function DishList({
     setAvailability((prev) => settle(prev, (id) => byId.get(id)?.is_available));
     setPrices((prev) => settle(prev, (id) => byId.get(id)?.price));
     if (movesInFlight.current === 0) setOrder({});
+    setRemoved((prev) => {
+      const still = Object.keys(prev).filter((id) => byId.has(id));
+      return still.length === Object.keys(prev).length
+        ? prev
+        : Object.fromEntries(still.map((id) => [id, true as const]));
+    });
   }, [byId]);
 
   // Keep the filter in the URL, so a refresh — or the dashboard's "3 plats
@@ -293,7 +315,12 @@ export function DishList({
     [categories, order, byId]
   );
 
-  const allDishes = ordered.flatMap((c) => c.dishes);
+  const listed = ordered.map((category) => ({
+    ...category,
+    dishes: category.dishes.filter((d) => !removed[d.id]),
+  }));
+
+  const allDishes = listed.flatMap((c) => c.dishes);
   const counts: Record<DishFilter, number> = {
     all: allDishes.length,
     hidden: allDishes.filter((d) => !isVisible(d)).length,
@@ -301,7 +328,7 @@ export function DishList({
   };
 
   const q = deaccent(query.trim());
-  const groups = ordered
+  const groups = listed
     .map((category) => ({
       category,
       dishes: reordering
@@ -457,6 +484,21 @@ export function DishList({
         setOrder({});
         toast.error(result.message ?? "Le déplacement a échoué.");
       }
+    });
+  }
+
+  function removeDish(dish: DishRow) {
+    setDeleting(true);
+    startTransition(async () => {
+      const result = await deleteDish(dish.id);
+      setDeleting(false);
+      setConfirmingDelete(null);
+      if (!result.ok) {
+        toast.error(result.message ?? "La suppression a échoué.");
+        return;
+      }
+      setRemoved((prev) => ({ ...prev, [dish.id]: true }));
+      toast.success(`« ${dish.name_fr} » a été supprimé.`);
     });
   }
 
@@ -725,6 +767,7 @@ export function DishList({
                       price={priceOf(dish)}
                       onToggle={(next) => toggleVisibility(dish, next)}
                       onPrice={(next) => savePrice(dish, next)}
+                      onMore={() => setActionsFor(dish)}
                     />
                   )
                 )}
@@ -733,6 +776,77 @@ export function DishList({
           </section>
         ))
       )}
+
+      {/* ---- per-dish actions (the ⋯ button) ---- */}
+      <Sheet
+        open={actionsFor !== null}
+        onClose={() => setActionsFor(null)}
+        title={actionsFor?.name_fr ?? ""}
+        description={
+          actionsFor
+            ? `${formatPrice(priceOf(actionsFor))} DA · ${
+                categories.find((c) => c.id === actionsFor.category_id)
+                  ?.title_fr ?? ""
+              }`
+            : undefined
+        }
+      >
+        {actionsFor && (
+          <div className="space-y-1">
+            <SheetItem
+              icon={<PencilIcon className="h-5 w-5" />}
+              label="Modifier le plat"
+              description="Nom, prix, photo, description, catégorie."
+              onClick={() => {
+                const id = actionsFor.id;
+                setActionsFor(null);
+                router.push(`/admin/dishes/${id}`);
+              }}
+            />
+            {isVisible(actionsFor) ? (
+              <SheetItem
+                icon={<EyeOffIcon className="h-5 w-5" />}
+                label="Masquer de la carte"
+                description="Pour un plat épuisé — vous pourrez le réafficher."
+                onClick={() => {
+                  toggleVisibility(actionsFor, false);
+                  setActionsFor(null);
+                }}
+              />
+            ) : (
+              <SheetItem
+                icon={<EyeIcon className="h-5 w-5" />}
+                label="Afficher sur la carte"
+                description="Le plat redevient visible pour les clients."
+                onClick={() => {
+                  toggleVisibility(actionsFor, true);
+                  setActionsFor(null);
+                }}
+              />
+            )}
+            <SheetItem
+              icon={<TrashIcon className="h-5 w-5" />}
+              label="Supprimer le plat"
+              description="Définitif, avec sa photo."
+              tone="danger"
+              onClick={() => {
+                setConfirmingDelete(actionsFor);
+                setActionsFor(null);
+              }}
+            />
+          </div>
+        )}
+      </Sheet>
+
+      <ConfirmDialog
+        open={confirmingDelete !== null}
+        title="Supprimer ce plat ?"
+        message={`« ${confirmingDelete?.name_fr ?? ""} » disparaîtra définitivement de la carte, avec sa photo. Cette action est irréversible.`}
+        confirmLabel="Supprimer"
+        loading={deleting}
+        onConfirm={() => confirmingDelete && removeDish(confirmingDelete)}
+        onCancel={() => setConfirmingDelete(null)}
+      />
     </div>
   );
 }
@@ -744,6 +858,7 @@ function DishRowItem({
   price,
   onToggle,
   onPrice,
+  onMore,
 }: {
   dish: DishRow;
   query: string;
@@ -751,16 +866,19 @@ function DishRowItem({
   price: number;
   onToggle: (next: boolean) => void;
   onPrice: (next: number) => void;
+  onMore: () => void;
 }) {
   return (
-    <li className="relative flex items-center gap-3 px-3 py-2.5 transition-colors hover:bg-surface-2/50 sm:gap-4 sm:px-4">
-      {/* The whole row opens the dish. The link is a layer underneath the
-       * price and switch rather than their parent — interactive elements
-       * inside an <a> are invalid and swallow the tap on iOS. */}
+    <li className="relative flex items-center gap-3 py-2.5 pe-1 ps-3 transition-colors hover:bg-surface-2/50 sm:gap-4 sm:pe-2 sm:ps-4">
+      {/* The whole row opens the dish. The link is a layer over the photo
+       * and text — z-[1], because the photo is itself positioned and would
+       * otherwise sit on top and swallow the tap — and under the price,
+       * switch and ⋯ (z-10). Not their parent: interactive elements inside
+       * an <a> are invalid and swallow the tap on iOS. */}
       <Link
         href={`/admin/dishes/${dish.id}`}
         aria-label={`Modifier ${dish.name_fr}`}
-        className="absolute inset-0 focus-visible:outline-offset-[-2px]"
+        className="absolute inset-0 z-[1] focus-visible:outline-offset-[-2px]"
       />
 
       <DishThumb src={dish.image_url} dimmed={!visible} />
@@ -809,7 +927,15 @@ function DishRowItem({
         />
       </div>
 
-      <ChevronRightIcon className="pointer-events-none hidden h-4 w-4 flex-shrink-0 text-subtle sm:block" />
+      <button
+        type="button"
+        onClick={onMore}
+        aria-label={`Actions pour ${dish.name_fr} : modifier, masquer, supprimer`}
+        aria-haspopup="dialog"
+        className={iconButtonClass("md", "relative z-10 !h-11 !w-9 md:!h-10 md:!w-10")}
+      >
+        <MoreIcon className="h-5 w-5" />
+      </button>
     </li>
   );
 }

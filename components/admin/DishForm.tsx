@@ -20,6 +20,7 @@ import { DishPreview } from "./DishPreview";
 import { ImageUploader, type ImageValue } from "./ImageUploader";
 import { Button } from "./ui/Button";
 import { Card } from "./ui/Card";
+import { PageHeader, type PageHeaderProps } from "./ui/PageHeader";
 import { ConfirmDialog } from "./ui/ConfirmDialog";
 import { SelectField, TextAreaField, TextField } from "./ui/Field";
 import { FormActionBar } from "./ui/FormActionBar";
@@ -29,6 +30,8 @@ import { useToast } from "./ui/Toast";
 import { TrashIcon } from "./icons";
 
 type Props = {
+  /** Title, back link… The form adds the delete button in edit mode. */
+  headerProps: Omit<PageHeaderProps, "action">;
   /** Absent in create mode. */
   dish?: DishRow;
   categories: CategoryRow[];
@@ -42,7 +45,12 @@ const digitsOnly = (value: string) => value.replace(/[^\d]/g, "");
 
 const BACK = "/admin/dishes";
 
-export function DishForm({ dish, categories, initialCategoryId }: Props) {
+export function DishForm({
+  headerProps,
+  dish,
+  categories,
+  initialCategoryId,
+}: Props) {
   const router = useRouter();
   const toast = useToast();
   const formRef = useRef<HTMLFormElement>(null);
@@ -193,6 +201,28 @@ export function DishForm({ dish, categories, initialCategoryId }: Props) {
   const priceChanged =
     isEdit && dish && priceNumber !== null && priceNumber !== dish.price;
 
+  const header = (
+    <PageHeader
+      {...headerProps}
+      action={
+        isEdit ? (
+          // Up here, not only at the bottom of the form: the owner looks
+          // for "delete" next to the title, as in most iPhone apps.
+          <Button
+            variant="danger-ghost"
+            onClick={() => setConfirmingDelete(true)}
+            disabled={isPending}
+            icon={<TrashIcon className="h-[18px] w-[18px]" />}
+            aria-label="Supprimer"
+            className="border border-danger/30 px-3 sm:px-4"
+          >
+            <span className="hidden sm:inline">Supprimer</span>
+          </Button>
+        ) : undefined
+      }
+    />
+  );
+
   const previewItem: MenuItem = {
     // Not a real slug, so the preview can never share state with an
     // item in the owner's own order.
@@ -207,6 +237,7 @@ export function DishForm({ dish, categories, initialCategoryId }: Props) {
 
   return (
     <>
+      {header}
       <form ref={formRef} onSubmit={handleSubmit} noValidate>
         <div className="grid items-start grid-cols-[minmax(0,1fr)] gap-5 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="min-w-0 space-y-5 lg:col-start-1">
