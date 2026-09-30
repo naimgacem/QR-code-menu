@@ -7,9 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "extract-dimensions": "node scripts/extract-dimensions.mjs"
+    "extract-dimensions": "node scripts/extract-dimensions.mjs",
+    "seed": "node scripts/seed-supabase.mjs",
+    "snapshot": "node scripts/snapshot-menu.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.0",
     "@vercel/analytics": "^2.0.1",
     "next": "15.0.7",
     "react": "18.3.1",

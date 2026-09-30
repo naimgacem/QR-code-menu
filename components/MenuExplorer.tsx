@@ -1,12 +1,13 @@
 "use client";
 
-import { menu } from "@/lib/menu-data";
 import { useLang } from "./LanguageProvider";
+import { useMenu } from "./MenuProvider";
 import { CategoryNav } from "./CategoryNav";
 import { MenuSection } from "./MenuSection";
 
 export function MenuExplorer() {
   const { lang } = useLang();
+  const { menu } = useMenu();
 
   const navCategories = menu.map((c) => ({
     id: c.id,

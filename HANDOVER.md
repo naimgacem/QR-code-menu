@@ -16,14 +16,19 @@ Mobile-first digital menu for **Dar El Baraka**, a traditional Algerian restaura
 
 ## Stack
 
-- **Next.js 15** App Router, fully static (`○ /` prerendered)
+- **Next.js 15** App Router. The customer menu is still fully static
+  (`○ /` prerendered); `/admin/*` is dynamic (`ƒ`).
 - **React 18.3**
+- **Supabase** — Postgres (menu content), Storage (dish photos), Auth (owner
+  login). Added for the admin dashboard; see **ADMIN-SETUP.md**.
 - **Tailwind CSS 3.4** — `darkMode: ["selector", '[data-theme="dark"]']`
 - **TypeScript**
 - **`next/font`** self-hosting: Cormorant Garamond (display Latin), Manrope (body Latin), Amiri (display Arabic), Cairo (body Arabic). Unicode-range scoping means Arabic fonts only download when Arabic codepoints render.
 - **No animation library.** Framer Motion was removed; all motion is CSS keyframes in `app/globals.css`.
 
-Build size last measured: **~19 kB page / ~119 kB First Load JS**.
+Build size last measured: **14.3 kB page / 120 kB First Load JS**. The page
+shrank ~5 kB when the menu stopped being imported into the client bundle — it
+now arrives in the RSC payload instead.
 
 ---
 
@@ -76,22 +81,40 @@ ThemeProvider → LanguageProvider → OrderProvider → children
 
 ## Menu data
 
-`data/menu.json` is the single source of truth. The owner can edit prices, items, photos, descriptions, and ship without touching code.
+**Supabase is the source of truth.** `data/menu.json` is now a committed
+*snapshot*, not the live data.
 
-Schema (also see `lib/menu-data.ts`):
+`getMenu()` in `lib/menu-data.ts` resolves in this order:
+
+1. Supabase, when `NEXT_PUBLIC_SUPABASE_*` are set.
+2. `data/menu.json`, when they aren't **or when the query fails**.
+
+That second branch is intentional beyond dev convenience: if Supabase is
+unreachable at build time, a QR scan still returns a complete menu instead of
+an error page. Refresh the snapshot with `npm run snapshot` and commit it —
+that also gives the owner's edits a plain-text history in git.
+
+App-level shape (unchanged from before, so every component kept working):
 ```ts
 type MenuItem = {
-  id: string;                 // kebab-case, used in DOM ids and order state
+  id: string;                 // the dish SLUG — DOM ids + sessionStorage order keys
   name: LocalizedText;
   price: number;              // DA, integer
   description?: LocalizedText;
-  image?: string;             // full URL or /public/ path
-  width?: number;             // baked-in natural dimensions; optional
-  height?: number;            // (populated by `npm run extract-dimensions`)
+  image?: string;             // Supabase Storage URL, /public/ path, or remote URL
+  width?: number;
+  height?: number;
 };
 ```
 
-`scripts/extract-dimensions.mjs` walks the JSON, fetches each image, parses JPEG/PNG/WebP headers, and writes `width`/`height` back. Idempotent; `-- --force` to refetch.
+**Slugs are frozen after creation.** A dish slug keys the customer's
+in-progress order in `sessionStorage["deb-order"]`; a category slug is its
+`#anchor` for CategoryNav's scroll-spy. Renaming either in /admin changes the
+displayed title but never the slug — see the comment in `updateCategory`.
+
+`scripts/extract-dimensions.mjs` still walks the JSON snapshot. New photos
+uploaded through /admin don't need it — the cropper knows its own output
+dimensions and writes them straight to the row.
 
 ---
 
@@ -133,17 +156,84 @@ components/
 
   Contact.tsx             ← compact footer with phone/maps/IG/FB icons + ©
 
+  MenuProvider.tsx        ← carries the server-fetched menu to client components
+  OrderMenuSync.tsx       ← prunes order lines whose dish was deleted/hidden
+
 lib/
   i18n.ts                 ← Lang type, message bundles, t() and pick() helpers
-  menu-data.ts            ← JSON loader + types
+  menu-data.ts            ← getMenu(): Supabase with JSON fallback
   restaurant.ts           ← constants: hours, phone, social URLs
   theme.ts                ← Theme type, default, storage key
 
 scripts/
   extract-dimensions.mjs  ← bake image dimensions into the JSON
+  seed-supabase.mjs       ← one-shot data/menu.json → Supabase (npm run seed)
+  snapshot-menu.mjs       ← Supabase → data/menu.json (npm run snapshot)
 
 data/
-  menu.json               ← single source of truth for menu content
+  menu.json               ← offline fallback snapshot (generated)
+
+supabase/
+  schema.sql              ← tables, RLS policies, storage bucket. Run once.
+```
+
+### Admin dashboard (`/admin`)
+
+Owner-facing, French-only, mobile-first. Full setup in **ADMIN-SETUP.md**.
+
+```
+middleware.ts             ← guards /admin/*, refreshes the session cookie.
+                            Matcher is scoped to /admin ONLY — matching "/"
+                            would force the static menu through the Node
+                            runtime on every QR scan.
+
+app/admin/
+  layout.tsx              ← noindex metadata; renders <SetupRequired> if unconfigured
+  login/page.tsx          ← branded sign-in
+  (dashboard)/
+    layout.tsx            ← re-checks the session, mounts <AdminShell>
+    page.tsx              ← stats, quick actions, recently edited
+    dishes/               ← list (search / filter / reorder / show-hide), new, [id]
+    categories/           ← list (reorder), new, [id]
+    loading.tsx  error.tsx  not-found.tsx
+
+lib/supabase/
+  env.ts                  ← isSupabaseConfigured, requireSupabaseEnv
+  public.ts               ← cookie-LESS anon client. Used by getMenu() so the
+                            menu page stays statically rendered.
+  server.ts               ← cookie-bound client + getCurrentUser()
+  client.ts               ← memoized browser client (login, image upload)
+  types.ts                ← hand-written Database types mirroring schema.sql
+
+lib/admin/
+  queries.ts              ← dashboard reads (includes hidden dishes)
+  dish-actions.ts         ← "use server" CRUD + reorder + availability
+  category-actions.ts     ← "use server" CRUD + reorder
+  validation.ts           ← hand-rolled, French error messages
+  storage.ts              ← Storage URL ⇄ object path
+  format.ts               ← price, relative time, slugify, deaccent
+
+components/admin/
+  AdminShell.tsx          ← sidebar on md+; on phones a top bar + bottom tabs
+                            (Accueil · Plats · + · Catégories · Compte). Tabs
+                            hide on create/edit screens, which have a save bar.
+  Dashboard.tsx           ← home: stats, recent edits, "À vérifier", per-category
+  DishList.tsx            ← search (/), status filter, sticky category bar
+                            (jump + scroll-spy), inline price edit,
+                            visibility switch with undo, reorder mode
+  DishForm.tsx            ← cards + live DishPreview + sticky FormActionBar
+  DishPreview.tsx         ← the REAL MenuItemCard, inert, in `.menu-tokens`
+  CategoryList.tsx  CategoryForm.tsx
+  ImageUploader.tsx       ← pick / camera / drag-drop, upload, orphan cleanup,
+                            "Retoucher" reopens the editor on the original
+  ImageEditor.tsx         ← canvas editor: crop, 90° turns, mirror, straighten,
+                            zoom, colour sliders + styles → 1200×900 JPEG ≤ ~260 KB
+  BrandMark.tsx  DishThumb.tsx  SetupRequired.tsx  LoginForm.tsx  icons.tsx
+  ui/                     ← Button, Field, Switch/Toggle, Toast (with undo),
+                            ConfirmDialog, Sheet, Card, Badge/Kbd, Segmented,
+                            Slider, EmptyState, Skeleton, FormActionBar,
+                            useModal (focus trap / Escape / scroll lock),
+                            Portal (see "Overlays" below)
 ```
 
 ---
@@ -156,7 +246,9 @@ These are non-obvious choices the user iterated to; don't undo without asking.
 - **French is the default**, `navigator.language` ignored. Only an explicit pick overrides.
 - **NoticeModal auto-opens on first session visit**, gated by `sessionStorage["deb-notice-seen"]`. Backdrop click does NOT dismiss — only Escape or the button. The banner is the persistent way to re-open it.
 - **Surcharge card in the notice** shows +30% in 34 px gold tabular-nums, gold-tinted card surface, soft entrance fade (260 ms) to draw the eye after the modal settles. It covers traditional dishes served on the terrace and includes the "(sauf bourak)" exclusion per owner's clarification. The former +20% card (fish on the ground floor) was removed at the owner's request — fish downstairs carries no surcharge.
-- **Search was removed.** Not needed for a 24-item menu.
+- **Search was removed** from the customer menu — not needed at this size.
+  (The admin dish list *does* have search; the owner scans a flat list of 37,
+  a customer browses by category.)
 - **Tag icons (fish/meat/leaf) were removed** from cards — owner didn't want them. Don't add back unprompted.
 - **Made-up descriptions were stripped.** Only Salade Verte (ingredient list) and Service de thé ("4 personnes") came from the original quiikly site and are real. Everything else is awaiting owner copy.
 - **Category capsule:** chips inside center via `mx-auto` on an inner flex (not `justify-content: center`, which breaks horizontal scroll when content overflows). Inactive chips use `bg-surface-2` — deliberately subtle, user pushed back twice when it was too dark.
@@ -179,18 +271,92 @@ These are non-obvious choices the user iterated to; don't undo without asking.
 
 4. **Per-image natural aspect ratio** is detected on load via `onLoadingComplete` (clamped 4:5 → 16:9), causing a brief one-time layout shift before the image's native ratio is applied. To eliminate, run `npm run extract-dimensions` once after images are self-hosted; the script bakes the dimensions into the JSON and the cards skip the detection step.
 
-5. **JSON-backed menu via build-time import is fine,** but for true zero-redeploy updates (owner editing without a developer), the next step would be moving `data/menu.json` into `/public/menu.json` and fetching at runtime, or wiring up a tiny CMS (Sanity, Notion API, Google Sheets via SheetDB).
+5. ~~JSON-backed menu via build-time import~~ — **done.** The owner now edits
+   in `/admin` and changes reach the live menu without a redeploy.
+
+6. **Admin forms are French-only.** The `_en` / `_ar` columns exist and the 24
+   migrated dishes keep their translations, but nothing in the UI writes to
+   them, so a dish renamed in French keeps its old English/Arabic name. Adding
+   FR/EN/AR tabs touches `DishForm`, `CategoryForm`, and the two action files.
+
+7. **Abandoned photo uploads can orphan a file.** The uploader writes to
+   Storage as soon as you confirm the crop, so leaving a form without saving
+   leaves the object behind. Re-cropping before saving cleans up the previous
+   attempt, and replacing/deleting a saved photo cleans up properly — only the
+   "uploaded then navigated away" path leaks. At ~200 KB against a 1 GB free
+   tier this is not urgent; a sweep script comparing bucket contents against
+   `dishes.image_url` would close it.
 
 
 ---
 
+## Admin design decisions worth knowing
+
+- **The admin UI is French only.** The customer menu is trilingual because
+  customers are; the dashboard has exactly one user and he works in French.
+- **The dashboard has its own palette and font**, scoped to `.admin-root`
+  (see the "Admin dashboard" block in `globals.css`). It redefines the same
+  semantic variables — warm off-white / white cards in light, near-black in
+  dark, ink or gold actions — so admin components still write `bg-surface`,
+  `text-muted`… and the customer menu is untouched. Inter is loaded in
+  `app/admin/layout.tsx` only, so QR-scan visitors never download it. Extra
+  tokens for the admin: `danger-*`, `success-*`, `warning-*`, and the
+  `shadow-admin-*` scale (true drop shadows; the menu's shadows are tinted
+  with `--fg`, which glows cream in dark mode).
+- **`.menu-tokens` re-applies the customer palette** (and Manrope) inside the
+  admin. The dish form's live preview renders the real `MenuItemCard` in it,
+  so what the owner sees is what customers get.
+- **The photo editor is canvas-based, no library.** Colour work runs on a
+  560 px copy while a slider is dragged and a 1600 px copy at rest; the
+  export re-runs the same pixel function on the 1200×900 output, so preview
+  and saved file match. Photos above 16 MP are downscaled first (iOS canvas
+  limit). The editor always uses the dark palette (`data-theme="dark"` on
+  its root) — photos are judged on a neutral dark surround.
+- **Optimistic everything in the lists.** Visibility, inline price and
+  reorder render instantly and roll back with a toast if the server refuses.
+  Visibility and price toasts offer "Annuler". Reorder keeps its local order
+  while arrow taps are still in flight (`movesInFlight`), otherwise the
+  first server reply would snap the list back mid-sequence.
+- **Overlays always go through `<Portal>`** (dialogs, sheets, the photo
+  editor). It mounts them directly in `.admin-root`, outside every page
+  wrapper. Rendered in place, an overlay's z-index only counts inside the
+  nearest stacking context: that is how the phone's sticky top bar once
+  covered the editor's Annuler / Appliquer buttons, leaving no way out.
+  Relatedly, the page fade uses `animation-fill-mode: backwards` so the
+  wrapper stops being a stacking context once it has faded in.
+- **Phone-first (iPhone) details:** 16px inputs (no Safari zoom on focus),
+  44px touch targets (the Toggle pads its hit area with `::before`), editor
+  actions at the bottom under the thumb, `enterKeyHint`/no autocorrect on
+  search, camera shortcut via `capture="environment"`.
+- **Keyboard shortcuts (desktop):** `N` new dish, `/` search, `Ctrl/⌘ S`
+  save a form, `Esc` closes any dialog/sheet/editor.
+- **Hide beats delete.** Every dish has an `is_available` toggle, surfaced as a
+  one-tap eye button in the list, because "sold out tonight" is the most
+  frequent edit a restaurant makes.
+- **Reordering is arrow buttons, not drag-and-drop.** Touch DnD needs a library
+  and is fiddly one-handed. Dishes get an explicit "Réorganiser" mode (search
+  and filters are ignored there — swapping with a hidden neighbour would be
+  confusing); categories show arrows permanently since the list is short.
+- **Position changes are a two-row swap, not a re-index**, so concurrent edits
+  in different parts of the menu can't clobber each other.
+- **The delete dialog focuses Cancel**, and category deletes state the dish
+  count in the confirm button (`Supprimer (12 plats)`).
+
 ## What the user might ask next
 
-- Run the `frontend-design` skill for a holistic redesign pass (highest-likelihood next ask).
-- Self-host the menu photos and update `data/menu.json` image paths.
+- **Add FR/EN/AR tabs to the admin forms** (see deferred item 6) — the most
+  likely follow-up now that the dashboard exists.
+- Make the restaurant settings editable too: hours, phone, socials and the
+  +30% terrace surcharge copy are still hardcoded in `lib/restaurant.ts` and
+  `lib/i18n.ts`.
+- Self-host the remaining `quiikly.com` photos — several dishes still point at
+  a host that is unreachable (deferred item 1). Re-uploading them through
+  /admin is now the easiest fix.
 - Replace placeholder descriptions with owner-provided copy.
 - Review the Arabic translations.
-- Set up Vercel deploy (`npx vercel --prod` is zero-config from this repo).
+- Set up Vercel deploy (`npx vercel --prod` is zero-config from this repo) —
+  remember the two `NEXT_PUBLIC_SUPABASE_*` env vars, and **not** the service
+  role key.
 
 ---
 
@@ -198,13 +364,20 @@ These are non-obvious choices the user iterated to; don't undo without asking.
 
 ```sh
 npm install
-npm run dev          # http://localhost:3000
+npm run dev          # http://localhost:3000 — menu; /admin for the dashboard
 npm run build        # production build, currently clean
 npm start            # serve the built site
-npm run extract-dimensions   # bake image dimensions into data/menu.json (idempotent)
+
+npm run seed         # data/menu.json → Supabase (one-shot; --force to re-import)
+npm run snapshot     # Supabase → data/menu.json (refresh the offline fallback)
+npm run extract-dimensions   # bake image dimensions into data/menu.json
 ```
 
-Last `next build` output: clean, page 19.x kB / First Load 119 kB, fully static.
+Last `next build`: clean. `/` is `○ Static` at 14.3 kB / 120 kB First Load;
+all `/admin/*` routes are `ƒ Dynamic`. Middleware 90.6 kB, scoped to /admin.
+
+There is **no ESLint config** in this repo — `npm run lint` will offer to
+create one. `npx tsc --noEmit` is the type gate.
 
 ---
 

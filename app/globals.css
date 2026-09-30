@@ -6,9 +6,14 @@
  * Design tokens (RGB triplets so Tailwind's <alpha-value>
  * syntax can append /opacity).  Every component reads from
  * these — no hardcoded hex anywhere.
+ *
+ * `.menu-tokens` re-applies the customer palette inside the admin, which
+ * overrides these same variables (see "Admin dashboard" below) — it is how
+ * the dish form's live preview renders exactly like the real menu card.
  * ============================================================ */
 :root,
-:root[data-theme="light"] {
+:root[data-theme="light"],
+.menu-tokens {
   /* canvas — warm paper, restrained saturation.
    * Sits between the two previous attempts: not pure-white-feeling,
    * not yellow-saturated either. Hue stays warm, saturation pulled
@@ -46,6 +51,18 @@
   --status-closed-bg: 123 113 96; /* neutral taupe dot (matches --subtle) */
   --status-closed-fg: 80 70 55; /* muted text */
 
+  /* feedback — admin dashboard only (destructive actions, validation,
+   * save confirmations). Desaturated into the warm palette so they read as
+   * part of the brand rather than bootstrap alerts. The customer menu
+   * never uses these. */
+  --danger: 158 44 34; /* brick red */
+  --danger-hover: 132 34 26;
+  --danger-fg: 253 247 237; /* text on a danger fill */
+  --danger-soft: 237 213 205; /* tinted surface behind danger text */
+  --success: 58 105 62; /* deep olive green */
+  --success-fg: 253 247 237;
+  --success-soft: 213 226 206;
+
   /* hero band — softened sand, distinct but no longer loud */
   --hero-bg: 201 185 145; /* #C9B991 */
   --hero-fg: 27 24 19;
@@ -59,7 +76,8 @@
   color-scheme: light;
 }
 
-:root[data-theme="dark"] {
+:root[data-theme="dark"],
+[data-theme="dark"] .menu-tokens {
   /* warm evening restaurant — coffee, leather, bronze */
   --app: 15 10 5; /* very deep warm coffee #0F0A05 */
   --surface: 27 19 12; /* espresso / leather */
@@ -89,6 +107,17 @@
   --status-closed-bg: 136 122 96; /* muted taupe dot (matches --subtle) */
   --status-closed-fg: 190 175 145; /* muted cream text */
 
+  /* feedback — admin only (see the light-theme note). Lifted toward warm
+   * coral / sage so they stay legible on espresso surfaces without the
+   * neon look a literal red/green would have in dark mode. */
+  --danger: 216 111 92; /* warm coral */
+  --danger-hover: 231 132 112;
+  --danger-fg: 27 19 12;
+  --danger-soft: 66 32 25;
+  --success: 128 173 124; /* muted sage */
+  --success-fg: 27 19 12;
+  --success-soft: 34 51 33;
+
   --hero-bg: 15 10 5;
   --hero-fg: 242 229 197;
   --hero-fg-muted: 190 175 145;
@@ -98,6 +127,129 @@
   --frame: 27 19 12;
 
   color-scheme: dark;
+}
+
+/* ============================================================
+ * Admin dashboard (/admin) — its own palette.
+ *
+ * The owner's back office reads as a tool, not a menu: neutral warm
+ * canvases, white (or near-black) cards, ink/gold actions. It redefines
+ * the SAME semantic variables the menu uses, scoped to `.admin-root`, so
+ * every admin component keeps writing `bg-surface`, `text-muted`, … and the
+ * customer menu is untouched.
+ *
+ * `:root:has(.admin-root)` repaints <html>/<body> too, so iOS overscroll
+ * and the page behind modals match the dashboard instead of the menu's
+ * taupe frame. `.admin-root [data-theme="dark"]` lets one subtree (the
+ * photo editor) force the dark palette whatever the owner's theme.
+ * ============================================================ */
+.admin-root,
+:root:has(.admin-root) {
+  --app: 246 245 242; /* #F6F5F2 — warm off-white canvas */
+  --surface: 255 255 255; /* cards */
+  --surface-2: 242 240 235; /* hover wells, inactive chips */
+  --surface-muted: 235 232 225;
+  --surface-overlay: 255 255 255; /* dialogs, sheets, toasts */
+
+  --line: 222 218 209; /* #DEDAD1 */
+  --line-soft: 234 231 225; /* #EAE7E1 */
+
+  --fg: 28 25 23; /* #1C1917 */
+  --muted: 87 83 78; /* #57534E */
+  --subtle: 120 114 105; /* #787269 — ≥ 4.5:1 on white */
+
+  --accent: 176 132 48; /* brand gold, icons and borders only */
+  --accent-strong: 134 97 27; /* gold that passes as text on white */
+  --accent-hover: 156 116 38;
+  --accent-soft: 246 238 219; /* #F6EEDB */
+
+  --action: 28 25 23; /* ink buttons in light */
+  --action-hover: 56 51 45;
+  --action-fg: 255 255 255;
+
+  --danger: 180 50 36;
+  --danger-hover: 152 38 26;
+  --danger-fg: 255 255 255;
+  --danger-soft: 252 236 232;
+  --success: 36 121 72;
+  --success-fg: 255 255 255;
+  --success-soft: 228 242 233;
+  --warning: 172 98 14;
+  --warning-soft: 253 242 222;
+
+  /* Shadow colour and strength. Dark mode needs ~2× the alpha for the
+   * same perceived lift, hence a multiplier rather than a second palette. */
+  --shadow: 41 37 32;
+  --shadow-k: 1;
+
+  --frame: 246 245 242;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] .admin-root,
+:root[data-theme="dark"]:has(.admin-root),
+.admin-root [data-theme="dark"] {
+  --app: 14 13 11; /* #0E0D0B */
+  --surface: 24 22 19; /* #181613 */
+  --surface-2: 34 32 28; /* #22201C */
+  --surface-muted: 41 38 33;
+  --surface-overlay: 30 28 24; /* #1E1C18 */
+
+  --line: 51 48 42; /* #33302A */
+  --line-soft: 39 37 32; /* #272520 */
+
+  --fg: 241 237 229; /* #F1EDE5 */
+  --muted: 184 177 165;
+  --subtle: 134 127 116;
+
+  --accent: 214 172 87; /* the menu's gold */
+  --accent-strong: 230 191 112;
+  --accent-hover: 240 205 132;
+  --accent-soft: 50 41 22;
+
+  --action: 214 172 87; /* gold buttons in dark, as on the menu */
+  --action-hover: 229 189 108;
+  --action-fg: 22 19 14;
+
+  --danger: 239 116 99;
+  --danger-hover: 247 139 123;
+  --danger-fg: 22 19 14;
+  --danger-soft: 52 25 21;
+  --success: 108 194 139;
+  --success-fg: 22 19 14;
+  --success-soft: 21 42 30;
+  --warning: 234 174 82;
+  --warning-soft: 49 37 17;
+
+  --shadow: 0 0 0;
+  --shadow-k: 2.4;
+
+  --frame: 14 13 11;
+
+  color-scheme: dark;
+}
+
+/* Captured at the root, before .admin-root re-points --font-body, so the
+ * live menu preview inside the dashboard can switch back to Manrope. */
+:root {
+  --font-menu-body: var(--font-body);
+}
+
+.admin-root {
+  /* Inter for the dashboard (loaded in app/admin/layout.tsx). Re-pointing
+   * --font-body means every `font-sans` inside picks it up. */
+  --font-body: var(--font-admin);
+  font-family: var(--font-admin), system-ui, sans-serif;
+  /* The menu's body sets Manrope stylistic sets that change Inter's
+   * glyphs (single-storey a, open digits). Back to Inter's defaults. */
+  font-feature-settings: normal;
+}
+
+.admin-root .menu-tokens {
+  --font-body: var(--font-menu-body);
+  font-family: var(--font-body), var(--font-arabic), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
 }
 
 /* ============================================================
@@ -216,10 +368,23 @@ body {
   outline: none;
 }
 
-*:focus-visible {
+/* The admin is excluded: forcing a 4px radius on focus squares off its
+ * rounded buttons and inputs. It has its own ring below. `:where()` keeps
+ * this at the specificity the plain `*:focus-visible` always had. */
+:where(:not(.admin-root *)):focus-visible {
   outline: 2px solid rgb(var(--accent));
   outline-offset: 3px;
   border-radius: 4px;
+}
+
+.admin-root :focus-visible {
+  outline: 2px solid rgb(var(--accent) / 0.85);
+  outline-offset: 2px;
+}
+
+/* Text controls draw their own focus ring (border + soft glow). */
+.admin-root :is(input:not([type="range"]), textarea, select):focus-visible {
+  outline: none;
 }
 
 mark {
@@ -285,6 +450,18 @@ input[type="search"]::-webkit-search-decoration {
 @keyframes sheet-up {
   from { transform: translate3d(0, 100%, 0); }
   to   { transform: translate3d(0, 0, 0); }
+}
+
+/* Admin toasts drop in from above the viewport edge. */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 @keyframes count-pop {
@@ -379,6 +556,10 @@ input[type="search"]::-webkit-search-decoration {
 .animate-sheet-up {
   animation: sheet-up 340ms cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform;
+}
+
+.animate-toast-in {
+  animation: toast-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-count-pop {
@@ -476,6 +657,129 @@ input[type="search"]::-webkit-search-decoration {
     min-width: 1.5rem;
     opacity: 0.7;
   }
+
+  /* ---- Admin motion ----------------------------------------------------
+   * Declared inside @layer utilities (unlike the menu's animations above) so
+   * Tailwind generates responsive variants: `animate-sheet-up
+   * sm:animate-admin-pop` is a bottom sheet on phones, a dialog on desktop.
+   *
+   * Page-in is opacity only on purpose: a transform on the page wrapper
+   * would make it the containing block for `position: fixed` children, and
+   * the form's save bar would jump for the length of the animation.
+   * `backwards`, not `both`: a filled-forwards opacity animation keeps the
+   * wrapper a stacking context for good, trapping every overlay inside it
+   * beneath the phone's sticky top bar. */
+  .animate-admin-page {
+    animation: admin-page-in 240ms ease-out backwards;
+  }
+  .animate-admin-pop {
+    animation: modal-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-admin-sheet {
+    animation: sheet-up 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .animate-admin-toast {
+    animation: admin-toast-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .animate-admin-fade {
+    animation: fade-in 180ms ease-out both;
+  }
+  .animate-indeterminate {
+    animation: admin-indeterminate 1.15s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  /* Loading placeholder with a slow light sweep. */
+  .admin-skeleton {
+    background-image: linear-gradient(
+      90deg,
+      rgb(var(--surface-2)) 0%,
+      rgb(var(--surface-muted)) 50%,
+      rgb(var(--surface-2)) 100%
+    );
+    background-size: 200% 100%;
+    animation: admin-shimmer 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes admin-page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes admin-toast-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes admin-shimmer {
+  from { background-position: 150% 0; }
+  to { background-position: -50% 0; }
+}
+
+@keyframes admin-indeterminate {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(260%); }
+}
+
+/* ---- Admin range slider ------------------------------------------------
+ * The filled part of the track comes from `--track`, a gradient the Slider
+ * component computes — it fills from the centre for ±100 sliders (contrast,
+ * straighten) and from the start for zoom. */
+.admin-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  background: transparent;
+  cursor: pointer;
+}
+.admin-range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--track, rgb(var(--line)));
+}
+.admin-range::-moz-range-track {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--track, rgb(var(--line)));
+}
+.admin-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: -8px;
+  border-radius: 999px;
+  background: rgb(var(--fg));
+  border: 3px solid rgb(var(--surface-overlay));
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+  transition: transform 120ms ease;
+}
+.admin-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: rgb(var(--fg));
+  border: 3px solid rgb(var(--surface-overlay));
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.35);
+}
+.admin-range:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+.admin-range:focus-visible {
+  outline: none;
+}
+.admin-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px rgb(var(--accent) / 0.35);
+}
+.admin-range:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px rgb(var(--accent) / 0.35);
 }
 
 @media (prefers-reduced-motion: reduce) {

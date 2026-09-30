@@ -2,17 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef } from "react";
-import { menu, type MenuItem } from "@/lib/menu-data";
+import { type MenuItem } from "@/lib/menu-data";
 import { pick } from "@/lib/i18n";
 import { useLang } from "./LanguageProvider";
+import { useMenu } from "./MenuProvider";
 import { useOrder } from "./OrderProvider";
 import { OrderStepper } from "./OrderStepper";
-
-const ITEM_INDEX: Map<string, MenuItem> = (() => {
-  const m = new Map<string, MenuItem>();
-  for (const c of menu) for (const i of c.items) m.set(i.id, i);
-  return m;
-})();
 
 const CloseIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -39,6 +34,7 @@ const DISMISS_MAX_DURATION = 340;
 
 export function OrderSheet() {
   const { lang, t } = useLang();
+  const { itemsBySlug } = useMenu();
   const { order, count, open, setOpen, increment, decrement, clear } =
     useOrder();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -86,14 +82,17 @@ export function OrderSheet() {
     };
   }, [open, setOpen]);
 
+  // A dish the owner deleted or hid since the customer added it simply
+  // vanishes from the sheet — it no longer exists on the menu, so it can't
+  // be ordered or priced.
   const entries = useMemo(() => {
     const out: { id: string; qty: number; item: MenuItem }[] = [];
     for (const [id, qty] of Object.entries(order)) {
-      const item = ITEM_INDEX.get(id);
+      const item = itemsBySlug.get(id);
       if (item) out.push({ id, qty, item });
     }
     return out;
-  }, [order]);
+  }, [order, itemsBySlug]);
 
   const total = useMemo(
     () => entries.reduce((sum, e) => sum + e.qty * e.item.price, 0),
