@@ -32,7 +32,7 @@ export function Wordmark({ compact = false }: { compact?: boolean }) {
     <div className="flex min-w-0 items-center gap-2.5">
       <BrandMark className={compact ? "h-8 w-8" : "h-9 w-9"} />
       <div className="min-w-0">
-        <p className="truncate font-display text-[19px] font-medium leading-none tracking-[0.005em] text-fg">
+        <p className="truncate font-wordmark text-[19px] font-bold leading-none tracking-[0.005em] text-fg">
           Dar El Baraka
         </p>
         <p className="mt-1 truncate text-[10.5px] font-medium uppercase tracking-[0.14em] text-subtle">

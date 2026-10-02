@@ -73,6 +73,14 @@ const config: Config = {
           "Cormorant Garamond",
           "serif",
         ],
+        // Admin "Dar El Baraka" wordmark — the 700 face is loaded in
+        // app/admin/layout.tsx; use with `font-bold`.
+        wordmark: [
+          "var(--font-admin-wordmark)",
+          "var(--font-display)",
+          "Cormorant Garamond",
+          "serif",
+        ],
         sans: [
           "var(--font-body)",
           "var(--font-arabic)",

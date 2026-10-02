@@ -38,7 +38,7 @@ export default function LoginPage() {
         </div>
 
         <div className="relative max-w-md">
-          <h1 className="font-display text-[56px] font-medium leading-[1] text-fg">
+          <h1 className="font-wordmark text-[56px] font-bold leading-[1] text-fg">
             Dar El Baraka
           </h1>
           <p className="mt-4 text-[17px] leading-relaxed text-muted">
@@ -66,7 +66,7 @@ export default function LoginPage() {
             <div className="flex items-center gap-3 lg:hidden">
               <BrandMark className="h-11 w-11" />
               <div>
-                <p className="font-display text-[26px] font-medium leading-none text-fg">
+                <p className="font-wordmark text-[26px] font-bold leading-none text-fg">
                   Dar El Baraka
                 </p>
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.14em] text-subtle">

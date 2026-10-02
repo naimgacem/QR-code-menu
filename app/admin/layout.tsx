@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { SetupRequired } from "@/components/admin/SetupRequired";
 
@@ -8,6 +8,16 @@ import { SetupRequired } from "@/components/admin/SetupRequired";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-admin",
+  display: "swap",
+});
+
+/** Bold Cormorant for the "Dar El Baraka" wordmark (`font-wordmark`). The
+ * root layout only loads 400–600; adding 700 there would preload it for
+ * customers too. */
+const wordmark = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: "700",
+  variable: "--font-admin-wordmark",
   display: "swap",
 });
 
@@ -39,7 +49,7 @@ export default function AdminRootLayout({
     <div
       lang="fr"
       dir="ltr"
-      className={`${inter.variable} admin-root min-h-screen bg-app text-fg antialiased`}
+      className={`${inter.variable} ${wordmark.variable} admin-root min-h-screen bg-app text-fg antialiased`}
     >
       {/* Caught here rather than at each page so a half-finished setup
        * produces instructions instead of a supabase-js stack trace. */}
