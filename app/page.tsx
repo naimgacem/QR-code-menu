@@ -2,7 +2,7 @@ import { getMenu } from "@/lib/menu-data";
 import { MenuProvider } from "@/components/MenuProvider";
 import { OrderMenuSync } from "@/components/OrderMenuSync";
 import { Hero } from "@/components/Hero";
-import { NoticeSystem } from "@/components/NoticeSystem";
+/**import { NoticeSystem } from "@/components/NoticeSystem";**/
 import { MenuTitle } from "@/components/MenuTitle";
 import { MenuExplorer } from "@/components/MenuExplorer";
 import { Contact } from "@/components/Contact";
@@ -27,7 +27,6 @@ export default async function HomePage() {
     <MenuProvider menu={menu}>
       <main className="relative mx-auto min-h-screen max-w-xl overflow-x-clip bg-app md:shadow-elevated md:ring-1 md:ring-line/60">
         <Hero />
-        <NoticeSystem />
 
         <section id="menu" aria-label="Carte du restaurant" className="bg-app">
           <MenuTitle />
